@@ -1,0 +1,61 @@
+site_name: NixOS Öğreniyoruz
+site_url: https://nixogreniyoruz.kavakci.dev
+docs_dir: src
+repo_url: https://github.com/LinuxTurkey/nix-ogreniyoruz
+repo_name: LinuxTurkey/nix-ogreniyoruz
+edit_uri: edit/main/src/
+plugins: 
+  - social:
+      cards_layout_options:
+        logo: assets/logo.png
+  - search
+  - offline
+markdown_extensions: 
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - footnotes
+theme:
+  name: material
+  icon:
+    logo: simple/nixos
+    annotation: material/circle-medium
+  favicon: assets/favicon.png
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
+    - navigation.prune 
+    - content.action.edit
+    - content.action.view
+    - search.suggest
+    - search.highlight
+  language: tr
+  palette: 
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      primary: "#7DB7E0"
+      accent: "#7DB7E0"
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: default
+      primary: "#7DB7E0"
+      accent: "#7DB7E0"
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+nav:
+  - NixOS: README.md
+  - Nix Dili:
+    - Nix Dili ve Özellikleri: nix_lang/01_nix_dili_ve_ozellikleri.md
+    - Nix Dili ile İlgili Alıştırmalar: nix_lang/02_nix_dili_alistirmalari.md
+    - Nix Dilinde Gömülü Fonksiyonlar: nix_lang/03_nix_dili_gomulu.md
+  - Nix Paket Yöneticisi:
+    - Nix Paket Yöneticisi: nix_package/04_nix_paket_yoneticisi.md
+    - Nix Shell ve Profile: nix_package/05_nix_package_manager_shell_profile.md
+    - Nix Flake Nedir?: nix_package/06_nix-package-flake-customderivation.md
+    - Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak: nix_package/07_nix-package-flake-customderivation-multiple.md
