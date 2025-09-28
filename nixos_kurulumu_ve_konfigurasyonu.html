@@ -1,0 +1,2428 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nixos_kurulumu_ve_konfigurasyonu.html">
+      
+      
+        <link rel="prev" href="module_ve_option_kullanimi.html">
+      
+      
+        <link rel="next" href="nixos_cloud_ve_uzak_ortam.html">
+      
+      
+      <link rel="icon" href="assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>NixOS Kurulumu ve Konfigürasyonu - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="NixOS Kurulumu ve Konfigürasyonu - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nixos_kurulumu_ve_konfigurasyonu.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nixos_kurulumu_ve_konfigurasyonu.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="NixOS Kurulumu ve Konfigürasyonu - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nixos_kurulumu_ve_konfigurasyonu.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nixos-kurulumu-ve-konfigurasyonu" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NixOS Kurulumu ve Konfigürasyonu
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_lang/01_nix_dili_ve_ozellikleri.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_lang/02_nix_dili_alistirmalari.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_lang/03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/nix_shell_ve_profile.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/override_ve_overlay.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_package/developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#klasorlerin-kullanm-amaclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Klasörlerin Kullanım Amaçları
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dosya-ve-klasor-yapsnn-olusturulmas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dosya ve Klasör Yapısının Oluşturulması
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-configuration-dosyasnn-incelenmesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix-Configuration Dosyasının İncelenmesi
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-nasl-upgrade-edilir" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS Nasıl Upgrade Edilir?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-manager-modulunun-eklenmesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Home-Manager Modülünün Eklenmesi
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-konfigurasyonu" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS Konfigürasyonu
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NixOS Konfigürasyonu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kde-masaustu-ortam-kurulumu-dil-ayarlar-zshn-ayarlanmas-browser-ayarlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      KDE Masaüstü Ortamı Kurulumu, Dil ayarları, Zsh'ın ayarlanması, Browser ayarları
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code-qemu-kvm-ve-docker-kurulumu-ve-ayarlarnn-yaplmas" class="md-nav__link">
+    <span class="md-ellipsis">
+      VS Code, Qemu-KVM ve Docker kurulumu ve Ayarlarının yapılması
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bir-servisi-kurmak-ve-gerektiginde-baslatp-durdurmak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bir Servisi Kurmak ve Gerektiğinde Başlatıp Durdurmak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-icin-diger-paket-yoneticileri" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS İçin Diğer Paket Yöneticileri
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#araclar-ve-sayfalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Araçlar ve Sayfalar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incelemlemek-ve-ornek-almak-icin-nixos-dotfiles-github-repolar" class="md-nav__link">
+    <span class="md-ellipsis">
+      İncelemlemek ve Örnek Almak için NixOS Dotfiles GitHub Repo'ları
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#klasorlerin-kullanm-amaclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Klasörlerin Kullanım Amaçları
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dosya-ve-klasor-yapsnn-olusturulmas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dosya ve Klasör Yapısının Oluşturulması
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-configuration-dosyasnn-incelenmesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix-Configuration Dosyasının İncelenmesi
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-nasl-upgrade-edilir" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS Nasıl Upgrade Edilir?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-manager-modulunun-eklenmesi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Home-Manager Modülünün Eklenmesi
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-konfigurasyonu" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS Konfigürasyonu
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NixOS Konfigürasyonu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kde-masaustu-ortam-kurulumu-dil-ayarlar-zshn-ayarlanmas-browser-ayarlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      KDE Masaüstü Ortamı Kurulumu, Dil ayarları, Zsh'ın ayarlanması, Browser ayarları
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code-qemu-kvm-ve-docker-kurulumu-ve-ayarlarnn-yaplmas" class="md-nav__link">
+    <span class="md-ellipsis">
+      VS Code, Qemu-KVM ve Docker kurulumu ve Ayarlarının yapılması
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bir-servisi-kurmak-ve-gerektiginde-baslatp-durdurmak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bir Servisi Kurmak ve Gerektiğinde Başlatıp Durdurmak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nixos-icin-diger-paket-yoneticileri" class="md-nav__link">
+    <span class="md-ellipsis">
+      NixOS İçin Diğer Paket Yöneticileri
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#araclar-ve-sayfalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Araçlar ve Sayfalar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incelemlemek-ve-ornek-almak-icin-nixos-dotfiles-github-repolar" class="md-nav__link">
+    <span class="md-ellipsis">
+      İncelemlemek ve Örnek Almak için NixOS Dotfiles GitHub Repo'ları
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nixos_kurulumu_ve_konfigurasyonu.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nixos_kurulumu_ve_konfigurasyonu.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="nixos-kurulumu-ve-konfigurasyonu">NixOS Kurulumu ve Konfigürasyonu</h1>
+<p>Bu yazımızda daha önce kurmuş olduğumuz NixOS konfigürasyonunu yapmaya devam edeceğiz.</p>
+<p>Yazının en sonunda örnek olarak incelenebilecek bir çok repo'nun da linklerini verdim. Onlarda da faydalanarak örneğimizi yavaş yavaş geliştireceğiz.</p>
+<p>Alttaki çalışmanın son halini de <a href="https://github.com/muratcabuk/nixos-sample-dotfiles">Github'daki repo</a> üzerinden inceleyebilirsiniz. Adım adım her değişimi ayrı bir branch olarak ekleyeceğim. Kod değişeceği için geri dönük takip edebilirsiniz kodu.</p>
+<h2 id="klasorlerin-kullanm-amaclar">Klasörlerin Kullanım Amaçları</h2>
+<p>Bir bilgisayarda ne tür ayarlar yaparız bi listeleyelim.</p>
+<ul>
+<li><strong>Makinemizin kullanıcıdan bağımsız donanımsal ayarları</strong>: Disk yapısı, driver'lar, bluetooth, sensör, dış cihazlar (yazıcı, monitor, kamera vb) ayarlar. Tabi eğer birden fazla makine yönetiliyorsa o zaman makine sayısı kadar ayar gerekiyor.</li>
+<li><strong>İşletim sisteminin kullanıcıdan bağımsız ayarları</strong>: Hangi modüller kullanılacak, hangi servisler çalışıyor olacak, sistem üzerinde tüm kullanıcılar için ortak olacak diğer ayarlar.</li>
+<li><strong>Sistem üzerinden kullanıcıdan bağımsız kurulması gereken uygulamalar</strong>: Hangi kullanıcı sistemi kullanırsa kullansın olması gereken uygulamalar. Mesela bir servis, office uygulaması veya basit bir çizim programı gibi. Tabi bunların kullanılabilmesi içinde bir masaüstü ortamı (kde, gnome) gerekiyor.</li>
+<li><strong>Kullanıcının kişisel ayarları</strong>: Kişinin kullanacağı uygulamalar me masaüstü ortamı ayarları</li>
+<li><strong>Kullanıcının kişisel uygulamaları</strong>: Kişinin sadece kendisinin kullandığı, diğer kullanıcılara paylaştırılmayacak uygulamalar. Tabi her kullanıcı kendisi isterse kurabilir aynı uygulamayı.</li>
+</ul>
+<p>Bütün bu sistemi kurmak için herkesin farklı bir dosya yönetme stratejisi var. Alttaki örnek linklerden farklı kullanıcıların repo'larını inceleyebilirsiniz. Bazı klasör adlarını hemen hemen hepsinde görebilirsiniz.</p>
+<ul>
+<li><strong>Hosts/machines</strong> : Kullanılacak Bilgisayarın ayaları için kullanılır. BAzıları donanımsal işleri machines klasörüne, diğer ayarları da hosts klasörüne koyabiliyor.</li>
+<li><strong>Home/Users</strong> : Kullanıcıya özel ayarlar ve uygulamalar için kullanılır.</li>
+<li><strong>Pkgs/Packages</strong>: Bizzat ilgili konfigürasyon içinde build alınıp derivation/package oluşturulacak paket bilgileri bulunur.</li>
+<li><strong>Overlays</strong>: Nixpkgs üzerindeki değişiklikler, pkgs/packages klasöründeki paketlerin yüklenmesi ve diğer paket repo'larından yüklenen paketlerin override işlemleri gibi işler için kullanılır.</li>
+<li><strong>Modules</strong> : NixOS konfigürasyonu için kullanılır. Burada önemli olan konu her kim olursa olsun yani kişiye bağlı olmadan yapılan konfigürasyonlar burada olmalı.</li>
+<li><strong>Lib</strong> : Custom yazılan fonksiyonlar konulur.</li>
+<li><strong>Scripts/Config/Bin</strong> : Bazen NixOS module ve option'ları yetersiz gelebilir. Bu gibi durumlarda script yazmak gerekebilir. Hem bu script'leri hem de kullanılan konfigürasyon dosyalarını burada tutulur.</li>
+</ul>
+<p>NixOS klasör yapısı için bize bir best practice sunmuyor. Yani tamamen nasıl bir şey yapacağımız tamamen bize kalmış</p>
+<p>Bu yazıda elimden geldiğince sade kalmaya çalışacağım. Hem yazıyı bitiremeyiz hem de amacımız zaten mükemmel bir sistem kurmak değil daha çok mantığını anlamak. Devamını getirmek artık sizin elinizde. Bu arada ben de kendi sistemlerimde mümkün olduğunca sade tutmaya çalışıyorum. Gereksiz yere kullanmayacağımız konfigürasyonları yönetmeye gerek yok.</p>
+<p>Tek bir makine ve tek bir kullanıcı için system konfigürasyonu yapacağız. Dosya yapımız alttaki gibi olacak</p>
+<p><img alt="schema.png" src="./assets/files\schema.png" /></p>
+<ul>
+<li><strong>Host</strong>: Makine hardware ayarlarımızın olduğu klasör</li>
+<li><strong>Modules</strong>: NixOS konfigürasyonunun ve kullanıcı home dizini ve diğer kişisel ayarlarının olduğu klasör</li>
+<li><strong>Overlays</strong>: Custom geliştirilen uygulamaların ve diğer paket yöneticilerinden yüklenen uygulamaların yüklenme öncesinde yapılacak değişikliklerinin yönetildiği overlay dosyalarının konulduğu klasör</li>
+<li><strong>Pkgs</strong>: Custom geliştirilen uygulamaların bulunduğu klasör</li>
+</ul>
+<p>Bu arada bütün klasörlerde README dosyası mevcut, bu dosyalardan bulunduğu klasör ve uygulama hakkında bilgi alabilirsiniz.</p>
+<h2 id="dosya-ve-klasor-yapsnn-olusturulmas">Dosya ve Klasör Yapısının Oluşturulması</h2>
+<p>Adım adım sistemimizi kurmaya başlayalım.</p>
+<ol>
+<li>Öncelikle hosts klasörünüze makinemizin adını/modelini içeren bir klasör oluşturalım ve root dizinde olan <code>hardware-configuration.nix</code> dosyasını bu klasöre kopyalayalım.</li>
+</ol>
+<p><img alt="schema2.png" src="./assets/files\schema2.png" /></p>
+<p>İlerde belki farklı sistemler de eklemek sitesebiz yapınız hazır olmuş olur.</p>
+<ol>
+<li>Root dizindeki <code>nixos-configuration.nix</code> dosyasını da modules klasörüne taşıyalım ve bu dosyada en üstte yer <code>hardware-configuration.nix</code> dosyasının adresini değiştirelim. Ayrıca <code>networking.hostName = "muratpc";</code> satırında önceden hostname NixOS olarak yazıyordu onu da sistem adıyla aynı yaptım yani muratpc. Siz de istediğiniz gibi değiştirebilirsiniz. İlla sistem adıyla hostname aynı olmak zorunda değil farklı isimler de verilebilir.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="ss">imports</span> <span class="o">=</span>
+    <span class="p">[</span> <span class="c1"># Include the results of the hardware scan.</span>
+      <span class="l">../hosts/lenovo-l15/hardware-configuration.nix</span>
+    <span class="p">];</span>
+
+<span class="c1"># KISALTILDI</span>
+</code></pre></div>
+<ol>
+<li>modules klasörünüze <code>home-manager.nix</code> dosyanızı ekleyin. Ben prefix olarak kendi adımı kullandım .Hangi user için olduğu belli olsun. İlerde belki farklı kulalnıcılar da ekleyebilirsiniz. İçini boş bırakın şimdilik ilerde dolduracağız.</li>
+<li>Pkgs klasörünü oluşturalım. Bu klasörde kendi yazdığımız paketler olarak. Eğer yazı dizisini baştan beri okuduysanız zaten içinde daha önceki yazılarda oluşturduğum örnek paketleri koydum. Bu paketleri sizde Github sayfamdaki repo'dan alabilirsiniz. Uygulamalar farklı şekillerde nasıl kendi paketlerinize yazabilirsiniz bunlar için de örnek olmuş oluyor. Zaten her bir uygulama klasöründe README dosyası var onlardan da bilgi alabilirsiniz.</li>
+<li>Overlays klasörünü oluşturalım. Bu klasörde de hem kendi yazdığımız paketlerde hem de diğer paket repo'larından yüklediğimiz paketlerde yüklenme öncesi değişiklikleri yönetiyoruz. Hatırlarsanız önceki yazılarımızda paket yüklemenin bile bir nixpkgs üzerinde bir değişiklik yapmak anlamına geldiğinden bahsetmiştik. Bu nedenle kendi yazdığımız paketlerin sisteme yüklenmesini ve yüklenme öncesi yapılacak değişiklikleri de buradan yönetiyoruz.</li>
+</ol>
+<p>Burada da şimdilik 2 dosya <code>custom.nix</code> ve <code>hello.nix</code> buluyor.</p>
+<p><img alt="schema3.png" src="./assets/files\schema3.png" /></p>
+<p><code>custom.nix</code> dosyasında kendi yazdığımız paketlere ait overlay işlemleri varken <code>hello.nix</code> içinde NisOs repo'sudan yer alan hello uygulamasına yönelik overlay ayarları bulunuyor.</p>
+<p><code>Custom.nix</code> dosya içeriği</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># custom.nix</span>
+final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">defaultapp</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/default</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+  <span class="ss">defaultfile</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/defaultfile</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+  <span class="ss">defaultalt</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/defaultalt</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+  <span class="ss">nixapp</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/nixapp</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+
+  <span class="c1"># uygulama build alınırken v3.0 kullanılsın</span>
+  <span class="ss">message</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/message</span> <span class="p">{</span>
+    <span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># uygulama build alınırken v3.0 kullanılsın</span>
+  <span class="ss">testapp</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">../pkgs/testapp</span> <span class="p">{</span>
+    <span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Hello.nix</code> dosya içeriği</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># hello.nix</span>
+
+final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+
+  <span class="c1"># uygulama build alınırken 2.9 kullanılsın</span>
+  <span class="ss">hello-custom</span> <span class="o">=</span> final<span class="o">.</span>hello<span class="o">.</span>overrideAttrs <span class="p">(</span>old<span class="p">:</span> <span class="k">rec</span> <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;hello-custom&quot;</span><span class="p">;</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.9&quot;</span><span class="p">;</span>
+    <span class="ss">src</span> <span class="o">=</span> final<span class="o">.</span>fetchurl <span class="p">{</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;mirror://gnu/hello/hello-</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+      <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256-7Lt6IhQZbFf/k0CqcUWOFVmr049tjRaWZoRpNd8ZHqc=&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">});</span>
+
+  <span class="ss">hello-new</span> <span class="o">=</span> final<span class="o">.</span>hello<span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<ol>
+<li><code>Flake.nix</code> dosyasını alttaki gibi değiştiriyoruz. Değişiklikler açıklama satırı olarak eklendi.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Murat Cabuk NixOS Configuration&quot;</span><span class="p">;</span>
+
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:NixOS/nixpkgs/nixos-23.11&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>inputs<span class="p">:</span>
+  <span class="k">let</span>
+
+    <span class="c1"># üzerinde çalıştığımız sistemin Nix&#39;deki kod addı.</span>
+    <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+
+    <span class="c1"># 2 adet overlay var</span>
+    <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="nb">import</span> <span class="l">./overlays/custom.nix</span><span class="p">)</span>
+                <span class="p">(</span><span class="nb">import</span> <span class="l">./overlays/hello.nix</span><span class="p">)</span>
+               <span class="p">]</span> <span class="p">;</span>
+    <span class="c1"># ne tür bir sistemde çalışıyorsak onun için nixpkgs koleksiyonu ve kütüphanesi oluşturuluyor.</span>
+    <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span>
+              <span class="k">inherit</span> system<span class="p">;</span>
+              <span class="ss">overlays</span> <span class="o">=</span> overlays<span class="p">;</span>
+            <span class="p">};</span>
+
+    <span class="c1"># build alınan veya override edilen paketler bu flake ile yayınlanıyor.</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="p">{</span>
+        x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">defaultfile</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultfile<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">defaultalt</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultalt<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">nixapp</span> <span class="o">=</span> pkgs<span class="o">.</span>nixapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">message</span> <span class="o">=</span> pkgs<span class="o">.</span>message<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">testapp</span> <span class="o">=</span> pkgs<span class="o">.</span>testapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">hello</span> <span class="o">=</span> pkgs<span class="o">.</span>hello<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">hello-custom</span> <span class="o">=</span> pkgs<span class="o">.</span>hello-custom<span class="p">;</span>
+    <span class="p">};</span>
+
+  <span class="k">in</span> <span class="p">{</span>
+
+    <span class="c1"># bu sistemin adı muratpc olarak değiştirildi</span>
+    nixosConfigurations<span class="o">.</span><span class="ss">muratpc</span> <span class="o">=</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>nixosSystem <span class="p">{</span>
+
+      <span class="c1"># systm bilgisi yukarıda tanımlana system değişkeniniden alındı</span>
+      <span class="ss">system</span> <span class="o">=</span> system<span class="p">;</span>
+
+      <span class="c1"># dosya adresi değiştirildi</span>
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="l">./modules/nixos-configuration.nix</span>
+      <span class="p">];</span>
+    <span class="p">};</span>
+
+    <span class="ss">packages</span> <span class="o">=</span> packages<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi <code>flake.nix</code> dosyamız neler sunuyor ona bir bakalım.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>flake<span class="w"> </span>show<span class="w"> </span>.<span class="w"> </span>--impure<span class="w"> </span>--all-systems
+warning:<span class="w"> </span>Git<span class="w"> </span>tree<span class="w"> </span><span class="s1">&#39;/home/.../nixos-sample-dotfiles&#39;</span><span class="w"> </span>is<span class="w"> </span>dirty
+warning:<span class="w"> </span>creating<span class="w"> </span>lock<span class="w"> </span>file<span class="w"> </span><span class="s1">&#39;/home/muratcabuk/projects/GitHub/nixos-sample-dot./assets/files\flake.lock&#39;</span>
+warning:<span class="w"> </span>Git<span class="w"> </span>tree<span class="w"> </span><span class="s1">&#39;/home/.../nixos-sample-dotfiles&#39;</span><span class="w"> </span>is<span class="w"> </span>dirty
+git+file:///home/.../nixos-sample-dotfiles
+├───nixosConfigurations
+│<span class="w">   </span>└───nixos:<span class="w"> </span>NixOS<span class="w"> </span>configuration
+└───packages
+<span class="w">    </span>└───x86_64-linux
+<span class="w">        </span>├───default:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;default&#39;</span>
+<span class="w">        </span>├───defaultalt:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;defaultalt&#39;</span>
+<span class="w">        </span>├───defaultfile:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;defaultfile&#39;</span>
+<span class="w">        </span>├───hello:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;hello-2.12.1&#39;</span>
+<span class="w">        </span>├───hello-custom:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;hello-custom&#39;</span>
+<span class="w">        </span>├───message:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;message&#39;</span>
+<span class="w">        </span>├───nixapp:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;nixapp&#39;</span>
+<span class="w">        </span>└───testapp:<span class="w"> </span>package<span class="w"> </span><span class="s1">&#39;testapp&#39;</span>
+</code></pre></div>
+<p>Ever görüleceği üzere flake dosyamız bir NixOS sistem birde 8 adet paket sunuyor.</p>
+<p>Şimdide yaptığımız değişiklikleri sisteme uygulayalım. Bunun için alttaki komutu çalıştırıyoruz. Eğer siz de <code>flake.nix</code> dosyasında system adını nixos dışında başka bir isme çevirdiyseniz altta muratpc yerine o ismi yazmalısınız. Eğer değiştirmediyseniz de nixos yazmalı.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc
+<span class="c1"># sistem adı aynı kaldıysa</span>
+<span class="c1"># sudo nixos-rebuild switch --flake .#nixos</span>
+</code></pre></div>
+<p>Bu komut sonrasında aslında bizim doğrudan hissedebileceğimiz bir şey olmadı. Sadece hostname değişti onu da <code>cat /etc/hostname</code> komutu ile görebiliriz.</p>
+<p>Hissetmediğimiz tarafta ise custom geliştirmiş olduğumuz uygulamalar build alındı ve build alınabilmeleri için gerekli olan paketler de kuruldu. Ancak bu uygulamalar doğrudan PATH'a ekli değil çünkü biz kurulumlarını ve user bazında erişilebilmesi için gerekli ayarları yapmadık. Ancak bir developer olarak bu test edemeyeceğimiz anlamına gelmiyor. Alttaki komutlarla test edebiliriz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span>.#default<span class="w">  </span>--impure
+
+nix<span class="w"> </span>run<span class="w"> </span>.#message<span class="w"> </span>--impure
+
+nix<span class="w"> </span>run<span class="w"> </span>.#hello<span class="w"> </span>--impure
+</code></pre></div>
+<p>Ancak mesela hello uygulamasına terminalden erişmeyi denediğimizde sonuç alamayacağız.</p>
+<p>Bu kısmı bu şekilde hızlı geçiyorum daha fazla detaya girmeden çünkü çok büyük ihtimal bu yazıyı okuyanların büyük bir kısmı bu tarz bir işlem yapamayacaktır yani kendi kod yazıp yada internetten bir projeyi, bulup build alama yoluna gitmeyecektir. Zaten bunu düşünenleriniz varsa geriye dönük bütün yazılar bu konuyu anlatıyor. Yani NixOS'u ayarlamak ona paket yazmaktan daha kolay.</p>
+<p>Github sayfamda geldiğimiz noktaya kadar olan kodları <a href="https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/file-structure">file-structure</a> adlı branch'de bulabilirsiniz.</p>
+<h2 id="nix-configuration-dosyasnn-incelenmesi">Nix-Configuration Dosyasının İncelenmesi</h2>
+<p>Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için açıklamalar ekledim. Bundan dolayı sizinkinden biraz farklı görünüyor olabilir.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="ss">imports</span> <span class="o">=</span>
+    <span class="p">[</span> <span class="c1"># Burada donanımsal ayarlarımızın olduğu diğer bir module import ediliyor</span>
+      <span class="l">../hosts/lenovo-l15/hardware-configuration.nix</span>
+    <span class="p">];</span>
+
+ <span class="c1"># Nix flake halen geliştiriliyor tam release olmadı.</span>
+ <span class="c1"># Buna rağmen çok stable ve neredeyse NixOS ile ilgili herkes flake&#39;i artık aktif olarak kullanıyor</span>
+ <span class="c1"># Ancak halen release olmadığı için deneyimsel bir özellik olarak kabul ediliyor.</span>
+ <span class="c1"># bundan dolayı bunu kullanmak için enable etmemiz gerekiyor</span>
+ nix<span class="o">.</span>settings<span class="o">.</span><span class="ss">experimental-features</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;nix-command&quot;</span> <span class="s2">&quot;flakes&quot;</span> <span class="p">];</span>
+
+  <span class="c1"># Bootloader.</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">device</span> <span class="o">=</span> <span class="s2">&quot;/dev/sda&quot;</span><span class="p">;</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">useOSProber</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># hem bilgisayar adımız hem de bir network&#39;de bilgisayara erişmek için kullanılan isim</span>
+  networking<span class="o">.</span><span class="ss">hostName</span> <span class="o">=</span> <span class="s2">&quot;muratpc&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Network ayarlarının yapılabilmesi için gerekli.</span>
+  <span class="c1"># Sadece Network MAnager yok aslında Linux dünyası için ancak ben de en iyilerinden biri</span>
+  networking<span class="o">.</span>networkmanager<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># TimeZoe ayarı</span>
+  time<span class="o">.</span><span class="ss">timeZone</span> <span class="o">=</span> <span class="s2">&quot;Europe/Istanbul&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Windows&#39;daki bölgesel ayarlarla aynı işi yapıyor.</span>
+  <span class="c1"># Yani  mesela para birimi, ölçüm ayalarları, Klavye karakterleri vb Türkiye&#39;ye özel ayarların baz alınacağını söylüyor. .</span>
+  i18n<span class="o">.</span><span class="ss">defaultLocale</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+  i18n<span class="o">.</span><span class="ss">extraLocaleSettings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">LC_ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_IDENTIFICATION</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_MEASUREMENT</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_MONETARY</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_NAME</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_NUMERIC</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_PAPER</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_TELEPHONE</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_TIME</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+
+
+  <span class="c1"># xserver için keyboard ayarları</span>
+  services<span class="o">.</span><span class="ss">xserver</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">layout</span> <span class="o">=</span> <span class="s2">&quot;tr&quot;</span><span class="p">;</span>
+    <span class="ss">xkbVariant</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># console için keyboard ayarları</span>
+  console<span class="o">.</span><span class="ss">keyMap</span> <span class="o">=</span> <span class="s2">&quot;trq&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Normal bir kullanıcı tanımlıyoruz ve onu wheel ve network manager gruplarına ekliyoruz.</span>
+  <span class="c1"># wheel grubu birçok linux dağıtımındaki sudo grubuyla aynı şeyi ifade eder.</span>
+  users<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;murat cabuk&quot;</span><span class="p">;</span>
+    <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;networkmanager&quot;</span> <span class="s2">&quot;wheel&quot;</span> <span class="p">];</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[];</span>
+  <span class="p">};</span>
+
+  <span class="c1"># free paketlerin kullanılmasına izin verdik</span>
+  nixpkgs<span class="o">.</span>config<span class="o">.</span><span class="ss">allowUnfree</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># ileride buna değişenceğiz.</span>
+  <span class="c1">#Bİr masaüstü ortamı kurduğumuzda SSh yerine VirtualBox üzeriden GUI kullanmak ve</span>
+  <span class="c1"># Host ile dosya alışverişi sağlam için kullanıan ayalarlar.</span>
+  virtualisation<span class="o">.</span>virtualbox<span class="o">.</span>guest<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  virtualisation<span class="o">.</span>virtualbox<span class="o">.</span>guest<span class="o">.</span><span class="ss">x11</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+
+  <span class="c1"># Sistemde kullanıcıdan bağımsız kullanılacak paketler</span>
+  <span class="c1"># ilerde buraları da değiştireceğiz.</span>
+  environment<span class="o">.</span><span class="ss">systemPackages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+    vim
+    wget
+    curl
+    git
+  <span class="p">];</span>
+
+   <span class="c1"># SSh ı açtık</span>
+   services<span class="o">.</span>openssh<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># Firewall&#39;ı kapattık</span>
+   networking<span class="o">.</span>firewall<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+
+   <span class="c1"># Sistemde kullanıcıdan bağımsız kullanılacak paketler</span>
+   system<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Tabi bir çok ayar yapacağımız için gerçek bir konfigürasyonda bu aynı hardware configuration modülünde olduğu gibi konfigürasyonları farklı modüllere bölmek gerekebilir.</p>
+<p>Diğer önemli konu da dosyada en attaki stateVersion numarası ne işe yarar? Bunu da alttaki başlıkta inceleyelim.</p>
+<h2 id="nixos-nasl-upgrade-edilir">NixOS Nasıl Upgrade Edilir?</h2>
+<p>Bu versiyon numarasını tabiri caizse dokümanımızın versiyon numarası olarak düşünebiliriz.</p>
+<ul>
+<li>Öncelikle kesinlikle stateVersion numarasını bir sonraki sürün notunu okumadan asla değiştirmiyoruz. Bu sistemin bozulmasına neden olabilir. Daha da kötüsü rollback de çalışmayabilir.</li>
+<li>Sistem bulunduğumuz stateVersion üzerinden paket güncellemelerini otomatik olarak yapar.</li>
+<li>Bu değerin mevcut NixOS sürümünden daha düşük olması, sisteminizin modası geçmiş, destek dışı veya savunmasız olduğu anlamına gelmez.</li>
+<li>Bundan dolayı bu değeri, yapılandırmamıza yapacağı tüm değişiklikleri manuel olarak incelemediğimiz ve verilerinizi buna göre taşımadığımız sürece değiştirmemeliyiz. Bunun için bir nedenden ötürü örneğin stateVersion numarasını release 23.11'e geçirmek istiyorsak öncelikle <a href="https://nixos.org/manual/nixos/unstable/release-notes#sec-release-23.11">release notlarını</a> okumalıyız. Bu notlar bize eğr bu değiştirmeyi yaparsak hangi verilerimizde problem olacağını ve bunları nasıl çözebileceğimizi anlatır.</li>
+</ul>
+<p>Bu seçenek, bu belirli makineye ilk yüklediğiniz NixOS sürümünü tanımlar ve eski NixOS sürümlerinde oluşturulan uygulama verileriyle (örneğin veritabanları) uyumluluğu korumak için kullanılır.</p>
+<p>Örneğin, NixOS XX.YY sürümü varsayılan olarak AwesomeDB N sürümüyle birlikte gelirse ve daha sonra XX.YY+1 sürümüne yükseltilirse, AwesomeDB N+1 sürümüyle birlikte gelen bu sürüm, mevcut veritabanlarıyla artık uyumlu olmayabilir. Bu, uygulamaların çalışmasına engel olabilir veya hatta veri kaybına yol açabilir. stateVersion mekanizması, varsayılan paket sürümlerini, her zaman en son sürümü kullanmak yerine, yüklediğiniz ilk NixOS sürümüne (stateVersion ile kodlanmış) bağlı hale getirerek bu durumdan kaçınır.</p>
+<p>Bu, genellikle verilerini otomatik olarak yükseltemeyen uygulamaları etkiler. Otomatik geçişleri destekleyen uygulamalar ve hizmetler, siz yükseltme yaptığınızda en son sürümlerde kalacaktır.</p>
+<p>Otomatik yükseltmelerde da zaten problem olabilecekler kontrol edilir. Örneğin <a href="https://github.com/NixOS/nixpkgs/blob/2c7f3c0fb7c08a0814627611d9d7d45ab6d75335/nixos/modules/services/databases/postgresql.nix#L486-L498">Postgresql paketinin yükseltilmesi</a> her setateVersion'a özel yapılır.</p>
+<div class="highlight"><pre><span></span><code>    services<span class="o">.</span>postgresql<span class="o">.</span><span class="ss">package</span> <span class="o">=</span> <span class="k">let</span>
+        <span class="ss">mkThrow</span> <span class="o">=</span> ver<span class="p">:</span> <span class="nb">throw</span> <span class="s2">&quot;postgresql_</span><span class="si">${</span>ver<span class="si">}</span><span class="s2"> was removed, please upgrade your postgresql version.&quot;</span><span class="p">;</span>
+        <span class="ss">base</span> <span class="o">=</span> <span class="k">if</span> versionAtLeast config<span class="o">.</span>system<span class="o">.</span>stateVersion <span class="s2">&quot;23.11&quot;</span> <span class="k">then</span> pkgs<span class="o">.</span>postgresql_15
+            <span class="k">else</span> <span class="k">if</span> versionAtLeast config<span class="o">.</span>system<span class="o">.</span>stateVersion <span class="s2">&quot;22.05&quot;</span> <span class="k">then</span> pkgs<span class="o">.</span>postgresql_14
+            <span class="k">else</span> <span class="k">if</span> versionAtLeast config<span class="o">.</span>system<span class="o">.</span>stateVersion <span class="s2">&quot;21.11&quot;</span> <span class="k">then</span> pkgs<span class="o">.</span>postgresql_13
+            <span class="k">else</span> <span class="k">if</span> versionAtLeast config<span class="o">.</span>system<span class="o">.</span>stateVersion <span class="s2">&quot;20.03&quot;</span> <span class="k">then</span> mkThrow <span class="s2">&quot;11&quot;</span>
+            <span class="k">else</span> <span class="k">if</span> versionAtLeast config<span class="o">.</span>system<span class="o">.</span>stateVersion <span class="s2">&quot;17.09&quot;</span> <span class="k">then</span> mkThrow <span class="s2">&quot;9_6&quot;</span>
+            <span class="k">else</span> mkThrow <span class="s2">&quot;9_5&quot;</span><span class="p">;</span>
+    <span class="k">in</span>
+      <span class="c1"># Note: when changing the default, make it conditional on</span>
+      <span class="c1"># ‘system.stateVersion’ to maintain compatibility with existing</span>
+      <span class="c1"># systems!</span>
+      mkDefault <span class="p">(</span><span class="k">if</span> cfg<span class="o">.</span>enableJIT <span class="k">then</span> base<span class="o">.</span>withJIT <span class="k">else</span> base<span class="p">);</span>
+</code></pre></div>
+<p>Çoğu kullanıcı, sisteminizi yeni bir NixOS sürümüne yükseltmiş olsanız bile, ilk kurulumdan sonra hiçbir nedenle bu değeri değiştirmemelidir.Bu değer, paketlerinizin ve işletim sisteminizin çekildiği Nixpkgs sürümünü etkilemez, bu nedenle onu değiştirmek sisteminizi yükseltmez. Bu değerin mevcut NixOS sürümünden daha düşük olması, sisteminizin modası geçmiş, destek dışı veya savunmasız olduğu anlamına gelmez.</p>
+<p>Zaten bunu şu şekilde de test edebilirsiniz. Alttaki komutla sisteminizin versiyonunu görebilirsiniz. en son upgrade aldığı tarih 2024-02-26 olarak görünüyor ki ben sistemi herhalde bu tarihten 1 hafta önce kurmuşumdur.</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span>cat<span class="w"> </span>/run/current-system/nixos-version
+<span class="c1"># 23.11.20240226.b7ee09c</span>
+
+<span class="c1"># active/current system hakkında daha fazla bilgi almak için `/run/current-system` dinizi incelenebilir. Bu arada bu dizin de /nix/store altındadır `/run` altın a symbolic link iel bağlıdır.</span>
+
+ll<span class="w"> </span>/run/current-system/
+</code></pre></div>
+<ul>
+<li>Peki diyelim ki bu değer düşük olmasına rağmen bir paketin üst versiyonunu kullanmak istersek veya tam tersi versiyon yukarıda olsa bile bir paketin alt versiyon kullanmak istersek ne yapacağız?</li>
+</ul>
+<p>Öncelikle şunu bilmek gerekiyor ki sistemi her zaman en son sürümde tutmamız lazım. Zaten sistemimiz de her zaman otomatik upgrade ile bunu sağlıyor.</p>
+<p>Eğer bir paketin/uygulamanın farklı bir versiyonu test edeceksek bunun için <code>nix shell</code> komutunu kullanmak en doğrusu. Mesela sisteminiz 23.11 ve siz 22.05 deki bir paketi test etmek istiyorsunuz. Testiniz bittikten sonra da sistemden otomatik kaldırılsın istiyorsunuz. Bu durumda alttaki komutu kullanabilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span>nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs/nixos-22.05#hello
+<span class="w">  </span><span class="c1"># çalıştırmak içinde hello komutunu çalıştırabilirsiniz</span>
+</code></pre></div>
+<p>Bu arada önceki yazılarımızda <code>nix shell</code>, <code>nix profile</code> ve <code>nix develop</code> komutlarını detaylı olarak inceledik. O yazıları okumanızı da tavsiye ederim.</p>
+<p>Eğer kalıcı olarak kurmak istiyorsanız <code>nix profile</code> komutunu kullanabilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span>nix<span class="w"> </span>profile<span class="w"> </span>install<span class="w"> </span>nixpkgs/nixos-22.05#hello
+</code></pre></div>
+<p>Tabi bu tekniklerin hiç birisi declarative değil ve bu nedenle değişikliklerinizi kaydetmek istiyorsanız bunu <code>flake.nix</code> dosyanıza eklemeniz gerekiyor. Ayrıca servis kuracaksanız veya kuracağınız uygulamada bazı değişikliler yapmanız gerekiyorsa bu durumda da zaten declarative yolu tercih etmeniz gerekiyor.</p>
+<p>Flake Dosyanızda iki farklı registry tanımlamanız gerekiyor. Mesela alttaki örnekte sistemde aktif olarak 23.11 versiyonu kullanılmasına rağmen unstable versiyonundan paket yükleyebilmek için unstable registry configuration dosyasında kullanılabilir hale getiriliyor..</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake.nix</span>
+<span class="p">{</span>
+<span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;NixOS configuration with two or more channels&quot;</span><span class="p">;</span>
+
+<span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+  nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs/nixos-23.11&quot;</span><span class="p">;</span>
+  nixpkgs-unstable<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> nixpkgs-unstable <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+    <span class="ss">overlay-unstable</span> <span class="o">=</span> final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+      <span class="ss">unstable</span> <span class="o">=</span> nixpkgs-unstable<span class="o">.</span>legacyPackages<span class="o">.</span><span class="si">${</span>prev<span class="o">.</span>system<span class="si">}</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="k">in</span> <span class="p">{</span>
+    nixosConfigurations<span class="o">.</span><span class="s2">&quot;&lt;hostname&gt;&quot;</span> <span class="o">=</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>nixosSystem <span class="p">{</span>
+      <span class="k">inherit</span> system<span class="p">;</span>
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># overlay kullanılarak unstable congifuration.nix dosyasında kullanılabilir hale getiriliyor</span>
+        <span class="p">({</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span> nixpkgs<span class="o">.</span><span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span> overlay-unstable <span class="p">];</span> <span class="p">})</span>
+        <span class="l">./configuration.nix</span>
+      <span class="p">];</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Mesela Firefox 23.11'den yüklenirken Chromium unstable'den yükleniyor.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># configuration.nix</span>
+<span class="c1"># NixOS configuration.nix artık &quot;pkgs.package&quot; veya &quot;pkgs.unstable.package&quot; kullanabilir hale geldi</span>
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+  environment<span class="o">.</span><span class="ss">systemPackages</span> <span class="o">=</span> <span class="p">[</span>pkgs<span class="o">.</span>firefox pkgs<span class="o">.</span>unstable<span class="o">.</span>chromium<span class="p">];</span>
+  <span class="c1"># ...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Tabi burada eğer yüklediğimiz şey bir paket bir servise option ayarlarının yapılması gerekebilir. İlgili versiyonun bütün bağımlılıklarını Nix paket yöneticisi hallediyor.</p>
+<p>Şimdi home-manager'ı da sisteme dahil edelim ve kullanıcı ile sistemi birbirinden ayırdıktan sonra iki taraf için adım adım ayarlarımızı eklemeye devam edelim.</p>
+<h2 id="home-manager-modulunun-eklenmesi">Home-Manager Modülünün Eklenmesi</h2>
+<p>Home-manager tamamen bir community projesidir.</p>
+<p>Home-manager ile yönetilecek kullanıcı NixOS'e user olarak eklenmiş olmalı. Mesel bendeki <code>configuration.nix</code> dosyasında alttaki gibi ekli.</p>
+<div class="highlight"><pre><span></span><code>  users<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;murat cabuk&quot;</span><span class="p">;</span>
+    <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;networkmanager&quot;</span> <span class="s2">&quot;wheel&quot;</span> <span class="p">];</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[];</span>
+  <span class="p">};</span>
+</code></pre></div>
+<p>Aynı kullanıcı için modules dizisine <code>murat-home-manager.nix</code> dosyasını ekliyoruz. <code>flake.nix</code> dosyasında da öncelikle inputs'lara ve alttaki gib modules dizisine ekleyelim. Home manager'ın NixOS ile aynı version olmasına dikket edin. Versiyon bilgileri için <a href="https://github.com/nix-community/home-manager/blob/master/modules/misc/version.nix">şu sayfayı</a> takip edebilrisiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Murat Cabuk NixOS Configuration&quot;</span><span class="p">;</span>
+
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:NixOS/nixpkgs/nixos-23.11&quot;</span><span class="p">;</span>
+
+    home-manager<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nix-community/home-manager&quot;</span><span class="p">;</span>
+    home-manager<span class="o">.</span>inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">follows</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs&quot;</span><span class="p">;</span>
+
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> home-manager<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>inputs<span class="p">:</span>
+  <span class="k">let</span>
+
+    <span class="c1"># üzerinde çalıştığımız sistemin Nix&#39;deki kod addı.</span>
+    <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+
+    <span class="c1"># 2 adet overlay var</span>
+    <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="nb">import</span> <span class="l">./overlays/custom.nix</span><span class="p">)</span>
+                <span class="p">(</span><span class="nb">import</span> <span class="l">./overlays/hello.nix</span><span class="p">)</span>
+               <span class="p">]</span> <span class="p">;</span>
+    <span class="c1"># ne tür bir sistemde çalışıyorsak onun için nixpkgs koleksiyonu ve kütüphanesi oluşturuluyor.</span>
+    <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span>
+              <span class="k">inherit</span> system<span class="p">;</span>
+              <span class="ss">overlays</span> <span class="o">=</span> overlays<span class="p">;</span>
+            <span class="p">};</span>
+
+    <span class="c1"># build alınan veya override edilen paketler bu flake ile yayınlanıyor.</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="p">{</span>
+        x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">defaultfile</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultfile<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">defaultalt</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultalt<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">nixapp</span> <span class="o">=</span> pkgs<span class="o">.</span>nixapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">message</span> <span class="o">=</span> pkgs<span class="o">.</span>message<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">testapp</span> <span class="o">=</span> pkgs<span class="o">.</span>testapp<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">hello</span> <span class="o">=</span> pkgs<span class="o">.</span>hello<span class="p">;</span>
+        x86_64-linux<span class="o">.</span><span class="ss">hello-custom</span> <span class="o">=</span> pkgs<span class="o">.</span>hello-custom<span class="p">;</span>
+    <span class="p">};</span>
+
+  <span class="k">in</span> <span class="p">{</span>
+
+    <span class="c1"># bu sistemin adı muratpc olarak değiştirildi</span>
+    nixosConfigurations<span class="o">.</span><span class="ss">muratpc</span> <span class="o">=</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>nixosSystem <span class="p">{</span>
+
+      <span class="c1"># systm bilgisi yukarıda tanımlana system değişkeniniden alındı</span>
+      <span class="ss">system</span> <span class="o">=</span> system<span class="p">;</span>
+
+      <span class="c1"># dosya adresi değiştirildi</span>
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="l">./modules/nixos-configuration.nix</span>
+
+        home-manager<span class="o">.</span>nixosModules<span class="o">.</span>home-manager
+          <span class="p">{</span>
+            home-manager<span class="o">.</span><span class="ss">useGlobalPkgs</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+            home-manager<span class="o">.</span><span class="ss">useUserPackages</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+            home-manager<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./modules/murat-home-manager.nix</span><span class="p">;</span>
+          <span class="p">}</span>
+      <span class="p">];</span>
+    <span class="p">};</span>
+
+    <span class="ss">packages</span> <span class="o">=</span> packages<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Konfigürasyondaki <code>home-manager.inputs.nixpkgs.follows = "nixpkgs";</code> satırında geçen follows keyword'ü ile Nix paket yöneticisine eğer nixpkgs update edilirse home-manager pakaetinin de update edilmesi gerektiğini söylemiş oluyoruz.</p>
+<p>Şimdi home-manager dosyamızı düzenlemeye başlayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="c1"># buradaki kullanıcı nixos-configuration.nix dosyasında tanımlı olan kullanıcı ile aynı olmalı</span>
+  home<span class="o">.</span><span class="ss">username</span> <span class="o">=</span> <span class="s2">&quot;muratcabuk&quot;</span><span class="p">;</span>
+  home<span class="o">.</span><span class="ss">homeDirectory</span> <span class="o">=</span> <span class="s2">&quot;/home/muratcabuk&quot;</span><span class="p">;</span>
+
+
+
+  <span class="c1"># bu değeri de ilk kuruulumdaki gibi bırakıyoruz.</span>
+  <span class="c1"># daha önce flake.nix dosyası için söylediklerimiz burası için de geçerli</span>
+  home<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Homemanager ın kendini kurmasını ve ayarlamasını söylüyoruz.</span>
+  programs<span class="o">.</span>home-manager<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi buraya kadar yaptıklarımızı NixOS'a uygulayalım. Ancak yaptığımız 2 değişikliği hatırlatmak istiyorum</p>
+<ol>
+<li><code>nixos-configuration.nix</code> dosyasında Hostame'i değiştirmiştik: Mesela benimkinde <code>networking.hostName = "muratpc";</code> olarka ayarlı.</li>
+<li><code>flake.nix</code> dosyasında <code>nixosConfigurations.muratpc = nixpkgs.lib.nixosSystem</code> satırında sistem çıktımızın adını değiştirmiştik. Mesela benimkinde hostnem adıyla aynı yani mcabuk.</li>
+</ol>
+<p>Flake dosyasındaki değişiklişkten solayı artık build alırken nixos değil mcabukpc olarak build alıyorum.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc<span class="w"> </span>--impure
+</code></pre></div>
+<p>Build işlemi bittiğinde artık home-manager yüklenmiş olacak.</p>
+<h2 id="nixos-konfigurasyonu">NixOS Konfigürasyonu</h2>
+<p>Bu noktadan sonra bir strateji belirlememiz gerekiyor. Kendimede yakın bulduğum için :) bir yazılımcının iş bilgisayarını konfigüre edelim diyorum.</p>
+<p><strong>Home Manager Konfigürasyonu</strong></p>
+<ul>
+<li>Varsayılan metin editörümüzü Vim olarak ayarlayalım</li>
+<li>IDE olarak Visual Studio Code kuralım</li>
+<li>Shell olarak Zsh'ı ayarlayalım</li>
+<li>Varsayılan Browser olarak Google Chrome kuralım</li>
+</ul>
+<p><strong>System Konfigürasyonu</strong></p>
+<ul>
+<li>Sistem dilini ingilizce olarak ayarlayalım</li>
+<li>Masaüstü Ortamı Olarak KDE'i kuralım</li>
+<li>Sistemin varsayılan metin editörü olarak Nano'yu ayaralayalım</li>
+<li>Sanallaştırma olarak kvm-qemu'yu kuralım</li>
+<li>Docker kuralım ve ayaralarını yapalım</li>
+<li>Sistem için Firefox'ı varsayılan Browser olarak kuralım</li>
+</ul>
+<p>Tabi daha bir çok şey yapılabilir ancak bunu yazarak bitiremeyiz. En temekl haliyke böyle bir sistem kuramak baya bi işimizi görecektir. Zatwn incelemeniz ve örnek almnız için bir çokGithub reposunun adresini altta vereceğim.</p>
+<p><strong>Home Manager Konfigürasyonu</strong> yaparken bir çok option'ı ayarlamamız ve gereken yerlerde olmayan option'ları da yazmamız gerekecek. Home manager'ın normal NixOS modülleriden en önemli farı da zaten özellikle home dizininne ve kullanıcı özelleştirmelerine yönelik option'lar sunuyor olması. <a href="https://nix-community.github.io/home-manager/index.xhtml#sec-usage-configuration">Şu sayfadan</a> home manager'ın sunmuş olduğu opiton'ları inceleyebilirsiniz ki zaten konfigürasyon yapmaya başladığınızda bu sayfayı bir çok kez ziyaret etmeniz gerekecek.</p>
+<p>Home manager ile kendi paketlerimizi yükleyebiliriz, sistemde zaten kurulu olan paketleri ayarlayabiliriz. Masaüstü ortamımızı ayarayabiliriz. Kendi dotfile'larımızı veya diğer configürasyon dosyalaımız yönetebiliriz. YAni temel de amaç kişisel tercihlerimizi declarative olarak yönetebilmemmizi sağlar.</p>
+<h3 id="kde-masaustu-ortam-kurulumu-dil-ayarlar-zshn-ayarlanmas-browser-ayarlar">KDE Masaüstü Ortamı Kurulumu, Dil ayarları, Zsh'ın ayarlanması, Browser ayarları</h3>
+<p>Tabii ki biz burada çok derin konfigürasyona yönetimi yapmayacağız. Amacımız sadece aktive etmek ve ufak tefek dokunuşlar yaparak mantığını anlamak. Yoksa KDE'de kullandığımız kısa yolları, temeları, Kwin scriptleri,...vb bütün ayarlarınızı declarative olarak yazmak mümkün.</p>
+<p>Biz kullanmayacağız ancak linkini vermek istedim. KDE Plasma'yı daha detaylı ama daha kolay bir yolla ayalarmyabilmemiz için community bir modul geliştirmiş <a href="https://github.com/pjones/plasma-manager">şu linkten</a> görebilirsiniz. GitHub'da görebilceğiniz bir çok örnekte de kullanılıyor.</p>
+<p>Bu bölümde yaptıklarımızı da GitHub respsundaki <a href="https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/kde-zsh">kde-zsh</a> branch'inde bulabilirsiniz.</p>
+<p><code>nixos-configuration.nix</code> dosyamıza bir göz atalım. Yeni eklene nveya değiştirilen her yerde açıklama ekledim.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># nixos-configuration.nix</span>
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="ss">imports</span> <span class="o">=</span>
+    <span class="p">[</span> <span class="c1"># Include the results of the hardware scan.</span>
+      <span class="l">../hosts/lenovo-l15/hardware-configuration.nix</span>
+    <span class="p">];</span>
+
+  nix<span class="o">.</span>settings<span class="o">.</span><span class="ss">experimental-features</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;nix-command&quot;</span> <span class="s2">&quot;flakes&quot;</span> <span class="p">];</span>
+
+  <span class="c1"># Bootloader.</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">device</span> <span class="o">=</span> <span class="s2">&quot;/dev/sda&quot;</span><span class="p">;</span>
+  boot<span class="o">.</span>loader<span class="o">.</span>grub<span class="o">.</span><span class="ss">useOSProber</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  networking<span class="o">.</span><span class="ss">hostName</span> <span class="o">=</span> <span class="s2">&quot;muratpc&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Enable networking</span>
+  networking<span class="o">.</span>networkmanager<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># Set your time zone.</span>
+  time<span class="o">.</span><span class="ss">timeZone</span> <span class="o">=</span> <span class="s2">&quot;Europe/Istanbul&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Select internationalisation properties.</span>
+  i18n<span class="o">.</span><span class="ss">defaultLocale</span> <span class="o">=</span> <span class="s2">&quot;en_US.UTF-8&quot;</span><span class="p">;</span>
+  i18n<span class="o">.</span><span class="ss">supportedLocales</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">];</span>
+
+  i18n<span class="o">.</span><span class="ss">extraLocaleSettings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">LC_ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_IDENTIFICATION</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_MEASUREMENT</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_MONETARY</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_NAME</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_NUMERIC</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_PAPER</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_TELEPHONE</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+    <span class="ss">LC_TIME</span> <span class="o">=</span> <span class="s2">&quot;tr_TR.UTF-8&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># Grafik servisini enable ediyoruz</span>
+  <span class="c1"># klavye ayarı yapılıyor</span>
+  services<span class="o">.</span><span class="ss">xserver</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+    <span class="c1"># sddm Oturum Yöneticisini aktif ediyoruz</span>
+    displayManager<span class="o">.</span><span class="ss">sddm</span> <span class="o">=</span> <span class="p">{</span>
+                              <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                              <span class="ss">autoNumlock</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="c1"># kde plasma 5 aktif ediliyor                          };</span>
+    desktopManager<span class="o">.</span>plasma5<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+    <span class="ss">layout</span> <span class="o">=</span> <span class="s2">&quot;tr&quot;</span><span class="p">;</span>
+    <span class="ss">xkbVariant</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># Enable the OpenSSH daemon.</span>
+  services<span class="o">.</span>openssh<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+  <span class="c1"># Configure console keymap</span>
+  console<span class="o">.</span><span class="ss">keyMap</span> <span class="o">=</span> <span class="s2">&quot;trq&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Define a user account. Don&#39;t forget to set a password with `passwd`.</span>
+  users<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;murat cabuk&quot;</span><span class="p">;</span>
+    <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;networkmanager&quot;</span> <span class="s2">&quot;wheel&quot;</span> <span class="s2">&quot;docker&quot;</span><span class="p">];</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[];</span>
+
+    <span class="c1"># kullanıcı default shell i zsh olarka ayarlanıyor</span>
+    <span class="ss">shell</span> <span class="o">=</span> pkgs<span class="o">.</span>zsh<span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># https://nixos.wiki/wiki/Command_Shell</span>
+  <span class="c1"># Sistemdeki bütün kullanıcılar için bash varsayılan shell olarak ayaralnıyor</span>
+  <span class="c1"># tabiiki kendi kullanıcııda da olduğu gibi farklı shell&#39;lere geçiş yapabilir</span>
+  users<span class="o">.</span><span class="ss">defaultUserShell</span> <span class="o">=</span> pkgs<span class="o">.</span>bash<span class="p">;</span>
+
+  <span class="c1"># Allow unfree packages</span>
+  nixpkgs<span class="o">.</span>config<span class="o">.</span><span class="ss">allowUnfree</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  virtualisation<span class="o">.</span>virtualbox<span class="o">.</span>guest<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  virtualisation<span class="o">.</span>virtualbox<span class="o">.</span>guest<span class="o">.</span><span class="ss">x11</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+
+  environment<span class="o">.</span><span class="ss">systemPackages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+    nano
+    wget
+    curl
+    git
+    home-manager
+
+    <span class="c1"># kde plasma 5 paketleri</span>
+    kate
+    kwin
+  <span class="p">];</span>
+
+  <span class="c1">## https://wiki.archlinux.org/title/XDG_Base_Directory</span>
+  <span class="c1"># environment.sessionVariables = {</span>
+  <span class="c1">#   XDG_CACHE_HOME = &quot;$HOME/.cache&quot;;</span>
+  <span class="c1">#   XDG_CONFIG_DIRS = &quot;/etc/xdg&quot;;</span>
+  <span class="c1">#   XDG_CONFIG_HOME = &quot;$HOME/.config&quot;;</span>
+  <span class="c1">#   XDG_DATA_DIRS = &quot;/usr/local/share/:/usr/share/&quot;;</span>
+  <span class="c1">#   XDG_DATA_HOME = &quot;$HOME/.local/share&quot;;</span>
+  <span class="c1">#   XDG_STATE_HOME = &quot;$HOME/.local/state&quot;;</span>
+  <span class="c1"># };</span>
+
+
+  <span class="c1"># https://nixos.wiki/wiki/Fonts</span>
+  <span class="c1"># ihtiyacımız olabilcek fontlar yükleniyor.</span>
+  fonts<span class="o">.</span><span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+                                  meslo-lgs-nf
+                                  noto-fonts
+                                  noto-fonts-cjk
+                                  noto-fonts-emoji
+                                  font-awesome
+                                  powerline-fonts
+                                  powerline-symbols
+                                  <span class="p">(</span>nerdfonts<span class="o">.</span>override <span class="p">{</span> <span class="ss">fonts</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;NerdFontsSymbolsOnly&quot;</span> <span class="p">];</span> <span class="p">})</span>
+                              <span class="p">];</span>
+    <span class="c1"># zsh&#39;ı sadece home-manager&#39;da aktif etmek yetmiyor</span>
+    <span class="c1"># burada da aktif etmek gerekiyor</span>
+    <span class="ss">programs</span> <span class="o">=</span> <span class="p">{</span>
+      zsh<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="p">};</span>
+
+
+    networking<span class="o">.</span>firewall<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+
+    system<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>NisOs konfigürasyonu yaparken bol miktarda yukarıdaki gibi option ayarlamak gerekiyor. Bunun için <a href="https://search.nixos.org/options">NixOS Arama sayfasında</a> hem opiton hem de paket arayabilirniz.
+<img alt="nixos.png" src="./assets/files\nixos.png" /></p>
+<p>Bir de Homa_manager dosyamıza bakalım.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># murat-home-manager.nix</span>
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="c1"># buradaki kullanıcı nixos-configuration.nix dosyasında tanımlı olan kullanıcı ile aynı olmalı</span>
+  home<span class="o">.</span><span class="ss">username</span> <span class="o">=</span> <span class="s2">&quot;muratcabuk&quot;</span><span class="p">;</span>
+  home<span class="o">.</span><span class="ss">homeDirectory</span> <span class="o">=</span> <span class="s2">&quot;/home/muratcabuk&quot;</span><span class="p">;</span>
+
+  <span class="c1"># Language ayaraları : https://nix-community.github.io/home-manager/options.xhtml#opt-home.language</span>
+  home<span class="o">.</span>language<span class="o">.</span><span class="ss">base</span> <span class="o">=</span> <span class="s2">&quot;en_US.UTF-8&quot;</span><span class="p">;</span>
+
+  home<span class="o">.</span><span class="ss">keyboard</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">layout</span> <span class="o">=</span> <span class="s2">&quot;tr&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="c1"># Kurulması gereken pakatler</span>
+  home<span class="o">.</span><span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+    vim
+
+    <span class="c1"># zsh</span>
+    zsh
+    oh-my-zsh
+    zsh-powerlevel10k
+    zsh-completions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
+
+    powershell
+  <span class="p">];</span>
+
+  <span class="c1"># Uygulamaların Konfigürasyonu</span>
+    programs<span class="o">.</span>home-manager<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    programs<span class="o">.</span><span class="ss">chromium</span> <span class="o">=</span> <span class="p">{</span>
+                          <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                          <span class="ss">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;aapbdbdomjkkjkaonfhkkikfgjllcleb&quot;</span><span class="p">];</span>
+                        <span class="p">};</span>
+
+    <span class="c1"># Yukarıda kurulan paketlerin ayarlanması</span>
+    <span class="c1"># zsh ayarlarının yapılması</span>
+    programs<span class="o">.</span><span class="ss">zsh</span> <span class="o">=</span> <span class="p">{</span>
+
+                      history<span class="o">.</span><span class="ss">size</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+                      historySubstringSearch<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                      <span class="ss">enableCompletion</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                      <span class="ss">enableAutosuggestions</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                      <span class="ss">dotDir</span> <span class="o">=</span> <span class="s2">&quot;.config/zsh&quot;</span><span class="p">;</span>
+                      <span class="ss">plugins</span> <span class="o">=</span> <span class="p">[</span>
+                                  <span class="c1"># zaten kurulu olan powerlevel10k paketinin ayarlamassını yapıyoruz</span>
+                                  <span class="p">{</span>
+                                    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;powerlevel10k&quot;</span><span class="p">;</span>
+                                    <span class="ss">src</span> <span class="o">=</span> pkgs<span class="o">.</span>zsh-powerlevel10k<span class="p">;</span>
+                                    <span class="ss">file</span> <span class="o">=</span> <span class="s2">&quot;share/zsh-powerlevel10k/powerlevel10k.zsh-theme&quot;</span><span class="p">;</span>
+                                  <span class="p">}</span>
+
+                                  <span class="c1"># Elimizdeki konfigurasyon dosyasını sisteme kopyalıyoruz.</span>
+                                  <span class="c1"># üst dinizdek config klasöründeki .pk10k.zsh dosyasını kopyalıyoruz</span>
+                                  <span class="p">{</span>
+                                    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;powerlevel10k-config&quot;</span><span class="p">;</span>
+                                    <span class="ss">src</span> <span class="o">=</span> <span class="l">../config</span><span class="p">;</span>
+                                    <span class="ss">file</span> <span class="o">=</span> <span class="s2">&quot;.p10k.zsh&quot;</span><span class="p">;</span>
+                                  <span class="p">}</span>
+
+                                  <span class="c1"># manual olarka paket kuruyoruz</span>
+                                  <span class="p">{</span>
+                                    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;zsh-syntax-highlighting&quot;</span><span class="p">;</span>
+                                    <span class="ss">src</span> <span class="o">=</span> pkgs<span class="o">.</span>fetchFromGitHub <span class="p">{</span>
+                                    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;zsh-users&quot;</span><span class="p">;</span>
+                                    <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;zsh-syntax-highlighting&quot;</span><span class="p">;</span>
+                                    <span class="ss">rev</span> <span class="o">=</span> <span class="s2">&quot;0.7.1&quot;</span><span class="p">;</span>
+                                    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;03r6hpb5fy4yaakqm3lbf4xcvd408r44jgpv4lnzl9asp4sb9qc0&quot;</span><span class="p">;</span>
+                                            <span class="p">};</span>
+                                  <span class="p">}</span>
+
+                                <span class="p">];</span>
+                      <span class="ss">oh-my-zsh</span> <span class="o">=</span> <span class="p">{</span>
+                                    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                                    <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>oh-my-zsh<span class="p">;</span>
+                                    <span class="ss">plugins</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;git&quot;</span> <span class="s2">&quot;sudo&quot;</span><span class="p">];</span>
+
+
+                                  <span class="p">};</span>
+                      <span class="c1"># zsh içine alias tanımlıyoruz</span>
+                      <span class="ss">shellAliases</span> <span class="o">=</span> <span class="p">{</span>
+                                        <span class="ss">ll</span> <span class="o">=</span> <span class="s2">&quot;ls -l&quot;</span><span class="p">;</span>
+                                        <span class="ss">nixupdate</span> <span class="o">=</span> <span class="s2">&quot;sudo nixos-rebuild switch --flake .#muratpc --impure&quot;</span><span class="p">;</span>
+                                      <span class="p">};</span>
+
+                    <span class="p">};</span>
+
+  <span class="c1"># Servislerin Konfigürasyonu</span>
+  services<span class="o">.</span><span class="ss">kdeconnect</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+      <span class="ss">indicator</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="p">};</span>
+
+
+  <span class="c1"># bu değeri de ilk kuruulumdaki gibi bırakıyoruz.</span>
+  <span class="c1"># daha önce flake.nix dosyası için söylediklerimiz burası için de geçerli</span>
+  home<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>NixOS için home manager gerekli değil. Hatta home manager için NixOS'da gerekli değil. Yani homa manger'ı Nix paket yönetcisini kurduğunuz diğer Linux dağıtımlarında da kullanabilirsiniz. Yeterince uzamnlaştığınıda kendiniz de modüllerinizi yazabilirsiniz. Ancak yine de home manager bu home dizini için bize sunduğu stadart kabül görmüş ve bir çok kolaylığı da sunuyor. Yani illa birşeyler yapmak isterseniz home manager'a detek olabilirsiniz.</p>
+<p>Flake.nix dosyasında bir değişiklik yapmamıştık.</p>
+<h3 id="vs-code-qemu-kvm-ve-docker-kurulumu-ve-ayarlarnn-yaplmas">VS Code, Qemu-KVM ve Docker kurulumu ve Ayarlarının yapılması</h3>
+<p>Öncelikle VS Code kurulumunu yapalım. Kurgumuz şu şekilde olacak. Visual Studio'yu kuracağız, basit kişisel ayarlar yapacağız, bir iki extension kuracağız. Ancak kuracağımız extension'lardan birini nixpks'nin unstable veryionundan kuracağız. Ancak home manager'da sadece 23.11 paket kolksiyonunu parametre olarak geçirmiştik. Ektra parametre geçirmek için flake üzerinden extraSpecialArgs parametresini geçirmemiz gerekiyor.</p>
+<p>Öncelikle flake içinde inputs'a yeni bir paket koleksiyonu <code>nixpkgs-unstable</code> tanımlıyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># kısaltıldı</span>
+
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:NixOS/nixpkgs/nixos-23.11&quot;</span><span class="p">;</span>
+    nixpkgs-unstable<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:NixOS/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+
+    <span class="ss">home-manager</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nix-community/home-manager/release-23.11&quot;</span><span class="p">;</span>  <span class="c1"># this selects the release-branch and needs to match Nixpkgs</span>
+      inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">follows</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+
+
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span>home-manager<span class="p">,</span>nixpkgs-unstable<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>inputs<span class="p">:</span>
+  <span class="k">let</span>
+
+
+<span class="c1"># kısaltıldı</span>
+</code></pre></div>
+<p>Daha sonra bunu flake üzerinde home manager'a parametre olarak geçirmemiz gerekiyor.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># kısaltıldı</span>
+
+  <span class="c1"># dosya adresi değiştirildi</span>
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="l">./modules/nixos-configuration.nix</span>
+          home-manager<span class="o">.</span>nixosModules<span class="o">.</span>home-manager
+            <span class="p">{</span>
+              home-manager<span class="o">.</span><span class="ss">useGlobalPkgs</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span><span class="ss">useUserPackages</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./modules/murat-home-manager.nix</span><span class="p">;</span>
+
+              <span class="c1"># home-manager için ektra parametre geçiriyoruz</span>
+              home-manager<span class="o">.</span><span class="ss">extraSpecialArgs</span> <span class="o">=</span> <span class="p">{</span><span class="k">inherit</span> pkgs-unstable<span class="p">;</span> <span class="p">};</span>
+
+            <span class="p">}</span>
+      <span class="p">];</span>
+
+<span class="c1"># kısaltıldı</span>
+</code></pre></div>
+<p>Şimdi bir de home manager'a VS Code ayarlarımızı ekleyelim.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># home-manager.nix</span>
+
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> pkgs-unstable<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="c1"># kısaltıldı</span>
+
+programs<span class="o">.</span><span class="ss">vscode</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                    <span class="c1"># bu ayar sayesinde VS Code&#39;u manulal olarak da yöntecileceğiz.</span>
+                    <span class="c1"># ÖZellikle NixOS a alışma şamasında faydalı olacaktır.</span>
+                    <span class="ss">mutableExtensionsDir</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                    <span class="c1"># Kişisel ayarlarmızı json format da girebiliriz.</span>
+                    <span class="ss">userSettings</span> <span class="o">=</span> <span class="p">{</span>
+                                      <span class="s2">&quot;editor.fontSize&quot;</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+                                    <span class="p">};</span>
+
+                    <span class="c1"># vs code update&#39;leri kontrol edilsin mi?</span>
+                    <span class="ss">enableUpdateCheck</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                    <span class="c1"># extensiton ların update&#39;leri kontrol edilsin mi?</span>
+                    <span class="ss">enableExtensionUpdateCheck</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                    <span class="c1"># community open source edition olan  pkgs.vscodium  paketi de kullanılabilir</span>
+                    <span class="ss">package</span> <span class="o">=</span> pkgs<span class="o">.</span>vscode<span class="p">;</span>
+
+                    <span class="c1"># extension listesi yazılabilir</span>
+                    <span class="c1"># ancak tabi extension ları burradan yüklemek istersek bu paketlerin yazılmış olması lazım.</span>
+                    <span class="c1"># şuan NixOS paket yöneticisinde 290 paketin yazılı olduğu görünüyor.</span>
+                    <span class="c1"># ayrıca istenirse farklı version lardan da kurulum yapılabilir.</span>
+                    <span class="c1"># Altta ili liste ++ opratörü ile topşanıyor.</span>
+                    <span class="ss">extensions</span> <span class="o">=</span> <span class="p">(</span><span class="k">with</span> pkgs<span class="o">.</span>vscode-extensions<span class="p">;[</span>
+                                  pkgs<span class="o">.</span>vscode-extensions<span class="o">.</span>bbenoist<span class="o">.</span>nix
+                                  bierner<span class="o">.</span>markdown-emoji
+                                  <span class="p">])</span> <span class="o">++</span> <span class="p">(</span><span class="k">with</span> pkgs-unstable<span class="o">.</span>vscode-extensions<span class="p">;</span> <span class="p">[</span>
+                                                <span class="c1"># Unstable nixpkgs den paket yükleniyor</span>
+                                                seatonjiang<span class="o">.</span>gitmoji-vscode
+                                                <span class="p">]);</span>
+                    <span class="c1"># kısayol tanımları yapılabilir</span>
+                    <span class="ss">keybindings</span> <span class="o">=</span> <span class="p">[</span>
+                                    <span class="p">{</span>
+                                      <span class="ss">key</span> <span class="o">=</span> <span class="s2">&quot;ctrl+y&quot;</span><span class="p">;</span>
+                                      <span class="ss">command</span> <span class="o">=</span> <span class="s2">&quot;editor.action.commentLine&quot;</span><span class="p">;</span>
+                                      <span class="ss">when</span> <span class="o">=</span> <span class="s2">&quot;editorTextFocus &amp;&amp; !editorReadonly&quot;</span><span class="p">;</span>
+                                    <span class="p">}</span>
+                                  <span class="p">];</span>
+                  <span class="p">};</span>
+
+<span class="c1"># kısaltıldı</span>
+</code></pre></div>
+<p>Build alıp çalıştıdığımızda VS Code'un kurulduğunu ve extension'ların yüklendiğini görebiliyoruz.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc<span class="w"> </span>--impure<span class="w"> </span>--show-trace<span class="w"> </span>--upgrade
+</code></pre></div>
+<p>Paket yöneticisiniden <a href="https://search.nixos.org/packages?channel=23.11&amp;from=0&amp;size=50&amp;sort=relevance&amp;type=packages&amp;query=vscode-extensions">Visual Studio Extension</a>'ların dan arama yapabilirsiniz. Şuan 290 adet paket bulunuyor.</p>
+<p><img alt="vscode.png" src="./assets/files\vscode.png" /></p>
+<p>Ancak bildiğiniz üzere eğer VS Code'a GitHub hesabınızı bağlanrsanız zaten bütün aylarınız ve extension'larınız senkronize oluyor. Ben bunu tercih ediyorum açıkçası.</p>
+<p>Diğer VS Code option'ları için<a href="https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.enable"> home manager option</a>'larında arama yapabilirsiniz.</p>
+<p>Visual Studio Code'u çalıştırdığımızda extension'ların kurulduğunu görebiliyoruz.</p>
+<p><img alt="vscode2.png" src="./assets/files\vscode2.png" /></p>
+<p>Bir de yaptığımız font ayarına bakalım. Fontu 16 olarak ayarlamıştık. Onu da görebiliyoruz.</p>
+<p><img alt="vscode3.png" src="./assets/files\vscode3.png" /></p>
+<p>Bu arada bu bölümün kodlarını da kendi Github hesabımdaki <a href="https://github.com/muratcabuk/nixos-sample-dotfiles">nixos-sample-dotfiles</a> reposunda <a href="https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/vscode-qemu-docker">vscode-qemu-docker</a> branch'inde bulabilirsiniz.</p>
+<p>Şimdi de Qemu-Kvm (libvirt) ve Docker kurulumlarını yapıp kodun son halini inceleyelim. Bu paketlerin kurulumunu <code>nixos-configuration.nix</code> dosyasında yapacaktık.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># nixos-configuration.nix</span>
+
+<span class="c1"># Kısaltıldı</span>
+
+environment<span class="o">.</span><span class="ss">systemPackages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+
+  <span class="c1"># kısaltıldı</span>
+
+    <span class="c1"># virtualisation olarka  virt-manager &#39;ı ekliyoruz</span>
+    virt-manager
+
+  <span class="p">];</span>
+
+
+<span class="c1"># kısaltıldı</span>
+
+  <span class="c1"># virtualisation / kvm-qemu</span>
+  virtualisation<span class="o">.</span>libvirtd<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+</code></pre></div>
+<p>Kvm-Qemu (libvirt) ayarlarında hata alırsanız <a href="https://nixos.wiki/wiki/Virt-manager">şu linki</a> ziyaret ediniz.</p>
+<p>Alttaki komutla sşstemimide kurumları yapabiliriz.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc<span class="w"> </span>--impure<span class="w"> </span>--show-trace<span class="w"> </span>--upgrade
+</code></pre></div>
+<p>Çalıştırdıktan sonra uygulamalardan virtual machine manager'ı açtığınızda <code>can't detect default hypervisor</code> hatası verece sistem. Bizde file menüsüne gidip yeni bir conneciton eklememizi istiyor. Aynen dediğini yapıyoruz, File&gt;Add Connection dediğimizde sadece KVM/QEMU'nun seçmemiz yeterli.</p>
+<p><img alt="qemu-kvm1.png" src="./assets/files\qemu-kvm1.png" /></p>
+<p>Son olarka bir de Docker'ı ekleyelim. <a href="https://nixos.wiki/wiki/Docker">Şu linkten</a> de konuyu inceleyebilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># kısaltıldı</span>
+
+  <span class="c1"># kullanıcıyı docker grubuna ekliyoruz</span>
+  users<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;murat cabuk&quot;</span><span class="p">;</span>
+    <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;networkmanager&quot;</span> <span class="s2">&quot;wheel&quot;</span> <span class="s2">&quot;docker&quot;</span> <span class="s2">&quot;libvirtd&quot;</span><span class="p">];</span>
+
+    <span class="c1"># kişise özel paketler. Biz bu kısmı home manager ile yöneteceğiz</span>
+    <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[];</span>
+
+    <span class="c1"># kullanıcı default shell i zsh olarka ayarlanıyor</span>
+    <span class="ss">shell</span> <span class="o">=</span> pkgs<span class="o">.</span>zsh<span class="p">;</span>
+  <span class="p">};</span>
+
+
+
+<span class="c1"># kısaltıldı</span>
+
+<span class="c1"># virtualisation / kvm-qemu</span>
+virtualisation<span class="o">.</span>libvirtd<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+<span class="c1"># virtualizatiob docker</span>
+virtualisation<span class="o">.</span><span class="ss">docker</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                        <span class="c1"># eğer btrfs kullanacaksanız</span>
+                        <span class="c1"># storageDriver = &quot;btrfs&quot;;</span>
+
+                        <span class="c1"># Docker data dizinini değiştirmek isterseniz</span>
+                        <span class="c1">#daemon.settings = {</span>
+                        <span class="c1">#        data-root = &quot;/some-place/to-store-the-docker-data&quot;;</span>
+                        <span class="c1">#};</span>
+                        <span class="p">};</span>
+</code></pre></div>
+<p>Kurulumu yapıp test ediyoruz.</p>
+<p><img alt="docker.png" src="./assets/files\docker.png" /></p>
+<p>Bu noktadan sonra biraz da ihtiyacımız olabilecek ince detaylarla uğraşalım.</p>
+<h2 id="bir-servisi-kurmak-ve-gerektiginde-baslatp-durdurmak">Bir Servisi Kurmak ve Gerektiğinde Başlatıp Durdurmak</h2>
+<p>Bildiğiniz üzere servislerl de aslında bir uygulama veya paket. Tek farkları işleri bitene kadar veya manual olarak durdurulana kadar yapması gereken işi yapmaya devam etmesi.</p>
+<p>Örneğin bir web servisi (Nginx, Apache, Dotnet Kestrel, NodeJs ExpressJs, Java Tomcat) veya bir veritabanı (Postgres, Mysql, MS Sql, Oracle) gibi devamlı çalışması gereken uygulamalara servis diyoruz. Sığ bi tanım oldu ama burada yapmak istediğimiz şeyi tanımlamaya yetiyor.</p>
+<p>Örnek olarak Nginx ile bir siteyi yayına verelim ve gerektiğinde başlatıp durduralım. Klasik dağıtımlardan ne gibi farklılıklar var görelim.</p>
+<p>Yazdığımız modülü <code>flake.nix</code> modülleri arasına ekliyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake.nix</span>
+
+<span class="c1"># kısaltıldı</span>
+
+ <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="l">./modules/nixos-configuration.nix</span>
+          home-manager<span class="o">.</span>nixosModules<span class="o">.</span>home-manager
+            <span class="p">{</span>
+              home-manager<span class="o">.</span><span class="ss">useGlobalPkgs</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span><span class="ss">useUserPackages</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./modules/murat-home-manager.nix</span><span class="p">;</span>
+              <span class="c1"># Bu da home-manager için</span>
+              home-manager<span class="o">.</span><span class="ss">extraSpecialArgs</span> <span class="o">=</span> <span class="p">{</span><span class="k">inherit</span> pkgs-unstable<span class="p">;</span> <span class="p">};</span>
+            <span class="p">}</span>
+          <span class="l">./modules/nginx.nix</span>
+      <span class="p">];</span>
+
+<span class="c1"># kısaltıldı</span>
+</code></pre></div>
+<p>Daha sonra modules klasörümüze <code>nginx.nix</code> adında bir dosya ekleyelim alttaki kodları kopyalayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># modules/nginx.nix</span>
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span>lib<span class="p">,</span> <span class="o">...</span><span class="p">}:</span>
+
+<span class="k">let</span>
+
+  <span class="c1"># writeTextDir fonksiyonu ile nix/store dizinine html/site1/index.html adında</span>
+  <span class="c1"># bir klasör açıp içinde index.html adında bir doya oluşturuyoruz.</span>
+  <span class="c1"># aynen yazdığım gibi yanlışlık yok. index.html adında  bir klasörün altına index.html adında doys olulşturuyor.</span>
+  <span class="ss">site1Root</span> <span class="o">=</span> pkgs<span class="o">.</span>writeTextDir <span class="s2">&quot;html/site1/index.html&quot;</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">      &lt;!DOCTYPE html&gt;</span>
+<span class="s s-Multiline">      &lt;html lang=&quot;en&quot;&gt;</span>
+<span class="s s-Multiline">      &lt;head&gt;</span>
+<span class="s s-Multiline">          &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+<span class="s s-Multiline">          &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
+<span class="s s-Multiline">          &lt;title&gt;Document&lt;/title&gt;</span>
+<span class="s s-Multiline">      &lt;/head&gt;</span>
+<span class="s s-Multiline">      &lt;body&gt;</span>
+<span class="s s-Multiline">          Hello from Site 1</span>
+<span class="s s-Multiline">      &lt;/body&gt;</span>
+<span class="s s-Multiline">      &lt;/html&gt;&#39;&#39;</span><span class="p">;</span>
+
+
+  <span class="c1"># writeTextDir fonksiyonu ile nix/store dizinine html/site2/index.html adında</span>
+  <span class="c1"># bir klasör açıp içinde index.html adında bir doya oluşturuyoruz.</span>
+  <span class="c1"># aynen yazdığım gibi yanlışlık yok. index.html adında  bir klasörün altına index.html adında doys olulşturuyor.</span>
+  <span class="ss">site2Root</span> <span class="o">=</span> pkgs<span class="o">.</span>writeTextDir <span class="s2">&quot;html/site2/index.html&quot;</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">      &lt;!DOCTYPE html&gt;</span>
+<span class="s s-Multiline">      &lt;html lang=&quot;en&quot;&gt;</span>
+<span class="s s-Multiline">      &lt;head&gt;</span>
+<span class="s s-Multiline">          &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+<span class="s s-Multiline">          &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span>
+<span class="s s-Multiline">          &lt;title&gt;Document&lt;/title&gt;</span>
+<span class="s s-Multiline">      &lt;/head&gt;</span>
+<span class="s s-Multiline">      &lt;body&gt;</span>
+<span class="s s-Multiline">          Hello from Site 2</span>
+<span class="s s-Multiline">      &lt;/body&gt;</span>
+<span class="s s-Multiline">      &lt;/html&gt;&#39;&#39;</span><span class="p">;</span>
+
+<span class="k">in</span>
+
+<span class="p">{</span>   <span class="c1"># domain olarak site1 ve site2 yi ekliyoruz hosts dosyamıza</span>
+    <span class="c1"># https://nixos.wiki/wiki/Networking</span>
+    networking<span class="o">.</span><span class="ss">extraHosts</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">                              127.0.0.1 site1</span>
+<span class="s s-Multiline">                              127.0.0.1 site2</span>
+<span class="s s-Multiline">                            &#39;&#39;</span><span class="p">;</span>
+    <span class="c1"># nginx i enable ediyoruz ve statik sayfalarımızın dizinlerini gosteriyoruz.</span>
+    services<span class="o">.</span><span class="ss">nginx</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                    <span class="ss">recommendedGzipSettings</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                    virtualHosts<span class="o">.</span><span class="s2">&quot;site1&quot;</span> <span class="o">=</span> <span class="p">{</span>
+                                              locations<span class="o">.</span><span class="s2">&quot;/&quot;</span> <span class="o">=</span> <span class="p">{</span><span class="ss">root</span> <span class="o">=</span> site1Root <span class="o">+</span> <span class="s2">&quot;/html/site1&quot;</span><span class="p">;};</span>
+                                           <span class="p">};</span>
+
+                    virtualHosts<span class="o">.</span><span class="s2">&quot;site2&quot;</span> <span class="o">=</span> <span class="p">{</span>
+                                              locations<span class="o">.</span><span class="s2">&quot;/&quot;</span> <span class="o">=</span> <span class="p">{</span><span class="ss">root</span> <span class="o">=</span> site2Root <span class="o">+</span> <span class="s2">&quot;/html/site2&quot;</span><span class="p">;};</span>
+                                            <span class="p">};</span>
+                   <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Tabiiki burada amacımız Nis Store'a nasıl dosya kaydedilir omu da görmek. Yoksa en doğrusu bu tarz bir iş için <code>/var/www</code> dizinini kullanmak daha doğru olacaktır.</p>
+<p>Build alıp tarayıcıdan test ettiğimizde alttaki gibi eklediğimiz <code>index.html</code> sayfasının içerğini görebiliriz.</p>
+<p><img alt="hello_site1.png" src="./assets/files\hello_site1.png" /></p>
+<p>Şİmdi mevzuyu biraz daha karmaşıklaştıralım. Sisteme bir de vertabanı ekleyelim. Ancak bu veritabanı Nginx çalıştırıldığında çalışsın çalışmıyorsa hiç başlamasın. Ayrıca kullanıcı adı, şifre ve veritabanı adını option'lardan alsın.</p>
+<p>Bunun için modules klasörüne <code>postgres.nix</code> adında bir dosya oluşturalım ve alttaki kodları ekleyelim.</p>
+<p>Şöyle bir soru aklımıza gelebilir. Neden burada option kullandık ki, zaten doğrudan postgres konfigürasyonuna kullanıcı adı ve şifreyi yazabilirdik. Bir özelliği option haline gatirdiğinizde başka modüllerde de bu ayarı değiştirme şansımız oluyor. Yazacağınız bir başka modülde de tanımladığımız kullanıcı adı ve şifre optionlarını kullnabiliriz. Bu sayede zaten Nginx'e ait bir özelliği Postgres modülü içinde kullanabiliyoruz. Kodda da göreceğiniz gibi Nginx'in enbale olup olmadığını kontrol edip ona gmre postgre'i kuruyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># postgres.nix</span>
+<span class="c1"># https://nixos.wiki/wiki/PostgreSQL</span>
+<span class="p">{</span> lib<span class="p">,</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span><span class="p">}:</span>
+<span class="p">{</span>
+
+  <span class="ss">options</span> <span class="o">=</span> <span class="p">{</span>
+      postgres<span class="o">.</span><span class="ss">database_name</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>str<span class="p">;</span>
+        <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;database name&quot;</span><span class="p">;</span>
+        <span class="ss">default</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span>
+      <span class="p">};</span>
+
+
+      postgres<span class="o">.</span><span class="ss">username</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>str<span class="p">;</span>
+        <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;db username&quot;</span><span class="p">;</span>
+        <span class="ss">default</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span>
+      <span class="p">};</span>
+
+      postgres<span class="o">.</span><span class="ss">password</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>str<span class="p">;</span>
+        <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;db password&quot;</span><span class="p">;</span>
+        <span class="ss">default</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span>
+      <span class="p">};</span>
+
+    <span class="p">};</span>
+
+<span class="ss">config</span> <span class="o">=</span> lib<span class="o">.</span>mkMerge <span class="p">[</span> <span class="p">{</span>
+                          postgres<span class="o">.</span><span class="ss">username</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span><span class="p">;</span>
+                          postgres<span class="o">.</span><span class="ss">password</span> <span class="o">=</span> <span class="s2">&quot;Abc123&quot;</span><span class="p">;</span>
+                          postgres<span class="o">.</span><span class="ss">database_name</span> <span class="o">=</span> <span class="s2">&quot;mydatabase&quot;</span><span class="p">;</span>
+                        <span class="p">}</span>
+
+                        <span class="c1"># eğer nginx enable ise postgres de çalışsın</span>
+                        <span class="p">(</span>lib<span class="o">.</span>mkIf config<span class="o">.</span>services<span class="o">.</span>nginx<span class="o">.</span>enable <span class="p">{</span>
+
+                                services<span class="o">.</span><span class="ss">postgresql</span> <span class="o">=</span> <span class="p">{</span>
+                                    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                                    <span class="ss">ensureDatabases</span> <span class="o">=</span> <span class="p">[</span> config<span class="o">.</span>postgres<span class="o">.</span>database_name <span class="p">];</span>
+                                    <span class="ss">enableTCPIP</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+
+                                    <span class="ss">port</span> <span class="o">=</span> <span class="mi">5432</span><span class="p">;</span>
+
+                                      <span class="ss">initialScript</span> <span class="o">=</span> pkgs<span class="o">.</span>writeText <span class="s2">&quot;backend-initScript&quot;</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">                                            CREATE ROLE </span><span class="si">${</span>config<span class="o">.</span>postgres<span class="o">.</span>username<span class="si">}</span><span class="s s-Multiline"> WITH LOGIN PASSWORD &#39;${config.postgres.password}&#39; CREATEDB;</span>
+<span class="s s-Multiline">                                            CREATE DATABASE </span><span class="si">${</span>config<span class="o">.</span>postgres<span class="o">.</span>database_name<span class="si">}</span><span class="s s-Multiline">;</span>
+<span class="s s-Multiline">                                            GRANT ALL PRIVILEGES ON DATABASE </span><span class="si">${</span>config<span class="o">.</span>postgres<span class="o">.</span>database_name<span class="si">}</span><span class="s s-Multiline"> TO </span><span class="si">${</span>config<span class="o">.</span>postgres<span class="o">.</span>username<span class="si">}</span><span class="s s-Multiline">;</span>
+<span class="s s-Multiline">                                            &#39;&#39;</span><span class="p">;</span>
+                                      <span class="p">};}</span>
+                        <span class="p">)</span>
+
+                    <span class="p">];</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Flake.nix</code> dosyasmıza da alttaki gibi yazdığımız <code>postgres.nix</code> modülünü ekleyelim.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake.nix</span>
+
+ <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="l">./modules/nixos-configuration.nix</span>
+          home-manager<span class="o">.</span>nixosModules<span class="o">.</span>home-manager
+            <span class="p">{</span>
+              home-manager<span class="o">.</span><span class="ss">useGlobalPkgs</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span><span class="ss">useUserPackages</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./modules/murat-home-manager.nix</span><span class="p">;</span>
+              <span class="c1"># Bu da home-manager için</span>
+              home-manager<span class="o">.</span><span class="ss">extraSpecialArgs</span> <span class="o">=</span> <span class="p">{</span><span class="k">inherit</span> pkgs-unstable<span class="p">;</span> <span class="p">};</span>
+            <span class="p">}</span>
+
+          <span class="l">./modules/nginx.nix</span>
+          <span class="l">./modules/postgres.nix</span>
+      <span class="p">];</span>
+</code></pre></div>
+<p>Kurulumu yapıp test edelim.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc<span class="w"> </span>--impure<span class="w"> </span>--show-trace<span class="w"> </span>--upgrade
+
+systemctl<span class="w"> </span>status<span class="w"> </span>postgresql
+
+<span class="c1"># sonuçta çalıştığını görebiliriz.</span>
+</code></pre></div>
+<p>Nginx'i enable özelliğini false yapıp sistememizi üstteki komutla tekrar güncelleyip postgres servisinin çalıp çalışmadığını kontrol ettiğimizde çalışmadığını da görebiliriz.</p>
+<p>Bu şekilde kurmuş olduğumuz bir servisi bildiğiniz systemctl komutları ile başlatıp durdurabiliriz. Ancak servisi <code>systemctl disable postgresql</code> komutu ile disable etmeye çalıştığımızda <code>Read-only file system</code> hatası alırız. İşte tam burası NixOS için çok önemli. NixOS'un kullanığı bir sisteme yazme yapacağınız zaman bunu kesinlikle NixOS komutları ile yapmalısınız. Örneğin bir servisi disable ettiğimizde en basiyle <code>/etc/systemd/system/</code> dizininden sembolik link silinir ki bu da sisteme yazmak anlamına gelir. Bu durumda her defasında bir servisi disable/enable etmek için konfigürasyon dosyamızı değitirmemiz gerekecek şuana kadar öğrendiklerimize göre.</p>
+<p>Günlük kullanımda illaki bu tarz işlemlere ihtiyacımız olacak ancak bunun çözümü de konfigürasyon dosyalarını editlemek olmamalı. Çünkü bu dosyalar sistemin state'ini de tutuyor. Yani bir dahaki sefere bir sistemi ayağa kaldırak sitediğimizde zırt pırt değişen bir dosyanın üzerinden kurulum yapmak istemeyiz. Bu tarz durumlarda kullanmak için önceleri adı <strong>nesting</strong> olan ama sonraları adı <strong>specialisation</strong> olarak değiştirilen bir kullanım var. Amacımız konfigürasyon dosyalarındaki bütün ayları aynı tutup sdece değişen ayarları bir yerde toplamak. Bu sadece bu farklılıklar üzerinden sitemi update edebilceğiz. Tabi bunu aynı zamanda iki farlı kullanıcı için bir çok ayar tamemen aynıysa diğerinden farklı olan ayarları bir yerde toplamak için de kullanabiliriz. Nesne Yönetlimli Programlamadaki inheritance (miras almaya) benzetebiliriz.</p>
+<p>Biz de örneğimizde Nginx servisini istediğimiz zaman disable etmeyi deneyelim. Tabibiz bun yaptuğımızda konfigürasyomnumuzdan dolayı Postgres'in de disable olması gerekeiyor. Tabi normal dağıtımlardaki servisi disable etmek gibi değil. NixOS da bir uyugulamyı disable etmek demek tamamen sistemden kaldırmak anlamına geliyor.</p>
+<p>Modules klasörüne <code>nigix-disabled.nix</code> adından bir dosya oluşturalım ve içine alattaki kodları kopyalayalım. Alttaki kodda en önceli bölüm configuration bloğu. Sistemde tanımlı bütün ayları değiştrebiliriz veya yenileri ekelyebliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># nginx-disabled.nix</span>
+<span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span>lib<span class="p">,</span> <span class="o">...</span><span class="p">}:</span>
+ <span class="p">{</span>
+    <span class="ss">specialisation</span> <span class="o">=</span> <span class="p">{</span>
+           <span class="ss">nginx-disabled</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="ss">inheritParentConfig</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+                <span class="ss">configuration</span> <span class="o">=</span> <span class="p">{</span>
+
+                         system<span class="o">.</span>nixos<span class="o">.</span><span class="ss">tags</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;nginx-disabled&quot;</span> <span class="p">];</span>
+                         services<span class="o">.</span>nginx<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> lib<span class="o">.</span>mkForce <span class="no">false</span><span class="p">;</span>
+                                 <span class="p">};</span>
+                            <span class="p">};</span>
+                      <span class="p">};</span>
+ <span class="p">}</span>
+                            <span class="p">};</span>
+</code></pre></div>
+<p>Sonuçta bu dosaya da bir modül. Bu modülü de <code>flake.nix</code> dosyamzdaki modüllerin arasına import ediyoruz. Biz şu ana kadar bütün modülleri <code>flake.nix</code> dosyuasına ekledik. Aslında istesek <code>nixos-congfiguration.nix</code> dosyasındaki imports listesine veya tamamane başka bir module dosyası ekleyip ona import edip daha sonra onu <code>flake.nix</code> dosyasındaki modules listesine ekleyebilirdik. Bu tamamen bize kalmış bir durum. Ancak şuınu söyleyebilirim, eğer bir klasörde çok fazla dosya birikirse bunları <code>default.nix</code> dsoyasına import edip o dosyası flake'e eklemek genel bir kullanım haline gelmiş.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake.nix</span>
+
+<span class="c1"># Kısaltıldı</span>
+
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="l">./modules/nixos-configuration.nix</span>
+          home-manager<span class="o">.</span>nixosModules<span class="o">.</span>home-manager
+            <span class="p">{</span>
+              home-manager<span class="o">.</span><span class="ss">useGlobalPkgs</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span><span class="ss">useUserPackages</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              home-manager<span class="o">.</span>users<span class="o">.</span><span class="ss">muratcabuk</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./modules/murat-home-manager.nix</span><span class="p">;</span>
+              <span class="c1"># Bu da home-manager için</span>
+              home-manager<span class="o">.</span><span class="ss">extraSpecialArgs</span> <span class="o">=</span> <span class="p">{</span><span class="k">inherit</span> pkgs-unstable<span class="p">;</span> <span class="p">};</span>
+            <span class="p">}</span>
+
+          <span class="l">./modules/nginx.nix</span>
+          <span class="l">./modules/postgres.nix</span>
+          <span class="l">./modules/nginx-disabled.nix</span>
+      <span class="p">];</span>
+
+<span class="c1"># Kısaltıldı</span>
+</code></pre></div>
+<p>Tabi burada ciddi bir değişiklik yapıyoruz. Çalışma anında postgres'i dsiable edip tekrar enable ediyoruz. Ancak çok daha basit işler için de specialisation'ları kullanabiliriz. Oluştrduğumuz nginx-disabled adındaki specialisation'i çalıştımak için alttaki komutu çalıştırıyoruz. komutun sonuna ekledğimiz <code>--specialisation nginx-disabled</code> kısmına dikkate edin.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nixos-rebuild<span class="w"> </span>switch<span class="w"> </span>--flake<span class="w"> </span>.#muratpc<span class="w"> </span>--impure<span class="w"> </span>--show-trace<span class="w"> </span>--upgrade<span class="w"> </span>--specialisation<span class="w"> </span>nginx-disabled
+</code></pre></div>
+<p>Bunu çalıştırdığımızda Nginx servisi disable olacak, Postgres ise Nginx disaple olduğunu için disable olacak.</p>
+<div class="highlight"><pre><span></span><code>systemctl<span class="w"> </span>status<span class="w"> </span>nginx
+<span class="c1"># Unit nginx.service could not be found.</span>
+
+systemctl<span class="w"> </span>status<span class="w"> </span>postgres
+<span class="c1"># Unit postgres.service could not be found.</span>
+</code></pre></div>
+<p>Kodun bitmiş halini Github sayfamda <a href="https://github.com/muratcabuk/nixos-sample-dotfiles">nixos-sample-dotfiles</a> reposundaki <a href="https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/nginx-postgres">nginx-postgres</a> branch'inde bulabilirsiniz.</p>
+<p>Şimdilik bu kadar. Bir sonraki yazımızda da elimizde ki configürasyon dosyası ile,</p>
+<ul>
+<li>uzak bir makineye kurmayı,</li>
+<li>Docker Container oluşturmayı,</li>
+<li>ISO oluşturmayı
+  göreceğiz.</li>
+</ul>
+<p>İlk yazımızda bahsettiğimiz gibi NixOS bunlardan ibaret değil. Ben ancak bu kadarına girebilceğim ama tüm kaynkları da yazıda vereceğim.</p>
+<p>Bu yazıyı ilgilendiren diğer bir konu da hardware managment kısmı ancak ona da o kadar hakim değilim. Tamamen ihtiyacınıza göre adokümnlardan araştırma yapıp halletmemniz gerekiyor. İlk kurulumda sistem aslında bir çok şeyi hallediyor. Ancak hiç birmediğiniz bir makineye doğrudan konfigürasyon üerinden bütün donaım ayarları kurulu yapmaya çalışmak tabii ki biraz zorlayıcı bir süreç. Tabi öyle bir şeye ne kadar ihtiyacınız olur aınu bilemem ancak çok myoğun sistem mühendisliği işi yapıyoranız belki ihyisaç duyabilrisiniz. Ben de ihtiyaç duymadığım için o kısımları sadece ihtiyaç duyfupumda bakacağım şekilde bıraktım.</p>
+<p>Bu yaznın konusu oldupu için sadece <a href="https://github.com/nix-community/disko">Disco</a> aracından çok kısa bahsetmek istiyorum. Bu araç ile durulu esnasında gerekli olan disk bölümlendirme ve yönetim işlemlerini de declarative olarak yönetbiliyorsunuz. Bu paketi de community geliştiriyor ve tamamen açık kaynak. Altta sadece firkir vermesi için <a href="https://nixos.wiki/wiki/Disko">NixOS wiki</a> sayfasındaki örneği paylaşıyorum.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># disko-config.nix</span>
+
+<span class="p">{</span> disks <span class="o">?</span> <span class="p">[</span> <span class="s2">&quot;/dev/vda&quot;</span> <span class="p">],</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+  disko<span class="o">.</span><span class="ss">devices</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">disk</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">vdb</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="ss">device</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>elemAt disks <span class="mi">0</span><span class="p">;</span>
+        <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;disk&quot;</span><span class="p">;</span>
+        <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+          <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;table&quot;</span><span class="p">;</span>
+          <span class="ss">format</span> <span class="o">=</span> <span class="s2">&quot;gpt&quot;</span><span class="p">;</span>
+          <span class="ss">partitions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+              <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;ESP&quot;</span><span class="p">;</span>
+              <span class="ss">start</span> <span class="o">=</span> <span class="s2">&quot;1MiB&quot;</span><span class="p">;</span>
+              <span class="ss">end</span> <span class="o">=</span> <span class="s2">&quot;500MiB&quot;</span><span class="p">;</span>
+              <span class="ss">bootable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+              <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">;</span>
+                <span class="ss">format</span> <span class="o">=</span> <span class="s2">&quot;vfat&quot;</span><span class="p">;</span>
+                <span class="ss">mountpoint</span> <span class="o">=</span> <span class="s2">&quot;/boot&quot;</span><span class="p">;</span>
+              <span class="p">};</span>
+            <span class="p">}</span>
+            <span class="p">{</span>
+              <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;root&quot;</span><span class="p">;</span>
+              <span class="ss">start</span> <span class="o">=</span> <span class="s2">&quot;500MiB&quot;</span><span class="p">;</span>
+              <span class="ss">end</span> <span class="o">=</span> <span class="s2">&quot;100%&quot;</span><span class="p">;</span>
+              <span class="ss">part-type</span> <span class="o">=</span> <span class="s2">&quot;primary&quot;</span><span class="p">;</span>
+              <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">;</span>
+                <span class="ss">format</span> <span class="o">=</span> <span class="s2">&quot;bcachefs&quot;</span><span class="p">;</span>
+                <span class="ss">mountpoint</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+              <span class="p">};</span>
+            <span class="p">}</span>
+          <span class="p">];</span>
+        <span class="p">};</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Flake.nix</code> dosyamızı da alttaki gibi yazıyoruz. Görüldüğü üzere bu da bir module. Formatlancak disk ile ilgili bilgiyi parametre olarak modüle geçiyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake.nix</span>
+<span class="p">{</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:NixOS/nixpkgs/nixos-23.05&quot;</span><span class="p">;</span>
+    disko<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nix-community/disko&quot;</span><span class="p">;</span>
+    disko<span class="o">.</span>inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">follows</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span>self<span class="p">,</span> nixpkgs<span class="p">,</span> disko<span class="p">,</span> <span class="o">...</span><span class="p">}@</span>inputs<span class="p">:</span> <span class="p">{</span>
+
+    nixosConfigurations<span class="o">.</span><span class="ss">mysystem</span> <span class="o">=</span> inputs<span class="o">.</span>nixpkgs<span class="o">.</span>lib<span class="o">.</span>nixosSystem <span class="p">{</span>
+      <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+      specialArgs<span class="o">.</span><span class="ss">inputs</span> <span class="o">=</span> inputs<span class="p">;</span>
+      <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+        disko<span class="o">.</span>nixosModules<span class="o">.</span>disko
+        <span class="l">./disko-config.nix</span>
+        <span class="p">{</span>
+          _module<span class="o">.</span>args<span class="o">.</span><span class="ss">disks</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;/dev/vda&quot;</span> <span class="p">];</span>
+        <span class="p">}</span>
+        <span class="l">./configuration.nix</span>
+      <span class="p">];</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Github sayfasında ihtiyacınız olacak hemen hemen bütün durumlar için örnekler mevcut. <a href="https://github.com/nix-community/disko/tree/master/example">Şu linkte</a> örnekleri bulabilirsiniz.</p>
+<h2 id="nixos-icin-diger-paket-yoneticileri">NixOS İçin Diğer Paket Yöneticileri</h2>
+<p>NixOS'da diğer cross platform paket yöneticilerini de kullnabilirsiniz. Alttaki kurumlarını da içeren linkleri paylaşıyorum.</p>
+<ul>
+<li><a href="https://www.flatpak.org/setup/NixOS">Flatpak Sayfası</a>, <a href="https://nixos.org/manual/nixos/stable/#module-services-flatpak">NixOS Sayfası</a></li>
+<li><a href="https://nixos.wiki/wiki/Appimage">AppImage</a></li>
+<li><a href="https://github.com/io12/nix-snapd">Community</a>, <a href="https://github.com/NixOS/nixpkgs/issues/30336">Github Tartışma Sayfası</a>, <a href="https://flakehub.com/flake/io12/nix-snapd">Flake ile Snapd Kurmak</a></li>
+</ul>
+<h2 id="araclar-ve-sayfalar">Araçlar ve Sayfalar</h2>
+<p>İşinize yarayabilcek bazı linkler paylaşıyorum.</p>
+<ul>
+<li><a href="https://github.com/danth/stylix">Stylix is a NixOS module which applies the same colour scheme, font and wallpaper to a range of applications and desktop environments.</a></li>
+<li><a href="https://github.com/fufexan/nix-gaming">Gaming related stuff for Nix and NixOS.</a></li>
+<li><a href="https://github.com/nix-community/nixos-vscode-server">Visual Studio Code Server support in NixOS</a></li>
+<li><a href="https://github.com/nix-community/awesome-nix">A curated list of the best resources in the Nix community.</a></li>
+<li><a href="https://nixos.wiki/wiki/Comparison_of_NixOS_setups">https://nixos.wiki/wiki/Comparison_of_NixOS_setups</a></li>
+<li><a href="https://nixos.wiki/wiki/Configuration_Collection">https://nixos.wiki/wiki/Configuration_Collection</a></li>
+<li><a href="https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/">https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/</a></li>
+<li><a href="https://github.com/nmattia/niv">Painless dependencies for Nix projects.</a></li>
+<li><a href="https://github.com/nix-community/disko">Declarative disk partitioning</a></li>
+<li><a href="https://www.tweag.io/blog/2022-08-18-nixos-specialisations/">https://www.tweag.io/blog/2022-08-18-nixos-specialisations/</a></li>
+<li><a href="https://nixos.wiki/wiki/Specialisation">https://nixos.wiki/wiki/Specialisation</a></li>
+</ul>
+<h2 id="incelemlemek-ve-ornek-almak-icin-nixos-dotfiles-github-repolar">İncelemlemek ve Örnek Almak için NixOS Dotfiles GitHub Repo'ları</h2>
+<ul>
+<li><a href="https://github.com/mitchellh/nixos-config">https://github.com/mitchellh/nixos-config</a></li>
+<li><a href="https://github.com/hlissner/dot./assets/files\tree/master">https://github.com/hlissner/dot./assets/files\tree/master</a></li>
+<li><a href="https://github.com/dustinlyons/nixos-config">https://github.com/dustinlyons/nixos-config</a></li>
+<li><a href="https://github.com/gvolpe/nix-config">https://github.com/gvolpe/nix-config</a></li>
+<li><a href="https://github.com/Misterio77/nix-config/tree/main">https://github.com/Misterio77/nix-config/tree/main</a></li>
+<li><a href="https://github.com/fufexan/dotfiles">https://github.com/fufexan/dotfiles</a></li>
+<li><a href="https://github.com/Mic92/dotfiles">https://github.com/Mic92/dotfiles</a></li>
+<li><a href="https://github.com/fufexan/nix-gaming">https://github.com/fufexan/nix-gaming</a></li>
+<li><a href="https://github.com/sioodmy/dotfiles">https://github.com/sioodmy/dotfiles</a></li>
+<li><a href="https://github.com/notusknot/dotfiles-nix">https://github.com/notusknot/dotfiles-nix</a></li>
+<li><a href="https://github.com/srid/nixos-config">https://github.com/srid/nixos-config</a></li>
+<li><a href="https://github.com/NobbZ/nixos-config">https://github.com/NobbZ/nixos-config</a></li>
+<li><a href="https://github.com/gytis-ivaskevicius/nix./assets/files\tree/master">https://github.com/gytis-ivaskevicius/nix./assets/files\tree/master</a></li>
+<li><a href="https://github.com/bobbbay/dot./assets/files\tree/master">https://github.com/bobbbay/dot./assets/files\tree/master</a></li>
+<li><a href="https://github.com/chvp/nixos-config/tree/main">https://github.com/chvp/nixos-config/tree/main</a></li>
+<li><a href="https://github.com/shiryel/fennecOS">https://github.com/shiryel/fennecOS</a></li>
+<li><a href="https://github.com/phenax/nixos-dotfiles">https://github.com/phenax/nixos-dotfiles</a></li>
+<li><a href="https://github.com/tolgaerok/nixos-kde">https://github.com/tolgaerok/nixos-kde</a></li>
+<li><a href="https://github.com/mcdonc/.nixconfig">https://github.com/mcdonc/.nixconfig</a></li>
+<li><a href="https://github.com/hervyqa/dotfire">https://github.com/hervyqa/dotfire</a></li>
+<li><a href="https://codeberg.org/merulox/dot./assets/files\src/branch/master/nixos/configuration.nix">https://codeberg.org/merulox/dot./assets/files\src/branch/master/nixos/configuration.nix</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

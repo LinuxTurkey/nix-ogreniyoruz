@@ -1,0 +1,1415 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nix_lang/02_nix_dili_alistirmalari.html">
+      
+      
+        <link rel="prev" href="01_nix_dili_ve_ozellikleri.html">
+      
+      
+        <link rel="next" href="03_nix_dili_gomulu.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Nix Dili ile İlgili Alıştırmalar - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Nix Dili ile İlgili Alıştırmalar - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_lang/02_nix_dili_alistirmalari.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nix_lang/02_nix_dili_alistirmalari.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Nix Dili ile İlgili Alıştırmalar - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_lang/02_nix_dili_alistirmalari.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nix-dili-ile-ilgili-alstrmalar" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Nix Dili ile İlgili Alıştırmalar
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="01_nix_dili_ve_ozellikleri.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="02_nix_dili_alistirmalari.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-kurulumu-ve-repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Kurulumu ve repl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-file-kullanm-ve-ornek-uygulamalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix File Kullanımı ve Örnek Uygulamalar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursive-list-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recursive List Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dilinde-loop-ve-recursive-fonksiyon-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dilinde Loop ve Recursive Fonksiyon Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Formatter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_shell_ve_profile.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/override_ve_overlay.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-kurulumu-ve-repl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Kurulumu ve repl
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-file-kullanm-ve-ornek-uygulamalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix File Kullanımı ve Örnek Uygulamalar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursive-list-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recursive List Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dilinde-loop-ve-recursive-fonksiyon-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dilinde Loop ve Recursive Fonksiyon Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Formatter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nix_lang/02_nix_dili_alistirmalari.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nix_lang/02_nix_dili_alistirmalari.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="nix-dili-ile-ilgili-alstrmalar">Nix Dili ile İlgili Alıştırmalar</h1>
+<p>Bu yazıda ilk makalede çok hızlı değindiğimiz Nix dilini aktif olarak kullanmak. Tamamen syntax ve dil özelliklerine değineceğiz. Herhangi bir kütüphane ve paket kullanmayacağız.</p>
+<p>Belki ilk etapta Nix paket yöneticisini veya NixOS'u kullanırken baştan sonra sıfırdan bir şeyler yazmayacağız, büyük ihtimal bir çoğumuz için sadece NixOS'a paketlerimizi kurmak yeterli olacak. Ancak hazır kodları alıp kullanırken bile kodun ne yapmaya çalıştığını anlamak isteyeceksiniz.</p>
+<h2 id="nix-kurulumu-ve-repl">Nix Kurulumu ve repl</h2>
+<p>NixOS dışında herhangi bir Linux distribution'da kurulum için sadece alttaki komutu çalıştırmak yetecektir.</p>
+<div class="highlight"><pre><span></span><code>sh<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-L<span class="w"> </span>https://nixos.org/nix/install<span class="o">)</span><span class="w"> </span>--daemon
+</code></pre></div>
+<p>Amacımız sadece dili biraz öğrenmek uzmanı olmak değil. Bir nix dosyasına baktığımızda onu anlamak, isteğimize göre değişiklikler yapabilmek. Kendi nix dosyalarımızı yazmaya başladığımızda zaten dilde ilerlemek mümkün olacak. Sıklıkla dokümanlara bakarak diğer kullanıcıların dosyalarını inceleyerek kendimizi geliştireceğiz.</p>
+<p>Terminalde <strong>nix repl</strong> yazarak nix-repl uygulamasını çalıştırıyoruz. Bundan sonra altta bahsettiğimiz bütün komutları bu komut ekranında çalıştıracağız. Artık örnek uygulamalarla dili biraz daha pekiştirmeye çalışalım.</p>
+<h2 id="nix-file-kullanm-ve-ornek-uygulamalar">Nix File Kullanımı ve Örnek Uygulamalar</h2>
+<p>Yukarıdaki bazı başlıkları sadece okuyarak anlamak zorunda kaldık çünkü dosyaları dolayısıyla da modülleri kullanamadık</p>
+<p>Nix-repl içindeyken <strong>:?</strong> komutu ile yardım alabiliriz.</p>
+<div class="highlight"><pre><span></span><code>:?
+The<span class="w"> </span>following<span class="w"> </span>commands<span class="w"> </span>are<span class="w"> </span>available:
+
+<span class="w">  </span>&lt;expr&gt;<span class="w">                       </span>Evaluate<span class="w"> </span>and<span class="w"> </span>print<span class="w"> </span>expression
+<span class="w">  </span>&lt;x&gt;<span class="w"> </span><span class="o">=</span><span class="w"> </span>&lt;expr&gt;<span class="w">                 </span>Bind<span class="w"> </span>expression<span class="w"> </span>to<span class="w"> </span>variable
+<span class="w">  </span>:a,<span class="w"> </span>:add<span class="w"> </span>&lt;expr&gt;<span class="w">              </span>Add<span class="w"> </span>attributes<span class="w"> </span>from<span class="w"> </span>resulting<span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>scope
+<span class="w">  </span>:b<span class="w"> </span>&lt;expr&gt;<span class="w">                    </span>Build<span class="w"> </span>a<span class="w"> </span>derivation
+<span class="w">  </span>:bl<span class="w"> </span>&lt;expr&gt;<span class="w">                   </span>Build<span class="w"> </span>a<span class="w"> </span>derivation,<span class="w"> </span>creating<span class="w"> </span>GC<span class="w"> </span>roots<span class="w"> </span><span class="k">in</span><span class="w"> </span>the
+<span class="w">                               </span>working<span class="w"> </span>directory
+<span class="w">  </span>:e,<span class="w"> </span>:edit<span class="w"> </span>&lt;expr&gt;<span class="w">             </span>Open<span class="w"> </span>package<span class="w"> </span>or<span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$EDITOR</span>
+<span class="w">  </span>:i<span class="w"> </span>&lt;expr&gt;<span class="w">                    </span>Build<span class="w"> </span>derivation,<span class="w"> </span><span class="k">then</span><span class="w"> </span>install<span class="w"> </span>result<span class="w"> </span>into
+<span class="w">                               </span>current<span class="w"> </span>profile
+<span class="w">  </span>:l,<span class="w"> </span>:load<span class="w"> </span>&lt;path&gt;<span class="w">             </span>Load<span class="w"> </span>Nix<span class="w"> </span>expression<span class="w"> </span>and<span class="w"> </span>add<span class="w"> </span>it<span class="w"> </span>to<span class="w"> </span>scope
+<span class="w">  </span>:lf,<span class="w"> </span>:load-flake<span class="w"> </span>&lt;ref&gt;<span class="w">       </span>Load<span class="w"> </span>Nix<span class="w"> </span>flake<span class="w"> </span>and<span class="w"> </span>add<span class="w"> </span>it<span class="w"> </span>to<span class="w"> </span>scope
+<span class="w">  </span>:p,<span class="w"> </span>:print<span class="w"> </span>&lt;expr&gt;<span class="w">            </span>Evaluate<span class="w"> </span>and<span class="w"> </span>print<span class="w"> </span>expression<span class="w"> </span>recursively
+<span class="w">  </span>:q,<span class="w"> </span>:quit<span class="w">                    </span>Exit<span class="w"> </span>nix-repl
+<span class="w">  </span>:r,<span class="w"> </span>:reload<span class="w">                  </span>Reload<span class="w"> </span>all<span class="w"> </span>files
+<span class="w">  </span>:sh<span class="w"> </span>&lt;expr&gt;<span class="w">                   </span>Build<span class="w"> </span>dependencies<span class="w"> </span>of<span class="w"> </span>derivation,<span class="w"> </span><span class="k">then</span><span class="w"> </span>start
+<span class="w">                               </span>nix-shell
+<span class="w">  </span>:t<span class="w"> </span>&lt;expr&gt;<span class="w">                    </span>Describe<span class="w"> </span>result<span class="w"> </span>of<span class="w"> </span>evaluation
+<span class="w">  </span>:u<span class="w"> </span>&lt;expr&gt;<span class="w">                    </span>Build<span class="w"> </span>derivation,<span class="w"> </span><span class="k">then</span><span class="w"> </span>start<span class="w"> </span>nix-shell
+<span class="w">  </span>:doc<span class="w"> </span>&lt;expr&gt;<span class="w">                  </span>Show<span class="w"> </span>documentation<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span><span class="nb">builtin</span><span class="w"> </span><span class="k">function</span>
+<span class="w">  </span>:log<span class="w"> </span>&lt;expr&gt;<span class="w">                  </span>Show<span class="w"> </span>logs<span class="w"> </span><span class="k">for</span><span class="w"> </span>a<span class="w"> </span>derivation
+<span class="w">  </span>:te,<span class="w"> </span>:trace-enable<span class="w"> </span><span class="o">[</span>bool<span class="o">]</span><span class="w">    </span>Enable,<span class="w"> </span>disable<span class="w"> </span>or<span class="w"> </span>toggle<span class="w"> </span>showing<span class="w"> </span>traces<span class="w"> </span><span class="k">for</span>
+<span class="w">                               </span>errors
+<span class="w">  </span>:?,<span class="w"> </span>:help<span class="w">                    </span>Brings<span class="w"> </span>up<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>menu
+</code></pre></div>
+<p><strong>:l</strong> komutunun bir nix doyasını (daha doğrusu bniz ifadesini) load ettiğini görebiliyoruz.</p>
+<p>Repl'de biraz detaya girmek isterseniz <a href="https://aldoborrero.com/posts/2022/12/02/learn-how-to-use-the-nix-repl-effectively/">şu sayfayı</a> tavsiye ederim.</p>
+<p>Öncelikle bir klasör oluşturalım ve içine default.nix adında bir dosya oluşturalım. Bir tane de functions.niz adında bir dosya oluşturalım. Bu dosyaları oluşturduktan sonra functions.nix dosyasına şu kodları yazalım.</p>
+<p>Nix dilinde birçok builtin fonksiyon bulunmaktadır. Bunların birçoğunu zaten göreceğiz. Altta bunlardan bir kaçını görebilirsiniz. Ne yaptıkları belli olduğu için detaylarına girmiyorum. Zaten <a href="https://nixos.org/manual/nix/stable/language/builtins.html">resmi sayfasından</a> her biri hakkında detaylı bilgi alabilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># functions.nix</span>
+<span class="p">{</span> numbers <span class="o">?</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">],</span> strings <span class="o">?</span> <span class="p">[</span><span class="s2">&quot;merhaba&quot;</span> <span class="s2">&quot;nasılsın&quot;</span><span class="p">]</span> <span class="p">}:</span>
+
+<span class="k">let</span>
+  <span class="ss">sumNumbers</span> <span class="o">=</span> list<span class="p">:</span> <span class="k">if</span> <span class="nb">builtins</span><span class="o">.</span>length list  <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="nb">builtins</span><span class="o">.</span>foldl&#39; <span class="p">(</span>x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">)</span> <span class="mi">0</span> list <span class="k">else</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="ss">concatenateStrings</span> <span class="o">=</span> list<span class="p">:</span> <span class="k">if</span> <span class="nb">builtins</span><span class="o">.</span>length list  <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="nb">builtins</span><span class="o">.</span>concatStringsSep <span class="s2">&quot; &quot;</span> list <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">sumNumbers</span> <span class="o">=</span> sumNumbers numbers<span class="p">;</span>
+  <span class="ss">concatenateStrings</span> <span class="o">=</span> concatenateStrings strings<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Üstteki kodda <code>builtins.foldl'</code> fonksiyonunun adı hakikaten böyle bu arada. Yani adında bir apostrof var.</p>
+<ul>
+<li>builtins.foldl' fonksiyonu, bir listenin elemanlarına bir fonksiyon uygular</li>
+<li>x: önceki toplam değeri, y: mevcut eleman</li>
+<li>0: başlangıç değeri</li>
+</ul>
+<p>sumNumbers ise aslında bir fonksion ve parametre olarak bir liste alıyor. Örneğin alttaki örnekte 2 parametreli bir örnek görebiliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 2 parametreli örnek</span>
+<span class="ss">toplama</span> <span class="o">=</span> a<span class="p">:</span> b<span class="p">:</span> a <span class="o">+</span> b
+
+toplama <span class="mi">1</span> <span class="mi">2</span>
+
+<span class="c1"># sonuç</span>
+<span class="mi">3</span>
+</code></pre></div>
+<p>default.nix doyası içeriği de alttaki gibi olacak.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># default.nix</span>
+
+<span class="k">let</span>
+  <span class="ss">functions</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./functions.nix</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">result</span> <span class="o">=</span> functions <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">];</span>   <span class="ss">strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span> <span class="s2">&quot; &quot;</span> <span class="s2">&quot;Nix&quot;</span><span class="p">];};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Öncelikle repl içinden functions.nix dosyasını load edelim. öncelikle absolute path'i alıyoruz. daha sonra bunu import edip kullanıyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># path alınıyor</span>
+<span class="nv">functionsPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>./functions.nix
+
+<span class="nv">functions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>functionsPath
+</code></pre></div>
+<p>Ardından functions nesnesini çağıralım</p>
+<div class="highlight"><pre><span></span><code>functions <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">];</span> <span class="ss">strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span> <span class="s2">&quot; &quot;</span> <span class="s2">&quot;Nix&quot;</span><span class="p">];</span> <span class="p">}</span>
+
+<span class="c1"># ve sonuc</span>
+
+<span class="p">{</span> <span class="ss">concatenateStrings</span> <span class="o">=</span> <span class="s2">&quot;Hello   Nix&quot;</span><span class="p">;</span> <span class="ss">sumNumbers</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div>
+<p>Burada şunu hatırlamamızda fayda var. Nix bir fonksiyonel programlama dili. Buda functions nesnesi aslında bir fonksiyon ve <strong>functions { numbers = [1 2 3 4]; strings = ["Hello" " " "Nix"]; }</strong> satırı ile bu fonksiyonu çağırmış oluyoruz. fonksiyon da bize bir set dönüyor ve içinde de concatenateStrings ve sumNumbers değişkenleri var.</p>
+<p>functions.nix dosyasını biraz daha inceleyelim. <strong>sumNumbers = list: if builtins.length list &gt; 0 then builtins.foldl' (x: y: x + y) 0 list else 0;</strong> bloğunu anlamak için alttaki gibi yazıyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fonksiyon tanımı</span>
+<span class="ss">sumNumbers</span> <span class="o">=</span> list<span class="p">:</span>
+
+<span class="c1"># Eğer liste boş değilse</span>
+<span class="k">if</span> <span class="nb">builtins</span><span class="o">.</span>length list <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">then</span>
+  <span class="c1"># builtins.foldl&#39; fonksiyonu, bir listenin elemanlarına bir fonksiyon uygular</span>
+  <span class="c1"># x: önceki toplam değeri, y: mevcut eleman</span>
+  <span class="c1"># 0: başlangıç değeri</span>
+  <span class="nb">builtins</span><span class="o">.</span>foldl&#39; <span class="p">(</span>x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">)</span> <span class="mi">0</span> list
+<span class="k">else</span>
+  <span class="c1"># Eğer liste boşsa, toplam değeri 0 olarak döndür</span>
+  <span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+<p>Şimdi kaldığımız yerden yani default.nix dosyasıyla devam edelim.</p>
+<p>repl içinden bu sefer default.nix dosyamızı yükleyelim.</p>
+<div class="highlight"><pre><span></span><code>:l<span class="w"> </span>./default.nix
+
+<span class="c1"># sonuç</span>
+Added<span class="w"> </span><span class="m">1</span><span class="w"> </span>variables.
+</code></pre></div>
+<p>Artık result değişkenimizin sonucunu görebiliriz</p>
+<div class="highlight"><pre><span></span><code>result
+<span class="o">{</span><span class="w"> </span><span class="nv">concatenateStrings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Hello   Nix&quot;</span><span class="p">;</span><span class="w"> </span><span class="nv">sumNumbers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>Daha basit örnek üzerinden devam edelim.</p>
+<p>calculator.nix adından bir dosya oluşturup alttaki kodları kopyalayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span><span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;};</span>
+  <span class="ss">sum</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">*</span> y<span class="p">;</span>
+
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">sum</span> <span class="o">=</span> sum numbers<span class="o">.</span>number1 numbers<span class="o">.</span>number2<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> mul numbers<span class="o">.</span>number1 numbers<span class="o">.</span>number2<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Daha sonra kodumuzu test etmek için <strong>nix repl</strong> komutu repl'i açıp alttaki kodları çalıştıralım.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">calcPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>./calculator.nix
+
+<span class="nv">calc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>calcPath
+
+calc
+<span class="c1"># sonuç</span>
+<span class="o">{</span><span class="w"> </span><span class="nv">mul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">200</span><span class="p">;</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>Bu haliyle calculator.nix dosyası sadece üzerindeki kodu çalıştırıyor. Yani kendi rakamlarımızla toplama veya çarpma yapamıyoıruz.</p>
+<p>Şimdi bu kodu biraz daha geliştirelim. Örneğin calculator.nix dosyasını bir fonksiyon olarak yazalım. Soru işareti default değeri atamış oluyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># calculator.nix</span>
+
+<span class="p">{</span> number1 <span class="o">?</span> <span class="mi">10</span><span class="p">,</span> number2 <span class="o">?</span> <span class="mi">20</span> <span class="p">}:</span>
+
+<span class="k">let</span>
+  <span class="ss">sum</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">*</span> y<span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">sum</span> <span class="o">=</span> sum number1 number2<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> mul number1 number2<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Artık yazdığımız fonksiyonu repl içinden çağırabiliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">calc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./calculator.nix
+
+<span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>calc<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nv">number1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span><span class="p">;</span><span class="w"> </span><span class="nv">number2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">40</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+
+result
+<span class="c1"># sonuç</span>
+<span class="o">{</span><span class="w"> </span><span class="nv">mul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1200</span><span class="p">;</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">70</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>şimdi bu dosyayı main.nix dosyasından çağıralım. main.nix dosyası içeriği alttaki gibi olacak.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">calc</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./calculator.nix</span><span class="p">;</span>
+  <span class="ss">result</span> <span class="o">=</span> calc <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="k">inherit</span> result<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Inherit anahtar kelimesini hatırlarsanız let bloğundaki değişkenleri inherit ile dışarıya aktarabilmemizi sağlıyordu.</p>
+<p>repl içinden main.nix dosyasını yükleyelim.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">main</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./main.nix
+
+main.result
+<span class="c1"># sonuç</span>
+<span class="o">{</span><span class="w"> </span><span class="nv">mul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1200</span><span class="p">;</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">70</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>Şimdi calculator modülümüzü biraz daha karmaşık hale getirelim. calcSet değişkeninden sonra gelen soru işareti eğer set için dışarıdan bir değer gelmezse default değerin atanmasını sağlıyor. Onlarda zaten sumSet ve numSet değişkenleri.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  calcSet <span class="o">?</span> <span class="p">{</span>
+    <span class="ss">sumSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="p">};</span>
+    <span class="ss">mulSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">sum</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">*</span> y<span class="p">;</span>
+
+
+
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">sum</span> <span class="o">=</span> sum calcSet<span class="o">.</span>sumSet<span class="o">.</span>numbers<span class="o">.</span>number1  calcSet<span class="o">.</span>sumSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> mul calcSet<span class="o">.</span>mulSet<span class="o">.</span>numbers<span class="o">.</span>number1  calcSet<span class="o">.</span>mulSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Artık veri yapımız iç içe set'lerden oluşuyor. Repl üzerinde alttaki komutlarla sonuçları görebiliriz.</p>
+<p>Bu sefer calc fonksiyonumuza parametre geçmedik.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">calc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./calculator.nix
+
+<span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>calc<span class="w"> </span><span class="o">{}</span>
+<span class="c1"># sonuç</span>
+<span class="o">{</span><span class="w"> </span><span class="nv">mul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">200</span><span class="p">;</span><span class="w"> </span><span class="nv">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>Şimdi örneği biraz daha geliştirelim. "Overriding" kavramını da nix dosyaları üzerinden görmüş olacağız.</p>
+<p>Alttaki kodu calculator.nix dosyamıza kopyalıyoruz. Daha doğrusu önceki dosyamızın içeriğini alttaki kodla değiştiriyoruz.</p>
+<p>İlk bakışta karışık geldiğinin farkındayım ama aslında çok basit bir mantığı var. Öncelikle ilk makalede bahsettiğimiz dile ait bir özelliği hatırlatmada fayda var. Nix dilinde bir değişkenin değeri bir kere atandıktan sonra değiştirilemez. Yani immutable. Bu durumda bir değişkenin değerini değiştirmek istediğimizde aslında yeni bir değişken oluşturuyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  calcSet <span class="o">?</span> <span class="p">{</span>
+    <span class="ss">sumSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">sumResult</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">};</span>
+    <span class="ss">mulSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">mulResult</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">sum</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">*</span> y<span class="p">;</span>
+
+  <span class="ss">sumResult</span> <span class="o">=</span> sum calcSet<span class="o">.</span>sumSet<span class="o">.</span>numbers<span class="o">.</span>number1  calcSet<span class="o">.</span>sumSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+  <span class="ss">mulResult</span> <span class="o">=</span> mul calcSet<span class="o">.</span>mulSet<span class="o">.</span>numbers<span class="o">.</span>number1  calcSet<span class="o">.</span>mulSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+  <span class="ss">result</span> <span class="o">=</span> calcSet <span class="o">//</span> <span class="p">{</span> <span class="ss">sumSet</span> <span class="o">=</span> calcSet<span class="o">.</span>sumSet <span class="o">//</span> <span class="p">{</span><span class="ss">sumResult</span> <span class="o">=</span> sumResult<span class="p">;</span> <span class="p">};</span> <span class="ss">mulSet</span> <span class="o">=</span> calcSet<span class="o">.</span>mulSet <span class="o">//</span> <span class="p">{</span> <span class="ss">mulResult</span> <span class="o">=</span> mulResult<span class="p">;</span> <span class="p">};};</span>
+
+<span class="k">in</span>
+<span class="p">{</span>
+   <span class="ss">result</span> <span class="o">=</span> result<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Örnekteki <code>result = calcSet // { sumSet = calcSet.sumSet // {sumResult = sumResult; }; mulSet = calcSet.mulSet // { mulResult = mulResult; };};</code> satırı ile sumSet ve mulSet değişkenlerinin içindeki sumResult ve mulResult değişkenlerini değiştirmiş oluyoruz. "//" operatörünü hatırlarsanız sağdaki seti soldaki sete override ediyordu. Yani soldaki setin değerlerini sağdaki setin değerleriyle değiştiriyordu. Yada farklı etiketli veriler varsa bunlarda ekleniyordu. Bu satırda amacımız mulResult değerlerini değiştirmek dolayısıyla diğer bütün değerlerin kalmasını istiyoruz. Bu da diğer değerleri yeni oluşturduğumuz sete taşımamız gerektiği anlamına geliyor.</p>
+<p>Kodumuzu nix-repl ile çalıştırıyoruz. Repl içindeyken alttaki komutlarla sonuçları görebiliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">calc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./calculator.nix
+<span class="nv">CalcResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>calc<span class="o">{}</span>
+CalcResult.result
+<span class="c1"># result { mulSet = { ... }; sumSet = { ... }; }</span>
+CalcResult.result.mulSet
+<span class="c1"># result { mulResult = 200; numbers = { ... }; }</span>
+</code></pre></div>
+<p>Kodumuzu biraz daha değiştirip <strong>with</strong> anahtar kelimesinin kullanımına bakalım. With anahtar kelimesi kullanılan set'i bir scope olarak size set içindeki attribute'lara set'in adını tekrar tekrar yazmadan kullanmanıza olanak tanır. Alttaki örnek çok anlamlı gelmeyebilir. Ancak paket kullanımlarında ve NixOS konfigürasyonlarında bir çok paketin özelliğini değiştirmek durumunda olacağız. Bu gibi yerlerde aynı kelimeyi yüzlerce kez tekrar etmek hem vakit kaybı hem de okumayı zorlaştırıyor.</p>
+<p>In bloğu içindeki resul değişkenine bakacak olursak <strong>with calcResult;</strong> satırı ile calcResult değişkenini scope olarak tanımlamış oluyoruz. Bu sayede <strong>sumResult</strong> ve <strong>mulResult</strong> değişkenlerinin başında calcResult kelimesini tekrar kullanmak zorunda kalmadık.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  calcSet <span class="o">?</span> <span class="p">{</span>
+    <span class="ss">sumSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">sumResult</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">};</span>
+    <span class="ss">mulSet</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">numbers</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">number1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">number2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">};</span> <span class="ss">mulResult</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">sum</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+  <span class="ss">mul</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">*</span> y<span class="p">;</span>
+
+  <span class="ss">calcResult</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="ss">sumResult</span> <span class="o">=</span> <span class="k">with</span> calcSet<span class="p">;</span> sum sumSet<span class="o">.</span>numbers<span class="o">.</span>number1  sumSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+                  <span class="ss">mulResult</span> <span class="o">=</span> <span class="k">with</span> calcSet<span class="p">;</span> mul mulSet<span class="o">.</span>numbers<span class="o">.</span>number1  mulSet<span class="o">.</span>numbers<span class="o">.</span>number2<span class="p">;</span>
+                  <span class="ss">allResult</span> <span class="o">=</span> calcSet <span class="o">//</span> <span class="p">{</span>
+                                            <span class="ss">sumSet</span> <span class="o">=</span> calcSet<span class="o">.</span>sumSet <span class="o">//</span> <span class="p">{</span><span class="ss">sumResult</span> <span class="o">=</span> sumResult<span class="p">;</span> <span class="p">};</span>
+                                            <span class="ss">mulSet</span> <span class="o">=</span> calcSet<span class="o">.</span>mulSet <span class="o">//</span> <span class="p">{</span> <span class="ss">mulResult</span> <span class="o">=</span> mulResult<span class="p">;};</span>
+                                          <span class="p">};</span>
+
+              <span class="p">};</span>
+<span class="k">in</span>
+<span class="p">{</span>
+   <span class="ss">result</span> <span class="o">=</span> <span class="k">with</span> calcResult<span class="p">;[</span>sumResult mulResult <span class="p">(</span><span class="k">if</span> sumResult<span class="o">&gt;</span>mulResult
+                                                    <span class="k">then</span> <span class="s2">&quot;toplama sonucu çarpmadan daha büyük&quot;</span>
+                                                    <span class="k">else</span> <span class="s2">&quot;çarpma sonucu toplamadan daha büyük&quot;</span><span class="p">)</span>
+                            <span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Sonucu görmek için repl içinden alttaki komutları çalıştırabiliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">calc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./calculator.nix
+
+<span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>calc<span class="o">{}</span>
+
+result.result
+
+<span class="c1"># sonuç [ 30 200 &quot;çarpma sonucu toplamadan daha büyük&quot; ]</span>
+</code></pre></div>
+<p>Bu arada biraz araştırdığınızda diğer kullanıcıların yazmış oldukları nix dosyalarında <strong>with</strong> kullanımının çok yaygın olduğunu görebilirsiniz. Ancak genellikle paket kullanımı ile ilgili olduğunu göreceksiniz. Bunun dışında kullanımı çok tavsiye edilmiyor. En büyük sebepleri ise namespace yapısını bozması, hataya çok açık olması ve kodun okunabilirliğini azaltması diyebiliriz.</p>
+<p>Diğer bilinmesi gereken bir konu da with'de scope'un dışı önceliklidir. Yani with anahtar sözcüğü set dışını override etmez. Örnekle daha iyi anlayacağız.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">myattrset</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">in</span>
+  <span class="k">with</span> myattrset<span class="p">;</span> <span class="s2">&quot;a&#39;nın değeri: </span><span class="si">${</span><span class="nb">toString</span> a<span class="si">}</span><span class="s2"> ve b&#39;nin değeri:  </span><span class="si">${</span><span class="nb">toString</span> b<span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Bu yazımda myattrset kelimesini a ve b elemanlarının başına yazmadan kullanabildik.
+Buradan dönecek değer <code>a'nın değeri: 1 ve b'nin değeri: 2</code> şeklinde olacaktır. Bu zaten beklediğimiz bi durum. Şimdi alttaki kodu inceleyelim.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="k">in</span>
+  <span class="k">with</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">};</span> <span class="s2">&quot;a&#39;nın değeri: </span><span class="si">${</span><span class="nb">toString</span> a<span class="si">}</span><span class="s2"> ve b&#39;nin değeri:  </span><span class="si">${</span><span class="nb">toString</span> b<span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Buranın sonucu ise <code>a'nın değeri: 3 ve b'nin değeri: 2</code> olacaktır. Gördüğünüz üzere burada scop dışındaki a'nın değeri hala geçerlidir. Yani Nix dili shadow variable kullanımına izin vermez.</p>
+<p>İlerleyen yazılarda veya incelemelerinizde with anahtar sözcüğünün paketlerle ilgili işlemlerde ne kadar çok kullanıldığını göreceksiniz. Community bunu çok sık kullanıyor çünkü paketlerle alakalı işlemlerde kodu daha okunabilir kılıyor ve kısaltıyor. Diğer bir fayda olarak <code>let myValue = ...; with lib; doSomethingWith myValue</code> gibi bir kod yazan developer doğal olarak myvalue değişkeninin lib içinde ezilmesini istemeyecektir.</p>
+<p>Shadow variable kullanımına bir tek nested with kullanımında izin verilir. Alltaki örnekte sonuç inner olacaktır.</p>
+<div class="highlight"><pre><span></span><code>nix-repl<span class="o">&gt;</span> <span class="k">with</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="s2">&quot;outer&quot;</span><span class="p">;</span> <span class="p">};</span> <span class="k">with</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="s2">&quot;inner&quot;</span><span class="p">;</span> <span class="p">};</span> x
+<span class="s2">&quot;inner&quot;</span>
+</code></pre></div>
+<h2 id="recursive-list-kullanm">Recursive List Kullanımı</h2>
+<p>Temel amacı set içindeki herhangi bir elementin set içindeki diğer elementlerle birlikte kullanılmasını sağlamaktır.</p>
+<p>Ayrıca ağaç yapısında bir veri yapısı oluşturmak istediğimizde de kullanabiliriz.</p>
+<p>basit bir örnekle başlayalım. Alttaki kodu rec.nix adında bir dosyaya kopyalayalım.</p>
+<p>mySet tanımına bakacak olursanız d değişkenine ait veri a değişkeninin bir arttırılmasıyla oluşturuluyor.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+
+<span class="ss">mySet</span> <span class="o">=</span> <span class="k">rec</span> <span class="p">{</span><span class="ss">a</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span><span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="ss">c</span><span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="ss">d</span><span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;};</span>
+
+<span class="k">in</span>
+<span class="p">{</span>
+   <span class="k">inherit</span> mySet<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>kodu çalıştırmak için repl içinden alttaki komutları çalıştırabiliriz.</p>
+<div class="highlight"><pre><span></span><code>:l<span class="w"> </span>./rec.nix
+
+<span class="c1"># Added 1 variables.</span>
+<span class="w"> </span>mySet
+<span class="o">{</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nv">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">;</span><span class="w"> </span><span class="nv">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<p>Daha karmaşık bir örnek yapalım. Bu sefer bir ağaç yapısı oluşturacağız. alttaki kodları family.nix adında bir dosyaya kopyalayalım.</p>
+<p>Dikkat ederseniz bütün bireylerin soyadları lastname elementinden alınmış. Annenin yaşı babaya göre ve çocuğun yaşı da anneye göre hesaplanmış.</p>
+<p>Ayrıca birbirleriyle oan ilişkileri de recursive list içindeki diğer element ile belirtilmiş. Örneğin baba elementi içindeki wife elementi annenin kendisi. Aynı şekilde anne elementi içindeki husband elementi babanın kendisi. Çocuk elementi içindeki mother elementi annenin kendisi ve father elementi babanın kendisi.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+
+  <span class="ss">family</span> <span class="o">=</span> <span class="k">rec</span> <span class="p">{</span><span class="ss">lastname</span> <span class="o">=</span> <span class="s2">&quot;Yılmaz&quot;</span><span class="p">;</span>
+                <span class="ss">father</span> <span class="o">=</span> <span class="p">{</span><span class="ss">name</span><span class="o">=</span><span class="s2">&quot;Mehmet&quot;</span><span class="p">;</span> <span class="ss">lastname</span><span class="o">=</span>lastname<span class="p">;</span> <span class="ss">age</span> <span class="o">=</span> <span class="mi">40</span><span class="p">;</span> <span class="ss">wife</span> <span class="o">=</span> mother<span class="p">;</span> <span class="ss">child</span> <span class="o">=</span> child<span class="p">;};</span>
+                <span class="ss">mother</span> <span class="o">=</span> <span class="p">{</span><span class="ss">name</span><span class="o">=</span><span class="s2">&quot;Ayşe&quot;</span><span class="p">;</span> <span class="ss">lastname</span><span class="o">=</span>father<span class="o">.</span>lastname<span class="p">;</span> <span class="ss">age</span> <span class="o">=</span> father<span class="o">.</span>age <span class="o">-</span> <span class="mi">3</span><span class="p">;</span> <span class="ss">husband</span> <span class="o">=</span> father<span class="p">;</span> <span class="ss">child</span> <span class="o">=</span> child<span class="p">;};</span>
+                <span class="ss">child</span> <span class="o">=</span> <span class="p">{</span><span class="ss">name</span><span class="o">=</span><span class="s2">&quot;Ali&quot;</span><span class="p">;</span> <span class="ss">lastname</span><span class="o">=</span>mother<span class="o">.</span>lastname<span class="p">;</span> <span class="ss">age</span> <span class="o">=</span> mother<span class="o">.</span>age <span class="o">-</span> <span class="mi">30</span><span class="p">;</span> <span class="ss">mother</span> <span class="o">=</span> mother<span class="p">;</span> <span class="ss">father</span> <span class="o">=</span> father<span class="p">;};</span>
+                <span class="p">};</span>
+
+<span class="k">in</span>
+<span class="p">{</span>
+   <span class="k">inherit</span> family<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Örneğin babanın çocuğunun annesinin adını almak için alttaki komutu çalıştırabiliriz.
+Öncelikle repl</p>
+<div class="highlight"><pre><span></span><code>:l<span class="w"> </span>./rec.nix
+
+<span class="c1"># result Added 1 variables.</span>
+
+family.father.child.mother.name
+
+<span class="c1"># result &quot;Ayşe&quot;</span>
+</code></pre></div>
+<p>Bunu yapmamızı sağlayan Nix dilinin laziness olmasıdır. Bu sayede zaten dil içindeki bir değişkenin değeri hesaplanmadan başka bir değişkende kullanılabilir. Bu aynı zamanda Nix dilinin çok kuvvetli declarative bir dil olmasını sağlıyor.</p>
+<p>Bu arada bu durum modüller import edilmesinde de geçerlidir. Yani aynı anda bir modül başka bir modülü import ederken import edilen modül de import edeni import edebilir. Böyle yazınca karmaşık geliyor ama aslında çok basit. Mesela "A.nix" dosyası "B.nix" doyasını import ederken "B.nix" dosyası da "A.nix" doyasını import edebilir.</p>
+<h2 id="nix-dilinde-loop-ve-recursive-fonksiyon-kullanm">Nix Dilinde Loop ve Recursive Fonksiyon Kullanımı</h2>
+<p>Nix dilinde bildiğimiz anlamda diğer dillerdeki gibi bir loop kavramı yoktur. Yani örneğin for, while, foreach gibi döngüleri kullanamayız. Ancak recursive fonksiyonlar kullanarak döngü mantığını oluşturabiliriz. Altta recursive fonksiyon yazılımını göreceğiz ancak bu tabii ki örneğin bir listedeki elemanları dolaşmamızı sağlamaz. Bunu için bir sonraki makalemizde paketlerin kullanımı ile birlikte loop kurgusunun da nasıl çalıştığını görmüş olacağız.</p>
+<p>Bunun için basit bir örnek yapacağız. Amacımız verilen pozitif bir sayıya kadar bütün rakamların toplamını almak.</p>
+<p>Bu sefer bir fonksiyon olarak tanımlayacağız.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>num<span class="o">?</span> <span class="p">{</span><span class="ss">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;}}:</span>
+<span class="k">let</span>
+    <span class="ss">sumAll</span> <span class="o">=</span> num1<span class="p">:</span> <span class="k">if</span> num1 <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">then</span> num1 <span class="k">else</span> <span class="k">if</span>  num1 <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">then</span> num1 <span class="o">+</span> sumAll <span class="p">(</span>num1 <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+<span class="ss">result</span> <span class="o">=</span> sumAll num<span class="o">.</span>num<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Test etmek için repl içinden alttaki komutları çalıştırabiliriz.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">recursive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>import<span class="w"> </span>./recursive.nix
+<span class="nv">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>recursive<span class="o">(</span><span class="m">3</span><span class="o">)</span>
+<span class="c1"># result { result = 6; }</span>
+</code></pre></div>
+<h2 id="formatter">Formatter</h2>
+<p>Formetter'lar programlama dillerindeki ifadeleri düzenlemek ve biçimlendirmek için kullanılır. Bu, kodumuzun okunabilirliğini artırır ve genellikle kod tabanında tutarlılık sağlamak için kullanılır.</p>
+<p>Nix ifadeleri, paketlerin ve sistem yapılandırmasının açıklanmasında kullanılan bir dil olduğundan, kodun anlaşılması ve yönetilmesi için düzenli bir biçimde tutulması önemlidir. Formatter, bu tür ifadeleri otomatik olarak biçimlendirerek, kod tabanının bakımını kolaylaştırır ve farklı geliştiriciler arasında tutarlılık sağlar. Bu, karmaşık sistem yapılandırmalarının veya paket setlerinin yönetilmesinde faydalıdır.</p>
+<p>Formetter'lar daha çok community desteğiyle yürüyor. Resmi Github sayfası için <a href="https://github.com/nix-community/nixpkgs-fmt">şu linki</a> ziyaret edebilirsiniz.</p>
+<p>En çok kullanılan formatter ve en güncel tutulanı gördüğüm kadarıyla <a href="https://github.com/kamadorueda/alejandra">Alejandra</a> görünüyor. Bir çok ide için plugin'leri bulunuyor. Nasıl kullanılacağına dair bilgiler sayfasında mevcut zaten. İkinci olarak da <a href="https://github.com/nix-community/nixpkgs-fmt">nixpkgs-fmt</a>'a da bakabilirsiniz. ikissinin de VS Code için plugin'leri bulunuyor.</p>
+<p>Tam olarak nasıl çalıştığını online görmek için <a href="https://kamadorueda.com/alejandra/">şu sayfayı</a> ziyaret edebilirsiniz.</p>
+<h2 id="referanslar">Referanslar</h2>
+<ul>
+<li><a href="https://github.com/tazjin/nix-1p/blob/master/README.md">https://github.com/tazjin/nix-1p/blob/master/README.md</a></li>
+<li><a href="https://nixos-and-flakes.thiscute.world/">https://nixos-and-flakes.thiscute.world/</a></li>
+<li><a href="https://nixos.wiki/wiki/Overview_of_the_Nix_Language">https://nixos.wiki/wiki/Overview_of_the_Nix_Language</a></li>
+<li><a href="https://dram.page/p/nix-lang-with/">https://dram.page/p/nix-lang-with/</a></li>
+<li><a href="https://stackoverflow.com/questions/46135417/trouble-understanding-with-statement-in-nix-expression">https://stackoverflow.com/questions/46135417/trouble-understanding-with-statement-in-nix-expression</a></li>
+<li><a href="https://nix.dev/guides/best-practices#with-attrset-expression">https://nix.dev/guides/best-practices#with-attrset-expression</a></li>
+<li><a href="https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55">https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

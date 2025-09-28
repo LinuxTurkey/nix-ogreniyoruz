@@ -1,0 +1,2177 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nix_lang/01_nix_dili_ve_ozellikleri.html">
+      
+      
+        <link rel="prev" href="../index.html">
+      
+      
+        <link rel="next" href="02_nix_dili_alistirmalari.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Nix Dili ve Özellikleri - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Nix Dili ve Özellikleri - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_lang/01_nix_dili_ve_ozellikleri.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nix_lang/01_nix_dili_ve_ozellikleri.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Nix Dili ve Özellikleri - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_lang/01_nix_dili_ve_ozellikleri.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nix-dili-ve-ozellikleri" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Nix Dili ve Özellikleri
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="01_nix_dili_ve_ozellikleri.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dilinin-tanm-ve-amaclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dilinin Tanımı ve Amaçları
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dili" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dili
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-kurulum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Kurulum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veri-tipleri" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veri Tipleri
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Veri Tipleri">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atoms-atomlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atoms (Atomlar)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saylar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sayılar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dizgiler-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dizgiler (Strings)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listeler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listeler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fonksiyonlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-fonksiyonlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Fonksiyonlar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-yol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path (Yol)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operatorler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operatörler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#degisken-tanmlama" class="md-nav__link">
+    <span class="md-ellipsis">
+      Değişken Tanımlama
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyon-tanmlama" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyon Tanımlama
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyonlarda-geri-deger-dondurmek" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlarda geri değer döndürmek
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyonlarda-coklu-arguman-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlarda çoklu arguman kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kosullar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Koşullar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inherit-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inherit kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#with-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      With Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-veri-turu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path veri türü
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-nix_path-ve-kavramlar-hakknda" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import, NIX_PATH ve kavramları hakkında
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modul-kavram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modül Kavramı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overrride-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overrride kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="02_nix_dili_alistirmalari.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_shell_ve_profile.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/override_ve_overlay.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_package/developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dilinin-tanm-ve-amaclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dilinin Tanımı ve Amaçları
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-dili" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Dili
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-kurulum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Kurulum
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#veri-tipleri" class="md-nav__link">
+    <span class="md-ellipsis">
+      Veri Tipleri
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Veri Tipleri">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atoms-atomlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Atoms (Atomlar)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saylar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sayılar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dizgiler-strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dizgiler (Strings)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listeler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Listeler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fonksiyonlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#built-in-fonksiyonlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Built-in Fonksiyonlar
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#path-yol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path (Yol)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operatorler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operatörler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#degisken-tanmlama" class="md-nav__link">
+    <span class="md-ellipsis">
+      Değişken Tanımlama
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyon-tanmlama" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyon Tanımlama
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyonlarda-geri-deger-dondurmek" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlarda geri değer döndürmek
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonksiyonlarda-coklu-arguman-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fonksiyonlarda çoklu arguman kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kosullar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Koşullar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inherit-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inherit kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#with-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      With Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#path-veri-turu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Path veri türü
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-nix_path-ve-kavramlar-hakknda" class="md-nav__link">
+    <span class="md-ellipsis">
+      Import, NIX_PATH ve kavramları hakkında
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modul-kavram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modül Kavramı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overrride-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overrride kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nix_lang/01_nix_dili_ve_ozellikleri.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nix_lang/01_nix_dili_ve_ozellikleri.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="nix-dili-ve-ozellikleri">Nix Dili ve Özellikleri</h1>
+<p>Bir önceki makalemizde NisOs dünyasını biraz tanımaya çalıştık. bu yazımızda Nix dilinin syntax'ini ve özelliklerini öğrenmeye çalışacağız.</p>
+<ul>
+<li><strong>Nix Dili:</strong> Nix dili C++ ile yazılmış fonksiyonel bir dildir. Yapı olarak Haskell diline benzer. Aynı amaçla geliştirilmiş bir de GNU Guile dili geliştirilmiştir bu dilde Lisp dilinden esinlenmiştir. Ancak Guile dili Nix'e göre daha karmaşıktır, öğrenmesi zordur.</li>
+<li><strong>Nix Paket Yöneticisi:</strong> Nix dili kullanılarka geliştirilmiş cross platform bir paket yöneticisidir. Aynı mantıkta geliştirilmiş bir de GNU Guix paket yöneticisi vardır (GNU Guile diliyle geliştirilmiş). Nix paket yöneticisi 2003 yılında geliştirilşmeye başlanmışken Guix 2013 yılında geliştirlmeye başlanmıştr, Nix'e göre topluluğu yok denecek kadar az.</li>
+<li><strong>NixOS İşletim Sistemi:</strong> Nix paket yönetcisini kullanan ve Nix dili ile konfigürasyou yapılan declarative bir işletim sistemidir.</li>
+<li><strong>Nixpkgs:</strong> Nix paket yöneticisinin paket deposudur (package repository).</li>
+</ul>
+<h2 id="nix-dilinin-tanm-ve-amaclar">Nix Dilinin Tanımı ve Amaçları</h2>
+<p>Nix, özellikle NixOS işletim sistemi ve Nix paket yöneticisi üzerinde odaklanan bir fonksiyonel dil ve sistem aracıdır. Nix dilinin temel amacı, paket yönetimi ve sistem konfigürasyonunu fonksiyonel programlama prensiplerini kullanarak ele almak ve bu işlemleri güvenli ve tekrarlanabilir bir şekilde gerçekleştirmektir. İşte Nix dilinin temel amaçlarından bazıları:</p>
+<ol>
+<li>
+<p><strong>Tekrarlanabilirlik ve İzolasyon:</strong> Nix, her paketin ve sistem konfigürasyonunun bağımlılıklarını ve versiyonlarını kesin bir şekilde belirtme yeteneği ile bilinir. Bu, herhangi bir ortamda aynı paket ve konfigürasyonun kurulmasını ve çalıştırılmasını sağlar.</p>
+</li>
+<li>
+<p><strong>Fonksiyonel Paket Yönetimi:</strong> Nix, paketleri fonksiyonel programlama prensiplerine dayalı olarak yönetir. Her paket, dışsal bağımlılıkları ile birlikte bir fonksiyon olarak tanımlanır. Bu sayede paketler birbirinden izole edilir ve sistemdeki başka paketlerin durumunu etkilemez.</p>
+</li>
+<li>
+<p><strong>İşletim Sistemi Konfigürasyonu:</strong> NixOS, Nix dilini kullanarak yapılandırılmış bir işletim sistemidir. Sistem konfigürasyonu, Nix dilinde ifade edilen bir fonksiyon olarak temsil edilir. Bu, sistem yapılandırmasının da tekrarlanabilir ve sürdürülebilir olmasını sağlar.</p>
+</li>
+<li>
+<p><strong>Değişmez Paket Yönetimi:</strong> Nix, her paketin ve sistem konfigürasyonunun belirli bir versiyonunu ve durumunu saklar. Bu durum, değişmez paket yönetimini sağlar ve geriye dönük uyumluluğu artırır.</p>
+</li>
+<li>
+<p><strong>Çoklu Ortam Desteği:</strong> Nix, aynı paketlerin farklı ortamlara (geliştirme, test, üretim) kurulmasını destekler. Her ortam, aynı paketin farklı versiyonlarına veya konfigürasyonlarına sahip olabilir.</p>
+</li>
+</ol>
+<p>Nix, genellikle yazılım geliştirme ve sistem yönetimi süreçlerini daha güvenli, tekrarlanabilir ve yönetilebilir hale getirmek için kullanılır.</p>
+<h2 id="nix-dili">Nix Dili</h2>
+<p>Nix, bir fonksiyonel dil olan bir paket yönetim sistemi ve dilidir.</p>
+<ol>
+<li>
+<p><strong>Fonksiyonel Dil:</strong>
+   Nix, fonksiyonel programlama paradigmasını benimser. Bu, değişmezlik ve fonksiyonların birinci sınıf vatandaşlar olarak kabul edilmesi anlamına gelir. Nix ifadeleri de fonksiyonlar olarak düşünülür ve değişmezlik ilkesine uyar.</p>
+</li>
+<li>
+<p><strong>Değişmezlik:</strong>
+   Nix dilinde, bir kere tanımlandıktan sonra değerler değiştirilemez. Bu, bir paket ya da ifade bir kere oluşturulduğunda, onunla ilişkilendirilen değerlerin değişmeyeceği anlamına gelir. Bu özellik, sistem durumunun tahmin edilebilir ve tekrar üretilebilir olmasını sağlar.</p>
+</li>
+<li>
+<p><strong>Tek Bir Dil:</strong>
+   Nix hem bir paket yönetimi sistemi hem de bir dil olduğu için, aynı dilin paket tanımlamalarında ve konfigürasyon dosyalarında kullanılmasına izin verir. Bu, dilin genel bir tutarlılık ve bütünlük sağlamasına yardımcı olur.</p>
+</li>
+<li>
+<p><strong>İfade Dilinde Tanımlama:</strong>
+   Nix ifadeleri, paketlerin, ortamların ve diğer sistem bileşenlerinin tanımlandığı bir dilde yazılır. Bu ifadeler, bir dilin içinde bir başka dil gibi ifade edilebilir ve yorumlanabilir. Bu, Nix'in esnekliğini artırır.</p>
+</li>
+<li>
+<p><strong>Lazy Evaluation (Gecikmeli Değerlendirme):</strong>
+   Nix, gecikmeli değerlendirme kullanarak sadece ihtiyaç duyulduğunda bir ifadenin değerlendirilmesini sağlar. Bu, kaynakları verimli bir şekilde kullanmayı ve gereksiz işlemleri önlemeyi amaçlar.</p>
+</li>
+<li>
+<p><strong>Bağımsız ve Taşınabilir Paketler:</strong>
+   Nix paketleri, sistem bağımlılıklarını izole edilmiş bir şekilde içerir. Bu, bir paketin bir sistemden diğerine taşınabilmesini sağlar. Her paket, kendi bağımlılıklarını ve sistem kütüphanelerini içerir.</p>
+</li>
+<li>
+<p><strong>Çoğaltılabilir Paket Kurulumları:</strong>
+   Nix, paketlerin belirli sürümlerini ve bağımlılıklarını çoğaltılabilir şekilde tanımlamak için kullanılır. Bu, projenin farklı sistemlerde tutarlı bir şekilde çalıştırılmasına olanak tanır.</p>
+</li>
+<li>
+<p><strong>NixOps ve NixOS:</strong>
+   Nix, ayrıca NixOS adlı bir işletim sistemi ve NixOps adlı bir sistem yönetimi aracıyla birleştirildiğinde güçlü bir sistem yönetim çözümü sunar. NixOps, Nix dilini kullanarak ölçeklenebilir sistem yapılandırmalarını yönetmeye olanak tanır.</p>
+</li>
+</ol>
+<p>Bu özellikler, Nix'in güçlü bir paket yönetim sistemi ve sistem konfigürasyon dilini tanımlayan temel karakteristikleridir. Bu özellikler, sistemlerin tekrar üretilebilir ve güvenilir bir şekilde yapılandırılmasına, paketlenmesine ve yönetilmesine olanak tanır.</p>
+<h2 id="nix-kurulum">Nix Kurulum</h2>
+<p>Mümkünse NixOS'a geçene kadar NixOS işletim sistemi dışında başka bir Linux dağıtımı kullanın. Bu nedenle Doğrudan NixOS kurulumu değil Nix paket yöneticisini kuracağız. <a href="https://nixos.org/download">Resmi sayfasından</a> kurulumları yapabilirsiniz. Zeten her işletim sistemi için bir script var onu çalıştırmanız yeterli.</p>
+<p>Sadece kurulum bittikten sonra flake'i enable etmemiz gerekiyor. Bunun için <code>~/.config/nix/nix.conf</code> veya `/etc/nix/nix.conf' dosyasına aşağıdaki satırı ekleyin.</p>
+<div class="highlight"><pre><span></span><code>experimental-features = nix-command flakes
+</code></pre></div>
+<h2 id="veri-tipleri">Veri Tipleri</h2>
+<p>Nix dili, NixOS ve Nix paket yöneticisi tarafından kullanılan özel bir dildir. Nix dilinde, bir dizi farklı veri tipi bulunur. İşte temel veri tipleri:</p>
+<h3 id="atoms-atomlar">Atoms (Atomlar)</h3>
+<ul>
+<li><code>true</code>: Mantıksal doğru.</li>
+<li><code>false</code>: Mantıksal yanlış.</li>
+<li><code>null</code>: Boş değer.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="no">true</span>
+<span class="no">false</span>
+<span class="no">null</span>
+</code></pre></div>
+<h3 id="saylar">Sayılar</h3>
+<ul>
+<li>Tam sayılar (<code>integer</code>): 1, 42, -10 gibi.</li>
+<li>Ondalıklı sayılar (<code>float</code>): 3.14, -0.5 gibi.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="mi">42</span>
+<span class="mf">3.14</span>
+</code></pre></div>
+<h3 id="dizgiler-strings">Dizgiler (Strings)</h3>
+<ul>
+<li>Tek tırnak (<code>'</code>) veya çift tırnak (<code>"</code>) içinde ifade edilir.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;Merhaba, dünya!&quot;</span>
+<span class="err">&#39;</span>This is a string<span class="o">.</span><span class="err">&#39;</span>
+</code></pre></div>
+<h3 id="listeler">Listeler</h3>
+<ul>
+<li>Elemanları boşlukla ayrılmış, köşeli parantez içinde ifade edilir.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span><span class="p">]</span>
+<span class="p">[</span><span class="s2">&quot;elma&quot;</span> <span class="s2">&quot;armut&quot;</span> <span class="s2">&quot;kiraz&quot;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="setler">Setler</h3>
+<ul>
+<li>Anahtar-değer çiftlerini içerir. Anahtarlar benzersiz olmalıdır.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="ss">anahtar</span> <span class="o">=</span> <span class="s2">&quot;değer&quot;</span><span class="p">;</span> <span class="ss">başkaAnahtar</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div>
+<h3 id="fonksiyonlar">Fonksiyonlar</h3>
+<ul>
+<li>Fonksiyonlar, <code>arg1: body</code> şeklinde ifade edilir.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>arg<span class="p">:</span> arg <span class="o">*</span> <span class="mi">2</span>
+</code></pre></div>
+<h3 id="built-in-fonksiyonlar">Built-in Fonksiyonlar</h3>
+<ul>
+<li><code>builtins</code> modülü içinde bir dizi yerleşik fonksiyon bulunur. Örneğin, <code>length</code>, <code>map</code>, <code>filter</code>, <code>throw</code>, vb.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nb">builtins</span><span class="o">.</span>length <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span> <span class="p">(</span>x<span class="p">:</span> x <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="path-yol">Path (Yol)</h3>
+<ul>
+<li>Bir dosya veya dizin yolu ifade eder.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="l">/home/kullanici/dosya.txt</span>
+<span class="l">./proje</span>
+</code></pre></div>
+<p>Bu temel veri tipleri, Nix dilindeki temel yapı taşlarını oluşturur. Nix dilinde daha karmaşık veri yapıları ve modüller de bulunabilir, ancak bu, temel veri tipleridir.</p>
+<h2 id="operatorler">Operatörler</h2>
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+, -, *, /</td>
+<td>Numerik Operatörler</td>
+</tr>
+<tr>
+<td>+</td>
+<td>String Birleştirme</td>
+</tr>
+<tr>
+<td>++</td>
+<td>Liste Birleştirme</td>
+</tr>
+<tr>
+<td>==</td>
+<td>Eşitlik</td>
+</tr>
+<tr>
+<td>&gt;, &gt;=, &lt;, &lt;=</td>
+<td>Büyüklük Karşılaştırma</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>Mantıksal <code>AND</code></td>
+</tr>
+<tr>
+<td>||</td>
+<td>Mantısksal <code>OR</code></td>
+</tr>
+<tr>
+<td>e1 -&gt; e2</td>
+<td>Mantıksal gerektirme (örneğin e1 önermesi doğru ise (true) e2 de doğrudur)</td>
+</tr>
+<tr>
+<td>!</td>
+<td>Mantıksal olarak tersini alma (örneğin true ise false yapmak)</td>
+</tr>
+<tr>
+<td>set.attr</td>
+<td>bir set'in bir attribute'una ulaşmak için</td>
+</tr>
+<tr>
+<td>set ? attribute</td>
+<td>bir set'in yazılan attribute'ı içerip içermediğini kontrol eder. (örneğin {a=1;b=2;c=3;} ? b, burada sonuç true olur)</td>
+</tr>
+<tr>
+<td>left // right</td>
+<td>sağdaki set'i soldaki set ile birleştirir (örneğin {a=1; b=2; c=3;} // {d=4; e=5; f=6;})</td>
+</tr>
+</tbody>
+</table>
+<h2 id="degisken-tanmlama">Değişken Tanımlama</h2>
+<p>Evet, Nix dilinde bir değişkeni tanımlamak ve kullanmak için <code>let</code> anahtar kelimesi kullanılır. <code>let</code> ifadesi, bir blok içinde geçici değişkenler tanımlamak için kullanılır ve bu değişkenler, sadece <code>in</code> anahtar kelimesinden sonraki kapsamda geçerlidir.</p>
+<p>İşte bir örnek:</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">myVariable</span> <span class="o">=</span> <span class="s2">&quot;Merhaba, Dünya!&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+  myVariable
+</code></pre></div>
+<p>Bu örnekte, <code>myVariable</code> adlı bir değişken tanımlanmış ve bu değişken <code>"Merhaba, Dünya!"</code> değeri ile initialize edilmiştir. Ardından <code>in</code> anahtar kelimesi ile bu değişkenin kullanıldığı bir kapsam (scope) tanımlanmıştır. <code>myVariable</code>, bu kapsamın içinde geçerli bir değişken haline gelir.</p>
+<p>Bir başka örnek ile bir dizi tanımlama ve bu dizi üzerinde işlem yapma:</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">myNumbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">];</span>
+  <span class="ss">doubledNumbers</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span> <span class="p">(</span>x<span class="p">:</span> x <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> myNumbers<span class="p">;</span>
+<span class="k">in</span>
+  doubledNumbers
+</code></pre></div>
+<p>Bu örnekte, <code>myNumbers</code> adlı bir dizi tanımlanmış ve ardından bu dizi üzerinde bir <code>map</code> işlemi gerçekleştirilerek her elemanı iki ile çarpılmış yeni bir dizi olan <code>doubledNumbers</code> oluşturulmuştur.</p>
+<p><code>let</code> ifadesi, Nix dilinde birçok durumda kullanılabilir ve özellikle fonksiyonlar veya derivasyonlar (derivation) içinde geçici değişkenler tanımlamak için sıklıkla kullanılır.</p>
+<h2 id="fonksiyon-tanmlama">Fonksiyon Tanımlama</h2>
+<p>Tabii ki, Nix dilinde fonksiyonlar, genellikle <code>pkgs</code> (paketler), <code>lib</code> (standart kütüphane) ve diğer Nix modüllerinde yaygın olarak kullanılır. Bir fonksiyonu kullanımını anlamak için, bir örnek üzerinden gitmek faydalı olabilir.</p>
+<p>Öncelikle, basit bir fonksiyon tanımlayalım. Aşağıdaki örnekte, bir sayının karesini bulan bir fonksiyon tanımlanmıştır:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fonksiyon tanımlama</span>
+<span class="ss">square</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">*</span> x<span class="p">;</span>
+
+<span class="c1"># Fonksiyonu kullanma</span>
+<span class="ss">result</span> <span class="o">=</span> square <span class="mi">5</span><span class="p">;</span>  <span class="c1"># result şimdi 25 değerine sahip</span>
+</code></pre></div>
+<p>Bu örnekte <code>square</code> adında bir fonksiyon tanımlanmıştır. Fonksiyon, bir argüman olan <code>x</code>'i alır ve <code>x * x</code> işlemi ile karesini hesaplar. Daha sonra <code>square</code> fonksiyonu, <code>5</code> sayısı ile çağrılarak <code>result</code> değişkenine atanır ve <code>result</code> değeri 25 olur.</p>
+<p>Nix dilinde fonksiyonlar genellikle <code>lib</code> modülündeki fonksiyonlar gibi standart kütüphane tarafından sağlanır. Aşağıda, <code>lib</code> modülündeki <code>concatStrings</code> fonksiyonunu kullanarak bir örnek bulunmaktadır:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> lib <span class="p">}:</span>
+
+<span class="c1"># Fonksiyonu kullanma</span>
+<span class="ss">result</span> <span class="o">=</span> lib<span class="o">.</span>concatStringsSep <span class="s2">&quot;, &quot;</span> <span class="p">[</span><span class="s2">&quot;merhaba&quot;</span><span class="p">,</span> <span class="s2">&quot;dünya&quot;</span><span class="p">];</span>
+</code></pre></div>
+<p>Bu örnekte, <code>lib.concatStringsSep</code> fonksiyonu, bir liste içindeki dizeleri belirtilen ayırıcı (sep) ile birleştirir. Sonuç olarak, <code>result</code> değişkeni <code>"merhaba, dünya"</code> değerine sahip olacaktır.</p>
+<p>Fonksiyonlar, Nix dilinde ifadeleri daha modüler ve yeniden kullanılabilir hale getirmek için kullanılır. Bu fonksiyonlar genellikle özellikle paket tanımlamalarında, sistem konfigürasyonunda ve diğer Nix ifadelerinde yaygın olarak kullanılır.</p>
+<p>Biraz daha karmaşık bir örnek. Bu örnekte, iki sayının toplamını, farkını, çarpımını ve bölümünü hesaplayan bir fonksiyon tanımlayacağız:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fonksiyon tanımlama</span>
+<span class="ss">calculate</span> <span class="o">=</span> <span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">sum</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+    <span class="ss">difference</span> <span class="o">=</span> a <span class="o">-</span> b<span class="p">;</span>
+    <span class="ss">product</span> <span class="o">=</span> a <span class="o">*</span> b<span class="p">;</span>
+    <span class="ss">division</span> <span class="o">=</span> <span class="k">if</span> b <span class="o">!=</span> <span class="mi">0</span> <span class="k">then</span> a <span class="o">/</span> b <span class="k">else</span> <span class="s2">&quot;Bölme hatası: b sıfıra bölünemez!&quot;</span><span class="p">;</span>
+  <span class="k">in</span>
+    <span class="p">{</span> <span class="ss">sum</span> <span class="o">=</span> sum<span class="p">;</span> <span class="ss">difference</span> <span class="o">=</span> difference<span class="p">;</span> <span class="ss">product</span> <span class="o">=</span> product<span class="p">;</span> <span class="ss">division</span> <span class="o">=</span> division<span class="p">;</span> <span class="p">};</span>
+
+<span class="c1"># Fonksiyonu kullanma</span>
+<span class="ss">result</span> <span class="o">=</span> calculate <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<p>Bu örnekte, <code>calculate</code> adlı bir fonksiyon tanımlanmıştır. Bu fonksiyon, <code>{ a, b }</code> şeklinde iki parametre alır. Ardından, <code>let</code> bloğu içinde toplam, fark, çarpım ve bölme işlemleri gerçekleştirilir. Bölme işleminde <code>if</code> ifadesi kullanılarak sıfıra bölme hatası kontrol edilir. Son olarak, bir tuple içinde hesaplanan değerler döndürülür.</p>
+<p>Bu fonksiyonu kullanmak için, <code>calculate</code> fonksiyonuna bir parametre objesi gönderilir ve dönen değer <code>result</code> değişkenine atanır. <code>result</code> değişkeni, hesaplamaların sonuçlarını içeren bir tuple'ı temsil eder.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">sum</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+  <span class="ss">difference</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="ss">product</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="ss">division</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu örnekteki fonksiyon, Nix dilinde daha karmaşık ifadeler ve kontroller içeren bir fonksiyonun nasıl tanımlanabileceğini göstermektedir. Nix dilinde fonksiyonlar, özellikle sistem konfigürasyonu veya paket tanımlamaları gibi karmaşık senaryolarda kullanılarak kodu modüler ve yeniden kullanılabilir hale getirmenin bir yolu olarak değerlendirilir.</p>
+<p>Örnekte, <code>calculate</code> ifadesi bir fonksiyonu tanımlar. Nix dilinde fonksiyonlar, genellikle parametre listesi ve fonksiyonun gövdesini içeren bir ifade ile tanımlanır.</p>
+<div class="highlight"><pre><span></span><code><span class="ss">calculate</span> <span class="o">=</span> <span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">sum</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+    <span class="ss">difference</span> <span class="o">=</span> a <span class="o">-</span> b<span class="p">;</span>
+    <span class="ss">product</span> <span class="o">=</span> a <span class="o">*</span> b<span class="p">;</span>
+    <span class="ss">division</span> <span class="o">=</span> <span class="k">if</span> b <span class="o">!=</span> <span class="mi">0</span> <span class="k">then</span> a <span class="o">/</span> b <span class="k">else</span> <span class="s2">&quot;Bölme hatası: b sıfıra bölünemez!&quot;</span><span class="p">;</span>
+  <span class="k">in</span>
+    <span class="p">{</span> <span class="ss">sum</span> <span class="o">=</span> sum<span class="p">;</span> <span class="ss">difference</span> <span class="o">=</span> difference<span class="p">;</span> <span class="ss">product</span> <span class="o">=</span> product<span class="p">;</span> <span class="ss">division</span> <span class="o">=</span> division<span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<p>Yukarıdaki örnekte, <code>calculate</code> fonksiyonu <code>{ a, b }</code> adlı bir parametre listesi alır. Daha sonra, <code>let</code> bloğu içinde <code>sum</code>, <code>difference</code>, <code>product</code>, ve <code>division</code> değişkenleri tanımlanır. <code>in</code> anahtar kelimesiyle ayrılan bölümde ise fonksiyonun geri dönüş değeri belirlenir. Bu durumda, hesaplanan değerleri içeren bir tuple döndürülür.</p>
+<p>Bu tarz bir fonksiyon, <code>calculate { a = 8; b = 4; }</code> gibi bir şekilde çağrılabilir. Bu çağrı, <code>a</code> ve <code>b</code> parametrelerini içeren bir obje ile fonksiyonu çağırır ve sonuç olarak hesaplamaların yapıldığı tuple'ı döndürür.</p>
+<p><code>let</code> ve <code>in</code> ifadeleri, Nix dilinde bir bloğu (scope) tanımlamak için kullanılır. Bu blok içinde tanımlanan değişkenler sadece bu blok içinde geçerlidir ve dışarıdan erişilemez. Dolayısıyla, <code>let</code> ve <code>in</code> ifadeleri, calculate fonksiyonunun gövdesini oluşturur.</p>
+<p>İşte detaylar:</p>
+<div class="highlight"><pre><span></span><code><span class="ss">calculate</span> <span class="o">=</span> <span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">sum</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+    <span class="ss">difference</span> <span class="o">=</span> a <span class="o">-</span> b<span class="p">;</span>
+    <span class="ss">product</span> <span class="o">=</span> a <span class="o">*</span> b<span class="p">;</span>
+    <span class="ss">division</span> <span class="o">=</span> <span class="k">if</span> b <span class="o">!=</span> <span class="mi">0</span> <span class="k">then</span> a <span class="o">/</span> b <span class="k">else</span> <span class="s2">&quot;Bölme hatası: b sıfıra bölünemez!&quot;</span><span class="p">;</span>
+  <span class="k">in</span>
+    <span class="p">{</span> <span class="ss">sum</span> <span class="o">=</span> sum<span class="p">;</span> <span class="ss">difference</span> <span class="o">=</span> difference<span class="p">;</span> <span class="ss">product</span> <span class="o">=</span> product<span class="p">;</span> <span class="ss">division</span> <span class="o">=</span> division<span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<ul>
+<li><code>let</code> ifadesi ile başlayan kısım, değişkenlerin tanımlandığı bloğu oluşturur.</li>
+<li><code>in</code> ifadesi ise bu bloğun sona erdiğini ve bu blok içinde tanımlanan değişkenlerin artık kullanılabileceğini belirtir.</li>
+</ul>
+<p>Bu yapı sayesinde, fonksiyonun içindeki hesaplamalara özgü değişkenler (<code>sum</code>, <code>difference</code>, <code>product</code>, <code>division</code>) sadece <code>let</code> ve <code>in</code> bloğu içinde geçerli olur ve fonksiyonun dışında görünmez.</p>
+<p>Daha sade bir örnek ile fonksiyon tanımı</p>
+<div class="highlight"><pre><span></span><code><span class="ss">f</span> <span class="o">=</span> <span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span> <span class="p">{</span> <span class="ss">result</span> <span class="o">=</span> a<span class="o">+</span>b<span class="p">;</span> <span class="p">};</span>
+
+f <span class="p">{</span><span class="ss">a</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="ss">b</span><span class="o">=</span><span class="mi">2</span><span class="p">;}</span>
+
+<span class="c1"># sonuç { result = 3; }</span>
+</code></pre></div>
+<h2 id="fonksiyonlarda-geri-deger-dondurmek">Fonksiyonlarda geri değer döndürmek</h2>
+<p>Fonksiyonlardan değer döndürmek mümkündür. Nix dilinde fonksiyonlar, son değeri otomatik olarak döndürür. Bu, fonksiyonun sonunda yer alan ifade veya bloğun değeridir. Önceki örneklerde de görüldüğü gibi, fonksiyon son değeri belirli bir değer veya ifade olabilir.</p>
+<p>Örneğin, basit bir fonksiyonun tanımlanması ve değer döndürmesi:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Fonksiyon tanımlama</span>
+<span class="ss">double</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1"># Fonksiyonu çağırma ve değer döndürme</span>
+<span class="ss">result</span> <span class="o">=</span> double <span class="mi">5</span><span class="p">;</span>  <span class="c1"># result şimdi 10 değerine sahip</span>
+</code></pre></div>
+<p>Bu örnekte, <code>double</code> fonksiyonu bir sayının iki katını hesaplar ve bu değeri otomatik olarak döndürür.</p>
+<p>Fonksiyonlar, <code>let</code> ve <code>in</code> blokları içinde daha karmaşık yapılarda da kullanılabilir. Örneğin, iki sayı arasındaki asal sayıları bulan bir fonksiyon:</p>
+<div class="highlight"><pre><span></span><code><span class="ss">findPrimes</span> <span class="o">=</span> <span class="p">{</span> start<span class="p">,</span> end <span class="p">}:</span>
+  <span class="k">let</span>
+    <span class="ss">isPrime</span> <span class="o">=</span> n<span class="p">:</span> <span class="nb">builtins</span><span class="o">.</span>all <span class="p">(</span>i<span class="p">:</span> n <span class="err">%</span> i <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">builtins</span><span class="o">.</span>range <span class="mi">2</span> n<span class="p">);</span>
+    <span class="ss">primes</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>filter isPrime <span class="p">(</span><span class="nb">builtins</span><span class="o">.</span>range start end<span class="p">);</span>
+  <span class="k">in</span>
+    primes<span class="p">;</span>
+
+<span class="ss">result</span> <span class="o">=</span> findPrimes <span class="p">{</span> <span class="ss">start</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="ss">end</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span> <span class="p">};</span>  <span class="c1"># result şimdi [11 13 17 19 23 29] değerine sahip</span>
+</code></pre></div>
+<p>Bu örnekte, <code>findPrimes</code> fonksiyonu iki sayı arasındaki asal sayıları bulur ve bu asal sayıları içeren bir liste olarak döndürür. <code>result</code> değişkeni, fonksiyonun döndürdüğü değeri içerir.</p>
+<h2 id="fonksiyonlarda-coklu-arguman-kullanm">Fonksiyonlarda çoklu arguman kullanımı</h2>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">multiply</span> <span class="o">=</span> a<span class="p">:</span> b<span class="p">:</span> a <span class="o">*</span> b<span class="p">;</span>
+  <span class="ss">doubleIt</span> <span class="o">=</span> multiply <span class="mi">2</span><span class="p">;</span> <span class="c1"># at this point we have passed in the value for &#39;a&#39; and</span>
+                         <span class="c1"># receive back another function that still expects &#39;b&#39;</span>
+<span class="k">in</span>
+  doubleIt <span class="mi">15</span>
+
+<span class="c1"># yields 30</span>
+</code></pre></div>
+<p>doubleIt fonksiyonu, <code>multiply</code> fonksiyonuna 2 değerini gönderir ve <code>multiply</code> fonksiyonundan bir fonksiyon döndürür. in ifadesi içinde çağrılan doubleIt 15 satırında ise multiply fonksiyonunun döndürdüğü fonksiyon 15 değerini alır ve 30 değerini döndürür.</p>
+<p>sayısı belli olmayan arguman tanımı için ... kullanılır</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span> <span class="ss">greeter</span> <span class="o">=</span> <span class="p">{</span> name<span class="p">,</span> age<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="s2">&quot;</span><span class="si">${</span>name<span class="si">}</span><span class="s2"> is </span><span class="si">${</span><span class="nb">toString</span> age<span class="si">}</span><span class="s2"> years old&quot;</span><span class="p">;</span>
+    <span class="ss">person</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Slartibartfast&quot;</span><span class="p">;</span>
+      <span class="ss">age</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+      <span class="c1"># the &#39;email&#39; attribute is not expected by the &#39;greeter&#39; function ...</span>
+      <span class="ss">email</span> <span class="o">=</span> <span class="s2">&quot;slartibartfast@magrath.ea&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="k">in</span> greeter person <span class="c1"># ... but the call works due to the ellipsis.</span>
+</code></pre></div>
+<p>greeter adında bir fonksiyon name ve age adında iki arguman alıyor. ün nokta ile eğer daha fazla arguman gelirse onları da alıyor. person adında bir obje tanımlanıyor. bu obje name ve age adında iki attribute içeriyor. email attribute'ü ise greeter fonksiyonu tarafından beklenmiyor. fakat greeter fonksiyonu person objesini arguman olarak alıyor ve çalışıyor. çünkü person objesindeki attribute'lerin hepsi greeter fonksiyonu tarafından beklenen argumanlar arasında yer alıyor. bu durumda email attribute'ü greeter fonksiyonu tarafından kullanılmıyor. ancak sistem üç nokta kullanıldığı için hata vermiyor.</p>
+<p>Diğer bir örnekte bütün argumanların adını yazalım</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span> <span class="ss">func</span> <span class="o">=</span> <span class="p">{</span> name<span class="p">,</span> age<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>args<span class="p">:</span> <span class="nb">builtins</span><span class="o">.</span>attrNames args<span class="p">;</span>
+<span class="k">in</span> func <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Slartibartfast&quot;</span><span class="p">;</span>
+    <span class="ss">age</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="ss">email</span> <span class="o">=</span> <span class="s2">&quot;slartibartfast@magrath.ea&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1"># sonuç: [ &quot;age&quot; &quot;email&quot; &quot;name&quot; ]</span>
+</code></pre></div>
+<p>şimdi de değerleri yazdılarım</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span> <span class="ss">func</span> <span class="o">=</span> <span class="p">{</span> name<span class="p">,</span> age<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>args<span class="p">:</span> <span class="nb">builtins</span><span class="o">.</span>attrValues args<span class="p">;</span>
+<span class="k">in</span> func <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Slartibartfast&quot;</span><span class="p">;</span>
+    <span class="ss">age</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="ss">email</span> <span class="o">=</span> <span class="s2">&quot;slartibartfast@magrath.ea&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1"># sonuç : [ 42 &quot;slartibartfast@magrath.ea&quot; &quot;Slartibartfast&quot; ]</span>
+</code></pre></div>
+<h2 id="kosullar">Koşullar</h2>
+<p>Nix dilinde koşul ifadeleri kullanmak için <code>if</code> ve <code>else</code> anahtar kelimeleri kullanılır. Koşullar, genellikle bir değerin doğru veya yanlış olup olmadığını kontrol etmek amacıyla kullanılır. İşte basit bir örnek:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Örnek 1: Bir koşulu kontrol etmek</span>
+<span class="p">{</span>
+  <span class="ss">condition</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+  <span class="ss">result</span> <span class="o">=</span> <span class="k">if</span> condition <span class="k">then</span> <span class="s2">&quot;Doğru durum&quot;</span> <span class="k">else</span> <span class="s2">&quot;Yanlış durum&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu örnekte, <code>condition</code> adlı bir değişken tanımlanmış ve <code>if</code> ifadesi ile kontrol edilmiştir. Eğer <code>condition</code> doğru ise "Doğru durum", değilse "Yanlış durum" dönecektir.</p>
+<p>Ayrıca, bir koşulu daha karmaşık hale getirmek için <code>else if</code> de kullanılabilir:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Örnek 2: Birden fazla koşulu kontrol etmek</span>
+<span class="p">{</span>
+  <span class="ss">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="ss">result</span> <span class="o">=</span>
+    <span class="k">if</span> value <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="s2">&quot;Negatif&quot;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="ss">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">then</span> <span class="s2">&quot;Sıfır&quot;</span>
+    <span class="k">else</span> <span class="s2">&quot;Pozitif&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu örnekte, <code>value</code> adlı bir değişkenin değerine bağlı olarak bir durum kontrol edilmektedir. Eğer <code>value</code> negatifse "Negatif", sıfırsa "Sıfır", pozitifse "Pozitif" dönecektir.</p>
+<p>Koşullar genellikle fonksiyonel bir dilde kullanılan ifade yöntemine benzer şekilde çalışır ve sadece belirli bir durum sağlandığında veya sağlanmadığında değeri değerlendirirler.</p>
+<h2 id="inherit-kullanm">Inherit kullanımı</h2>
+<p>Bu aslında çok basit bir iş yapar. Normalde değişkenler bildiğimiz gibi in bloğu dışında kullanılmaz. Ancak bazen bunları dışarı aktarmamız gerekir. Bundan dolayı da alttaki örnekte olduğu gibi bunları in bloğundan tekrar eşitleriz.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Slartibartfast&quot;</span><span class="p">;</span>
+  <span class="c1"># ... other variables</span>
+<span class="k">in</span> <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> name<span class="p">;</span> <span class="c1"># set the attribute set key &#39;name&#39; to the value of the &#39;name&#39; var</span>
+  <span class="c1"># ... other attributes</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>tabi değişken asıyı çok olduğunda bun yazmak sıkıcı olabilir. Inherit keyword'ü bunu kolaylaştırır.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Slartibartfast&quot;</span><span class="p">;</span>
+  <span class="c1"># ... other variables</span>
+<span class="k">in</span> <span class="p">{</span>
+  <span class="k">inherit</span> name<span class="p">;</span>
+  <span class="c1"># ... other attributes</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>bu tabi sadece let içinde tanımlı olanları taşımak için kullanılmaz. Henüz görmedik ancak yine bahsetmek gerekiyor.Import ettiğimiz modüllerdeki attribute'leri de taşımak için kullanılır. Örneğin pkgs modülünü import edelim. Bu modüldeki bütün attribute'leri taşımak için inherit kullanabiliriz.</p>
+<p><code>inherit</code>, bir özellik veya değeri başka bir ifadeden veya bir modülden miras almak için kullanılır. İşte birkaç örnek:</p>
+<p><strong>Örnek 1: Modüldeki Bir Özelliği Miras Almak:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Bir modül tanımla</span>
+<span class="ss">myModule</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">foo</span> <span class="o">=</span> <span class="s2">&quot;Merhaba, Dünya!&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># inherit kullanarak modüldeki özelliği miras al</span>
+<span class="ss">myDerivation</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="k">inherit</span> <span class="p">(</span>myModule<span class="p">)</span> foo<span class="p">;</span>
+  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> foo <span class="p">];</span> <span class="c1"># Foo&#39;yu kullanabilirsin</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Bu örnekte, <code>myModule</code> adlı bir modül tanımlanmış ve <code>foo</code> adlı özelliği içermektedir. Daha sonra, <code>inherit</code> ifadesi ile <code>myDerivation</code> adlı bir derivasyon tanımlanmıştır ve bu derivasyon, <code>myModule</code> modülünden <code>foo</code> özelliğini miras almıştır.</p>
+<p><strong>Örnek 2: Paket Tanımlamasında inherit Kullanımı:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># inherit kullanarak bir paket tanımla</span>
+<span class="ss">myPackage</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="k">rec</span> <span class="p">{</span>
+  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;myPackage&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+
+  <span class="k">inherit</span> <span class="p">(</span>pkgs<span class="p">)</span> fetchurl<span class="p">;</span> <span class="c1"># fetchurl&#39;ü miras al</span>
+  <span class="ss">src</span> <span class="o">=</span> fetchurl <span class="p">{</span>
+    <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/myPackage-1.0.tar.gz&quot;</span><span class="p">;</span>
+    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span><span class="p">;</span> <span class="c1"># Gerçek bir değer kullanılmalıdır.</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>Bu örnekte, <code>myPackage</code> adlı bir paket tanımlaması yapılmıştır. <code>inherit</code> ifadesi, <code>pkgs</code> modülünden <code>fetchurl</code>'ü miras alarak, <code>src</code> özelliğini tanımlamak için kullanılmıştır. <code>fetchurl</code> fonksiyonu, belirtilen URL'den kaynak dosyasını çekmek için Nix içinde bulunan bir fonksiyondur.</p>
+<p><code>inherit</code> ifadesi, Nix dilinde modülerlik ve tekrar kullanılabilirlik sağlamak için sıkça kullanılır, özellikle de derivasyon tanımlamaları ve paket ifadeleri içinde.</p>
+<h2 id="with-kullanm">With Kullanımı</h2>
+<p>with anahtar kelimesi çok fazla tekrar etmemizi önler.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># İç içe geçmiş set&#39;ler</span>
+<span class="ss">outerSet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">innerSet1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">innerSet2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="ss">d</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">innerSet3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">e</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="ss">f</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1"># `with` kullanarak iç içe geçmiş set&#39;lerdeki özelliklere erişim</span>
+<span class="k">with</span> outerSet<span class="p">;</span> innerSet1<span class="o">.</span>a <span class="o">+</span> innerSet2<span class="o">.</span>d <span class="o">-</span> innerSet3<span class="o">.</span>f
+</code></pre></div>
+<p>Bu örnekte, <code>outerSet</code> adlı bir set içinde <code>innerSet1</code>, <code>innerSet2</code> ve <code>innerSet3</code> adlı üç ayrı set bulunmaktadır. Daha sonra <code>with outerSet;</code> ifadesi ile <code>innerSet1</code>, <code>innerSet2</code> ve <code>innerSet3</code> set'lerine doğrudan erişim sağlanmaktadır. Bu set'lerin içindeki özelliklere <code>innerSet1.a</code>, <code>innerSet2.d</code> ve <code>innerSet3.f</code> şeklinde erişim sağlayarak bir matematiksel işlem gerçekleştirilmiştir.</p>
+<h2 id="path-veri-turu">Path veri türü</h2>
+<p>Nix dilinde <code>path</code> veri tipi, dosya yollarını temsil etmek için kullanılır. Bu veri tipi, bir dizeden ziyade bir dosya yolunu daha güvenli ve taşınabilir bir şekilde ifade etmek için tasarlanmıştır. <code>path</code> tipi, dosya yollarının karakter kodlaması, kök dizin ağacı (root) ve diğer özellikleri konusunda tutarlılığı sağlamak amacıyla geliştirilmiştir.</p>
+<p>İşte <code>path</code> veri tipiyle ilgili temel bilgiler:</p>
+<ol>
+<li><strong>Yol Oluşturma:</strong>
+   <code>path</code> tipinde bir yol oluşturmak için <code>builtins.path</code> fonksiyonu kullanılır.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">myPath</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>path <span class="s2">&quot;/etc&quot;</span><span class="p">;</span>
+</code></pre></div>
+<ol>
+<li><strong>Yol İşlemleri:</strong>
+   <code>path</code> tipi, standart dosya işlemlerini gerçekleştirmek için kullanılabilir. Örneğin, <code>myPath</code> adlı bir <code>path</code> nesnesinin içindeki dosya ve dizinleri listelemek için:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">filesInPath</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>readDir myPath<span class="p">;</span>
+</code></pre></div>
+<ol>
+<li><strong>Güvenli Dizin Birleştirme:</strong>
+   <code>path</code> tipi, dizinleri güvenli bir şekilde birleştirmek için <code>//</code> operatörünü kullanır. Bu, dosya yollarının sistem bağımsız bir şekilde birleştirilmesini sağlar.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">combinedPath</span> <span class="o">=</span> <span class="s2">&quot;/etc&quot;</span> <span class="o">//</span> <span class="s2">&quot;nginx&quot;</span> <span class="o">//</span> <span class="s2">&quot;conf.d&quot;</span><span class="p">;</span>
+</code></pre></div>
+<ol>
+<li><strong>Karakter Kodlaması:</strong>
+   <code>path</code> tipi, dosya yollarının karakter kodlamasını sağlamak için özel bir işleme tabi tutulur. Bu, dosya adlarının yanlışlıkla değişmesini önler.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">encodedPath</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>path <span class="s2">&quot;/home/user/ürün&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p>Bu özellikler sayesinde <code>path</code> veri tipi, dosya işlemlerini daha güvenli ve taşınabilir bir şekilde gerçekleştirmenizi sağlar. Özellikle dosya yollarının taşınabilirliği ve sistem bağımsızlığı önemliyse, <code>path</code> tipini kullanmak iyi bir uygulamadır.</p>
+<h2 id="import-nix_path-ve-kavramlar-hakknda">Import, NIX_PATH ve <entry> kavramları hakkında</h2>
+<p><code>import</code>, <code>NIX_PATH</code>, ve <code>&lt;entry&gt;</code> kavramları, Nix dilinde paket ve modül yönetimi için kullanılan önemli kavramlardır. İşte bu kavramlarla ilgili açıklamalar:</p>
+<ol>
+<li><strong><code>import</code>:</strong></li>
+<li><code>import</code> ifadesi, bir dosyada veya URL'de bulunan Nix ifadesini içe aktarmak için kullanılır.</li>
+<li>Örneğin, <code>import ./myFile.nix</code> ifadesi, mevcut dizindeki <code>myFile.nix</code> dosyasındaki Nix ifadesini içe aktarır.</li>
+<li>
+<p><code>import</code> ile uzak bir kaynaktan da içe aktarım yapılabilir, örneğin: <code>import https://example.com/myFile.nix</code>.</p>
+</li>
+<li>
+<p><strong><code>NIX_PATH</code>:</strong></p>
+</li>
+<li><code>NIX_PATH</code>, Nix dilinde modüllerin ve diğer kaynakların bulunduğu dizinleri belirten bir ortam değişkenidir.</li>
+<li>Bu değişken, Nix'in modül sistemini ve kaynakların yerini bulmasını sağlar.</li>
+<li>Örneğin, <code>NIX_PATH=nixpkgs=/path/to/nixpkgs</code> ifadesi, <code>nixpkgs</code> modülünün <code>/path/to/nixpkgs</code> dizininde bulunduğunu belirtir.</li>
+<li>
+<p><code>NIX_PATH</code> kullanılarak, Nix dilinde farklı modüller ve kaynaklar arasında geçiş yapabilirsiniz.</p>
+</li>
+<li>
+<p><strong><code>&lt;entry&gt;</code>:</strong></p>
+</li>
+<li><code>&lt;entry&gt;</code>, <code>NIX_PATH</code> içinde belirtilmiş olan bir modülün veya kaynağın adıdır.</li>
+<li>Örneğin, <code>import &lt;nixpkgs&gt;</code> ifadesi, <code>NIX_PATH</code> içinde belirtilmiş olan <code>nixpkgs</code> modülünü içe aktarır.</li>
+</ol>
+<p><strong>İlişki:</strong></p>
+<ul>
+<li><code>import</code> ifadesi ile bir dosya veya URL içeri aktarılırken, <code>NIX_PATH</code> içinde belirtilen modüller veya kaynaklar da kullanılabilir.</li>
+<li><code>&lt;entry&gt;</code> kullanılarak <code>NIX_PATH</code> içinde belirtilen modüller veya kaynaklar, <code>import</code> ifadesi içinde referans olarak kullanılabilir.</li>
+<li>Örneğin, <code>import &lt;nixpkgs&gt;</code> ifadesi, <code>NIX_PATH</code> içindeki <code>nixpkgs</code> modülünü içe aktarır.</li>
+</ul>
+<p>Bu kavramlar, Nix dilinde kod organizasyonunu ve modülerliği destekleyen önemli bileşenlerdir. <code>import</code>, <code>NIX_PATH</code>, ve <code>&lt;entry&gt;</code> kullanımı, Nix projelerinde kodun düzenlenmesi ve paylaşılabilirliği açısından önemlidir.</p>
+<h2 id="modul-kavram">Modül Kavramı</h2>
+<p>Nix dilindeki modül kavramı, Nix kodunu organize etmek, paylaşmak ve tekrar kullanmak için kullanılan bir yapıdır. Modüller, Nix ifadelerini içeren ve genellikle belirli bir konsepti veya işlevi temsil eden dosyalardır. Modüller, Nix projelerini modüler hale getirerek kodun düzenlenmesini ve yönetilmesini kolaylaştırır.</p>
+<p>İşte Nix modülleri hakkında temel bilgiler:</p>
+<ol>
+<li><strong>Modül Tanımlama:</strong></li>
+<li>Modüller, <code>.nix</code> uzantılı dosyalarda tanımlanır.</li>
+<li>
+<p>Genellikle, bir modül, bir fonksiyon, bir paket tanımlaması veya belirli bir konsepti temsil eden bir grup ifade içerir.</p>
+</li>
+<li>
+<p><strong>Modül İçindeki Kodun Kullanımı:</strong></p>
+</li>
+<li>Modül içinde tanımlanan ifadeler, diğer Nix dosyalarında <code>import</code> ifadesi kullanılarak içe aktarılabilir ve kullanılabilir.</li>
+<li>
+<p>İçe aktarılan modüldeki fonksiyonlar, paket tanımlamaları veya diğer ifadeler, kullanıldıkları dosyada kullanılabilir.</p>
+</li>
+<li>
+<p><strong>Modül İmport Etme:</strong></p>
+</li>
+<li>Başka bir Nix dosyasında bir modülü içe aktarmak için <code>import</code> ifadesi kullanılır.</li>
+<li>Modülün bulunduğu dosyanın yolunu veya <code>NIX_PATH</code> içinde belirtilen bir modülü içe aktarmak mümkündür.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Modül içindeki fonksiyonları içe aktarma</span>
+<span class="k">let</span>
+  <span class="ss">myModule</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./myModule.nix</span><span class="p">;</span>
+<span class="k">in</span>
+  myModule<span class="o">.</span>myFunction
+</code></pre></div>
+<ol>
+<li><strong>Modüler Kod Organizasyonu:</strong></li>
+<li>Modüller, kodu mantıklı bloklara bölerek ve belirli işlevleri temsil ederek projeyi daha düzenli hale getirir.</li>
+<li>Örneğin, bir modül içinde paket tanımlamaları, özel fonksiyonlar veya sistem konfigürasyonu ile ilgili ifadeler bulunabilir.</li>
+</ol>
+<p>Örnek bir modül tanımı:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># myModule.nix</span>
+
+<span class="p">{</span> lib<span class="p">,</span> buildInputs <span class="o">?</span> <span class="p">[]</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="ss">myFunction</span> <span class="o">=</span> args<span class="p">:</span> <span class="p">{</span>
+    <span class="k">inherit</span> <span class="p">(</span>args<span class="p">)</span> packageName<span class="p">;</span>
+    <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> lib<span class="o">.</span>iconv <span class="p">]</span> <span class="o">++</span> buildInputs<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu örnek modül, bir fonksiyon içerir ve bu fonksiyon, gelen argümanlara göre bir paket tanımlaması yapar. Başka bir dosyada bu modülü içe aktarıp, <code>myFunction</code>'ı kullanabilirsiniz. Bu şekilde, kodunuzu modüler ve yeniden kullanılabilir hale getirebilirsiniz.</p>
+<h2 id="overrride-kullanm">Overrride kullanımı</h2>
+<p>Nix dilinde <code>override</code> ifadesi, var olan bir ifadeyi veya set'i değiştirmek veya genişletmek için kullanılır. Bu, özellikle paket tanımlamalarını değiştirmek veya var olan bir konfigürasyonu güncellemek için sıkça kullanılır. <code>override</code> ifadesi, bir set'in belirli özelliklerini güncellemenin yanı sıra, bir set'i genişletmek veya daraltmak için de kullanılabilir.</p>
+<p><code>override</code> ifadesinin temel kullanımı şu şekildedir:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set içindeki bir özelliği değiştirme</span>
+originalSet <span class="o">//</span> <span class="p">{</span> <span class="ss">key</span> <span class="o">=</span> newValue<span class="p">;</span> <span class="p">}</span>
+
+<span class="c1"># Set&#39;i genişletme</span>
+originalSet <span class="o">//</span> <span class="p">{</span> <span class="ss">newKey</span> <span class="o">=</span> newValue<span class="p">;</span> <span class="p">}</span>
+
+<span class="c1"># Set&#39;ten bir özelliği kaldırma</span>
+originalSet <span class="o">//</span> <span class="p">{</span> <span class="ss">key</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div>
+<p>İşte birkaç örnek:</p>
+<p><strong>1. Set içindeki bir özelliği değiştirme:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Bir set tanımla</span>
+<span class="ss">mySet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">key1</span> <span class="o">=</span> <span class="s2">&quot;value1&quot;</span><span class="p">;</span>
+  <span class="ss">key2</span> <span class="o">=</span> <span class="s2">&quot;value2&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># key1&#39;i &quot;new_value&quot; ile değiştir</span>
+<span class="ss">updatedSet</span> <span class="o">=</span> mySet <span class="o">//</span> <span class="p">{</span> <span class="ss">key1</span> <span class="o">=</span> <span class="s2">&quot;new_value&quot;</span><span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<p><strong>2. Set'i genişletme:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Bir set tanımla</span>
+<span class="ss">mySet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">key1</span> <span class="o">=</span> <span class="s2">&quot;value1&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># Yeni bir özellik ekleyerek set&#39;i genişlet</span>
+<span class="ss">extendedSet</span> <span class="o">=</span> mySet <span class="o">//</span> <span class="p">{</span> <span class="ss">key2</span> <span class="o">=</span> <span class="s2">&quot;value2&quot;</span><span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<p><strong>3. Set'ten bir özelliği kaldırma:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Bir set tanımla</span>
+<span class="ss">mySet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">key1</span> <span class="o">=</span> <span class="s2">&quot;value1&quot;</span><span class="p">;</span>
+  <span class="ss">key2</span> <span class="o">=</span> <span class="s2">&quot;value2&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># key1&#39;i set&#39;ten kaldır</span>
+<span class="ss">removedSet</span> <span class="o">=</span> mySet <span class="o">//</span> <span class="p">{</span> <span class="ss">key1</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span> <span class="p">};</span>
+</code></pre></div>
+<p><code>override</code> ifadesi, özellikle Nix paket tanımlamalarında ve konfigürasyonlarında güncellemeler yapmak için kullanılır. Bu sayede var olan bir set üzerinde değişiklik yapmak, yeni özellikler eklemek veya mevcut özellikleri değiştirmek mümkün olur.</p>
+<p><code>overrideAttrs</code> fonksiyonu, Nix dilinde paket tanımlamalarını değiştirmek için kullanılan özel bir fonksiyondur. Bu fonksiyon, bir paketin tanımındaki özellikleri değiştirmek ve güncellemek için kullanılır. <code>overrideAttrs</code> fonksiyonu, paketin derleme (build) süreci, bağımlılıklar, isim ve diğer özellikleri üzerinde değişiklikler yapma yeteneği sağlar.</p>
+<p>Temel kullanım şu şekildedir:</p>
+<div class="highlight"><pre><span></span><code>overrideAttrs <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+  <span class="o">//</span> Yeni <span class="err">ö</span>zellikleri veya değişiklikleri tanımla
+<span class="p">})</span>
+</code></pre></div>
+<p>Bu ifadede:</p>
+<ul>
+<li><code>oldAttrs</code>: Orijinal paket tanımındaki özellikleri temsil eden bir değişken.</li>
+<li><code>{ ... }</code>: Değiştirilecek veya eklenen özellikleri içeren bir set.</li>
+</ul>
+<p>İşte bir örnek:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Orijinal paket tanımı</span>
+<span class="ss">myPackage</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myPackage&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="l">./mySource</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># overrideAttrs ile paket tanımını değiştirme</span>
+<span class="ss">myUpdatedPackage</span> <span class="o">=</span> myPackage <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myUpdatedPackage&quot;</span><span class="p">;</span>
+  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>gcc <span class="p">];</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Bu örnekte, <code>overrideAttrs</code> fonksiyonu, <code>myPackage</code> adlı paketin tanımını alır ve <code>name</code> özelliğini <code>"myUpdatedPackage"</code> olarak, <code>buildInputs</code> özelliğini ise <code>[ pkgs.gcc ]</code> olarak değiştirir.</p>
+<p><code>overrideAttrs</code> fonksiyonu, paket tanımlamalarını güncelleme ve özelleştirme açısından oldukça güçlü bir araçtır. Bu sayede paketlerin derleme süreçleri, bağımlılıkları veya diğer özellikleri üzerinde ihtiyaç duyulan değişiklikler kolaylıkla yapılabilmektedir.</p>
+<p>Nix dilinde override fonksiyonu kullanımına benzer şekilde başka override fonksiyonları da bulunmaktadır. Bunlar, özellikle paket tanımlamalarını, derivasyonları (build), bağımlılıkları ve diğer özellikleri değiştirmek veya genişletmek için kullanılır. İşte bazı örnekler:</p>
+<ol>
+<li><strong><code>overrideDerivation</code>:</strong> Bu fonksiyon, derivasyon tanımını değiştirmek için kullanılır. Derivasyon, bir paketin derleme sürecini ve diğer ilgili özellikleri tanımlayan bir yapıdır.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">myDerivation</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myPackage&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="l">./mySource</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="ss">myUpdatedDerivation</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>overrideDerivation myDerivation <span class="p">(</span>drv<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">builder</span> <span class="o">=</span> <span class="l">./myCustomBuilder.sh</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+<ol>
+<li><strong><code>overrideAttrs</code>:</strong> Paket tanımındaki özellikleri değiştirmek için kullanılır. Bu, <code>override</code> ifadesiyle benzerdir.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">myPackage</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myPackage&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="l">./mySource</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="ss">myUpdatedPackage</span> <span class="o">=</span> myPackage <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myUpdatedPackage&quot;</span><span class="p">;</span>
+  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>gcc <span class="p">];</span>
+<span class="p">});</span>
+</code></pre></div>
+<ol>
+<li><strong><code>overrideDrv</code>:</strong> Bu fonksiyon, derivasyon tanımını (build sürecini) değiştirmek için kullanılır.</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="ss">myDerivation</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myPackage&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="l">./mySource</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="ss">myUpdatedDerivation</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>overrideDrv myDerivation <span class="p">(</span>drv<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">builder</span> <span class="o">=</span> <span class="l">./myCustomBuilder.sh</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Bu fonksiyonlar, Nix dilinde paket tanımlamalarını daha esnek ve özelleştirilebilir hale getirmek için kullanılır. Aslında normal bir programalama dilinde bir listeye elemen ekleme, çıkartma ve ya değiştirme işlemleri gibi düşünebiliriz. Override kelimesi genellikle standart programlama dillerinde bir fonksiyonun ezilmesi/yeniden tanımlanası olarak kullanılır.</p>
+<p>Nix tabi farkettiğiniz gibi tamamen bir paket yonetimi ve sistem konfigürasyonu üzerine geliştirilmiş bir dil. Dolayısıyla buradaki kavramlar aslında çok iş yapmasına rağmen aslında kullanımı ve anlaması çok kolay. Ancak şu bir gerçek ki bizim çok basit bir şekilde değiştirdiğimiz (override) bir attribute bütün bir sistemin tekrar oluşturulmasına sebep olabilir. Bu nedenle bu tabirler büyük büyük kelimelerle anlatılıyor. Birde sonuçta bir object-oriented bir dil değil Nix. Ancak geliştirdikleri kurgulara da bir isim vermeleri gerekiyor ve burada amaç sadece bir değişkenin değerini değiştirmiş olmak değil.</p>
+<h2 id="overlay">Overlay</h2>
+<p>Override sadece local modülü ve dosyayı değiştirebilir. Overlay ise daha global'dir birden fazla modülü veya paketi değiştirebilir .Genellikle overlay.nix dosyalarına yazılarak import edilir.</p>
+<p><code>overlay</code> kavramını örneklerle açıklayalım. <code>overlay</code> genellikle birden fazla set veya modül tanımını birleştirmek veya bir konfigürasyonu değiştirmek için kullanılır. İşte birkaç örnek:</p>
+<ol>
+<li><strong>Birden Fazla Set'i Birleştirme:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Birinci set tanımı</span>
+<span class="ss">firstSet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">package1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;package1&quot;</span><span class="p">;</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1"># İkinci set tanımı</span>
+<span class="ss">secondSet</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="ss">package2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;package2&quot;</span><span class="p">;</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.0&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1"># overlay ile set&#39;leri birleştirme</span>
+<span class="ss">mergedSets</span> <span class="o">=</span> pkgs<span class="o">.</span>lib<span class="o">.</span>composeExtensions <span class="p">[</span>
+  firstSet
+  secondSet
+<span class="p">];</span>
+
+<span class="c1"># mergedSets içindeki paketlere erişim</span>
+mergedSets<span class="o">.</span>package1<span class="o">.</span>version  <span class="c1"># &quot;1.0&quot;</span>
+mergedSets<span class="o">.</span>package2<span class="o">.</span>version  <span class="c1"># &quot;2.0&quot;</span>
+</code></pre></div>
+<p>Bu örnekte, <code>pkgs.lib.composeExtensions</code> fonksiyonu ile iki set (<code>firstSet</code> ve <code>secondSet</code>) birleştirilmiş ve <code>mergedSets</code> adlı yeni bir set oluşturulmuştur.</p>
+<ol>
+<li><strong>Paket Tanımlamalarını Değiştirme:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># Orijinal paket tanımlamaları</span>
+<span class="ss">package1</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;package1&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="ss">package2</span> <span class="o">=</span> pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;package2&quot;</span><span class="p">;</span>
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.0&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1"># overlay ile paket tanımlamalarını değiştirme</span>
+<span class="ss">overlayPackages</span> <span class="o">=</span> pkgs<span class="o">.</span>lib<span class="o">.</span>composeExtensions <span class="p">[</span>
+  <span class="p">(</span>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+    <span class="ss">package1</span> <span class="o">=</span> super<span class="o">.</span>package1 <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+      <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.1&quot;</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="ss">package2</span> <span class="o">=</span> super<span class="o">.</span>package2 <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+      <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.1&quot;</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">})</span>
+<span class="p">];</span>
+
+<span class="c1"># overlayPackages içindeki paketlere erişim</span>
+overlayPackages<span class="o">.</span>package1<span class="o">.</span>version  <span class="c1"># &quot;1.1&quot;</span>
+overlayPackages<span class="o">.</span>package2<span class="o">.</span>version  <span class="c1"># &quot;2.1&quot;</span>
+</code></pre></div>
+<p>Bu örnekte, <code>pkgs.lib.composeExtensions</code> fonksiyonu ile iki paket tanımı (<code>package1</code> ve <code>package2</code>) birleştirilmiş ve <code>overlayPackages</code> adlı yeni bir set oluşturulmuştur. Her iki paketin versiyonu overlay ile değiştirilmiştir.</p>
+<p><code>overlay</code> kullanımı, Nix dilinde modüler ve özelleştirilebilir konfigürasyonlar oluşturmak için önemli bir araçtır. Bu, farklı paket tanımlamalarını birleştirerek veya değiştirerek projenin ihtiyaçlarına uygun bir yapı oluşturmayı sağlar.</p>
+<p>Overlay'ler genellikle dış nix dosylaları import edilerek kullanılır.</p>
+<p>genellikle <code>overlay.nix</code> dosyaları, Nix projelerinde overlay'lerin tanımlandığı ve organizasyon sağladığı yerlerdir. Bu dosyalar, projenin kök dizininde yer alabilir ve projenin genel konfigürasyonunu, paket tanımlamalarını veya diğer özellikleri değiştirmek için kullanılabilir. <code>overlay.nix</code> dosyalarının adı genellikle standartlaşmış bir şekilde kullanılır, ancak adlandırma konvansiyonlarına katılmak zorunlu değildir.</p>
+<p>Aşağıda, bir projede <code>overlay.nix</code> dosyasını kullanarak overlay tanımlamak için basit bir örnek bulunmaktadır:</p>
+<ol>
+<li><strong><code>overlay.nix</code> Dosyası:</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="c1"># overlay.nix</span>
+
+self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">package1</span> <span class="o">=</span> super<span class="o">.</span>package1 <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;1.1&quot;</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="ss">package2</span> <span class="o">=</span> super<span class="o">.</span>package2 <span class="o">//</span> <span class="p">(</span>oldAttrs<span class="p">:</span> <span class="p">{</span>
+    <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.1&quot;</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu <code>overlay.nix</code> dosyası, <code>package1</code> ve <code>package2</code> adlı iki paketin versiyonlarını değiştirmek için bir overlay tanımlar.</p>
+<ol>
+<li><strong>Projedeki Kullanım:</strong></li>
+</ol>
+<p>Proje kök dizininde bu <code>overlay.nix</code> dosyası bulunuyorsa, projenin diğer bölümlerinde bu overlay'leri kullanmak oldukça kolaydır.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># default.nix veya başka bir nix dosyası</span>
+
+<span class="k">let</span>
+  <span class="ss">overlays</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./overlay.nix</span><span class="p">;</span>
+<span class="k">in</span>
+
+<span class="p">{</span>
+  <span class="k">inherit</span> <span class="p">(</span>overlays<span class="p">)</span> package1 package2<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu örnekte, <code>import ./overlay.nix;</code> ifadesi ile <code>overlay.nix</code> dosyasındaki overlay'leri içe aktarıyoruz ve ardından bu overlay'leri <code>inherit</code> ifadesi ile projenin genel konfigürasyonuna ekliyoruz.</p>
+<p>Bu kullanım, projenin temel konfigürasyonunu <code>overlay.nix</code> dosyasına taşıyarak, projenin çeşitli bölümlerinde bu overlay'leri kullanmayı kolaylaştırır ve organizasyonu artırır. Ayrıca, bu sayede overlay'leri projenin diğer kısımlarına uygulamak daha tutarlı ve yönetilebilir hale gelir.</p>
+<h2 id="referanslar">Referanslar</h2>
+<ul>
+<li><a href="https://nix.dev/tutorials/first-steps/">https://nix.dev/tutorials/first-steps/</a></li>
+<li><a href="https://nixos.org/guides/nix-pills/">https://nixos.org/guides/nix-pills/</a></li>
+<li><a href="https://nixos.org/guides/how-nix-w">https://nixos.org/guides/how-nix-works</a></li>
+<li><a href="https://nixos.org/manual/nix/unstable/language/operators.h">https://nixos.org/manual/nix/unstable/language/operators.html</a></li>
+<li><a href="https://medium.com/@MrJamesFisher/nix-by-example-a">https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Nix_(package_manager)">https://en.wikipedia.org/wiki/Nix_(package_manager)</a></li>
+<li><a href="https://nix.dev/concepts/f">https://nix.dev/concepts/faq</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

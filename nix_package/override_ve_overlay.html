@@ -1,0 +1,1460 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nix_package/override_ve_overlay.html">
+      
+      
+        <link rel="prev" href="birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html">
+      
+      
+        <link rel="next" href="developer_ve_profile_ortamlari_olusturmak.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Override ve Overlay - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Override ve Overlay - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/override_ve_overlay.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nix_package/override_ve_overlay.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Override ve Overlay - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/override_ve_overlay.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#override-ve-overlay" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Override ve Overlay
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/01_nix_dili_ve_ozellikleri.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/02_nix_dili_alistirmalari.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_shell_ve_profile.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="override_ve_overlay.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#override" class="md-nav__link">
+    <span class="md-ellipsis">
+      Override
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Override">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverridederivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.overrideDerivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverrideattrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.overrideAttrs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverride" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.override
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgmakeoverradable" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.makeOverradable
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlayi-manuel-olarak-uygulamak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay'i Manuel Olarak Uygulamak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlayi-otomatik-olarak-uygulamak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay'i Otomatik Olarak Uygulamak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#override" class="md-nav__link">
+    <span class="md-ellipsis">
+      Override
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Override">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverridederivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.overrideDerivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverrideattrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.overrideAttrs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgoverride" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.override
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgmakeoverradable" class="md-nav__link">
+    <span class="md-ellipsis">
+      &lt;pkg&gt;.makeOverradable
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlay" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlayi-manuel-olarak-uygulamak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay'i Manuel Olarak Uygulamak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overlayi-otomatik-olarak-uygulamak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overlay'i Otomatik Olarak Uygulamak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nix_package/override_ve_overlay.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nix_package/override_ve_overlay.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="override-ve-overlay">Override ve Overlay</h1>
+<p>Override'in Türkçe geçersiz kılmak anlamına geliyor. Nix dilinde paketlerin ve paket setlerinin değiştirilmesi ve genişletilmesi için kullanılan iki önemli kavramdır. Bir modül veya bir paketin bazı özelliklerini değiştirerek, silerek veya yeni özellikler ekleyerek daha esnek paket yönetimi yapmamıza olanak tanırlar.</p>
+<p>Bunu yapmak için Nix hem builtins hem de nixpkgs içindeki lib kütüphanelerinde bir çok fonksiyon sunar. Aslında tanım olarak kolay ancak uygulaması biraz karmaşık daha doğrusu nerede ve nasıl yapacağımızı anlamak ve bulmak biraz zor.</p>
+<p>Bir de hatırlatma yapayım. İlk yazılarımızda hatırlarsanız Nix dilinin immutable (yani değiştirilemez) olduğundan bahsetmiştik. Fonksiyonel programlama dillerinde kod yazmış olanlar buna zaten aşinadır. Yada son zamanlarda yükselişte olan Rust dili de yine immutable değişkenlere sahiptir aksi belirtilmedikçe. Bunun bir çok faydası var ama şuan konumuz bu değil. Asıl vurgulamak istediğim Nix dilinde aslında bir set'in değerlerini aslında silemeyiz veya değiştiremeyiz. Burada yapılan yeni bir set oluşturmaktır aslında. Özellikle OOP dünyasından gelen arkadaşların buna bende dahil alışması biraz zaman alıyor bu duruma. Normalde bir liste elemanını Java veya C# dillerinde değiştirmek çok kolaydır. Ancak burada her şey fonksiyon dolayısıyla biz donen her değeri başka bir değişkene atarken değiştiriyoruz. Bundan dolayı override ve overlay işlemleri için Nix dilinde farklı farklı fonksiyonlar. Amaçları bu işlemleri yapabilmemizin muhtemel olduğu yerlerde işimizi kolaylaştırmak.</p>
+<p>Bu durumda override etmeyi düşündüğümüz veri tipini bilmemiz gerekiyor. Bir set ile mesela bir string'i farklı yollarla override edebiliriz. Amacım detaya girip kafanızı karıştırmak değil sade bir override yazmak istediğimizde nereden başlayacağımızı anlamak. Veri tipini öğrendikten sonra da ona uygulayacağımız fonksiyonu veya varsa diğer yolları bulup uygulamak. Mesela amacımız bir derivation'ı override etmekse bunun için overrideDerivation fonksiyonunu kullanabiliriz. Amacımız bir paketi override etmekse bunun için overrideAttrs veya override fonksiyonunu kullanabiliriz. Yada doğrudan bir set üzerinde işlem yapmaksa belki bir fonksiyon kullanmamıza gerek olmayabilir. İlk yazılarımızda anlattığımız setler üzerinde işlem yapma konularına bakabilirsiniz.</p>
+<ul>
+<li><strong>Overlay</strong>: Birden çok paketi veya modülü override etmek için kullanılır. Tabi birden çok paketi veya modülü override edebilen tekini de edebilir.</li>
+<li><strong>Override</strong>: Tek bir paket veya modül üzerinde değişiklik yapmak için kullanılır.</li>
+</ul>
+<p>Kullanımlarımdan edindiğim sonuç overlay'ı anlamak ve uygulamak daha kolay. Ancak yine de çok spesifik durumlarda mecburen salt override kullanmamız gerekebiliyor.</p>
+<h2 id="override">Override</h2>
+<p>Basit uygulamalardan karmaşığa doğru gidelim. Bir klasör içinde message-app adında bir klasör açalım. Klasör içinde default.nix adında bir dosya oluşturup alttaki kodları kopyalayalım. Ben de kendi repo'mda override-derivation adında bir klasörde bu işlemleri yapıyorum.</p>
+<h3 id="pkgoverridederivation"><code>&lt;pkg&gt;.overrideDerivation</code></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>nixpkgs <span class="o">?</span> <span class="p">{}}:</span>
+        nixpkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">(</span>finalAttrs<span class="p">:</span> <span class="p">{</span>
+              <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;message-app&quot;</span><span class="p">;</span>
+              <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v1.0&quot;</span><span class="p">;</span>
+
+              <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;merhaba dünya&quot;</span><span class="p">;</span>
+
+              <span class="ss">src</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>fetchTarball <span class="p">{</span>
+                      <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/muratcabuk/simple-message-app-with-c/archive/refs/tags/</span><span class="si">${</span>finalAttrs<span class="o">.</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+                      <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256:1aai9xdkgq2vd0ch10gxhg53qfv4ny2x3jgxlq4r9nrn4g9r8s1z&quot;</span><span class="p">;</span>
+                    <span class="p">};</span>
+
+              <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> nixpkgs<span class="o">.</span>gcc <span class="p">];</span>
+              <span class="ss">buildPhase</span> <span class="o">=</span> <span class="s2">&quot;gcc -o message-app </span><span class="si">${</span>finalAttrs<span class="o">.</span>src<span class="si">}</span><span class="s2">/message.c&quot;</span><span class="p">;</span>
+              <span class="ss">installPhase</span> <span class="o">=</span> <span class="s2">&quot;mkdir -p $out/bin; install -t $out/bin message-app&quot;</span><span class="p">;</span>
+
+              <span class="ss">meta</span> <span class="o">=</span> <span class="k">with</span> nixpkgs<span class="o">.</span>lib<span class="p">;</span> <span class="p">{</span>
+                    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Simple Message App with C&quot;</span><span class="p">;</span>
+                    <span class="ss">license</span> <span class="o">=</span> licenses<span class="o">.</span>mit<span class="p">;</span>
+                    <span class="ss">version</span> <span class="o">=</span>  <span class="s2">&quot;</span><span class="si">${</span>finalAttrs<span class="o">.</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">})</span>
+</code></pre></div>
+<p>message-app klasörü ile aynı dizinde flake.nix adında bir dosya açıp için alttaki kodları kopyalayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Flake için örnek paketler&quot;</span><span class="p">;</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span><span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+    <span class="k">let</span>
+        <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{};</span>
+
+        <span class="ss">packages</span> <span class="o">=</span> <span class="k">rec</span> <span class="p">{</span>
+            x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">(</span>pkgs<span class="o">.</span>callPackage <span class="l">./message-app</span> <span class="p">{</span><span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v1.0&quot;</span><span class="p">;})</span><span class="o">.</span>overrideDerivation<span class="p">(</span> oldAttrs<span class="p">:</span> <span class="k">rec</span> <span class="p">{</span> <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0-preview&quot;</span><span class="p">;}</span> <span class="p">);</span>
+            x86_64-linux<span class="o">.</span><span class="ss">message-app</span> <span class="o">=</span> x86_64-linux<span class="o">.</span>default<span class="p">;</span>
+
+            aarch64-linux<span class="o">.</span><span class="ss">message-app</span> <span class="o">=</span>  <span class="nb">import</span> <span class="l">./message-app</span> <span class="p">{</span><span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;};</span>
+        <span class="p">};</span>
+
+    <span class="k">in</span>
+    <span class="p">{</span>
+        <span class="ss">packages</span> <span class="o">=</span> packages<span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Default paketini callPackage fonksiyonu ile içeri alırken parantez içine alındığına dikkat edin. Parantez ile bu işleme öncelik verilmesini söylemiş oluyoruz. Buj fonksiyon bildiğimiz gibi bize derivative döndürüyor. Bu tipi override edebilmemiz için de Nix bize overrideDerivation adında bir fonksiyon sunuyor. Bu fonksiyon veri olarak bir anonim fonksiyon alıyor. Bu fonksiyonun ilk parametresi olan oldAttrs ise üzerinde işlem yaptığımız derivative'in attribute'larına erişmek için kullanılır.</p>
+<p>Bu örnekte oldAttrs parametresi ile version attribute'una erişip değiştirdik. Ancak dikkat ederseniz paket import ederken v1.0 dedik ama override ederken v3.0-preview kullandık. Zaten böyle bir versiyona destek vermediğimiz default.nix'den belli oluyor. Bu durumda eğer override işlemi derivation işleminden önce oluyorsa yazdığımız kod çalışmayacaktır. Versiyon 1'de hatırlarsanız uygulamamız kullanıcıdan sadece tek bir metin alıp onu ekrana yazıyordu.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>run<span class="w">  </span>.#<span class="w"> </span>--impure
+<span class="c1"># komutu çalıştırdığımızda uygulama tek bir input alıp onu akrana yazacaktır.</span>
+<span class="c1"># Yani kodumuz hata vermedi. Demek ki overrideDerivation derivate işleminden sonra çalışıyor.</span>
+</code></pre></div>
+<p>Buradan override işleminin build işleminden sonra çalıştığını görebiliyoruz. Peki hakikaten böyle mi acaba? Yani bu durum hakikaten override işleminin build işleminden sonra çalıştığını ispat eder mi? Evet eder çünkü default.nix dosyasına bakacak olursak hakikaten versiyon bilgisini kaynak kodu çekerken kullanıyoruz. Dolayısıyla eğer sadece metadata bilgisi olarak değiştirmek istediğimiz attribute'lar varsa overrrideDerivation fonksiyonunu kullanabiliriz. Mesela hakikaten v1.0 dan paket oluşturmak istiyoruz ancak tam release olmadığı için version bilgisini değiştirmek istiyoruz. Veya adını farklı bir şekilde göstermek istiyoruz. bu gibi durumlar kullanılabilir.</p>
+<h3 id="pkgoverrideattrs"><code>&lt;pkg&gt;.overrideAttrs</code></h3>
+<p>Bunun için sadece flake.nix dosyasını alttaki gibi değiştiriyoruz. Önce test edelim sonra da ne döndüğünü anlamaya çalışalım. Halen default.nix dosyamızda v1.0 versiyonunun yazılı olduğunu unutmayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake</span>
+
+<span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Flake için örnek paketler&quot;</span><span class="p">;</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">outputs</span> <span class="o">=</span><span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+    <span class="k">let</span>
+
+
+        <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{};</span>
+
+        <span class="ss">packages</span> <span class="o">=</span> <span class="k">rec</span> <span class="p">{</span>
+           x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="p">(</span>pkgs<span class="o">.</span>callPackage <span class="l">./message-app</span> <span class="p">{</span><span class="ss">nixpkgs</span> <span class="o">=</span> pkgs<span class="p">;})</span><span class="o">.</span>overrideAttrs <span class="p">(</span>
+                                                      finalAttrs<span class="p">:</span> previousAttrs<span class="p">:</span> <span class="k">rec</span><span class="p">{</span>
+                                                                      <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;</span>
+                                                                      <span class="ss">src</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>fetchTarball <span class="p">{</span>
+                                                                                <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/muratcabuk/simple-message-app-with-c/archive/refs/tags/</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+                                                                                <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256:1a4a2i32da9shc2d3i1ndarmla97bald7lgs1vjmwyjlry0mk4m7&quot;</span><span class="p">;};</span>
+                                                                                  <span class="p">});</span>
+
+
+
+            x86_64-linux<span class="o">.</span><span class="ss">message-app</span> <span class="o">=</span> x86_64-linux<span class="o">.</span>default<span class="p">;</span>
+
+            aarch64-linux<span class="o">.</span><span class="ss">message-app</span> <span class="o">=</span>  <span class="nb">import</span> <span class="l">./message-app</span> <span class="p">{</span><span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;};</span>
+        <span class="p">};</span>
+
+    <span class="k">in</span>
+    <span class="p">{</span>
+        <span class="ss">packages</span> <span class="o">=</span> packages<span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Alttaki gibi test ettiğimizde artık v3.0 versiyonunun kullanıldığını göreceğiz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>run<span class="w">  </span>.#<span class="w"> </span>--impure
+<span class="c1"># artık v3.0 versiyonunun kullanıldığını göreceğiz.</span>
+</code></pre></div>
+<p>Peki buradaki finalAttrs ve previousAttrs ne anlama geliyor? finalAttrs, override işlemi yapılan set'in son hali anlamına gelir. previousAttrs ise override işlemi yapılmadan önceki set'in hali anlamına gelir. Alında biz her atama yaptığımızda derivative'i değiştiriyoruz. Eğer biz değiştirmeden bir önceki değerlere ihtiyacımız varsa previousAttrs kullanıyoruz o değeri okumak için. Yada biz değiştirdikten sonraki bir değeri okumak istiyorsak finalAttrs kullanıyoruz.</p>
+<p>Bazı kaynaklarda finalAttrs yerine self, previousAttrs yerine super kullanıldığını görebilirsiniz. Burada bilmemiz gereken ilk parametre değiştikten sonra yeni hali, ikinci parametre ise değişmeden önceki hali temsil eder.</p>
+<h3 id="pkgoverride"><code>&lt;pkg&gt;.override</code></h3>
+<p>Nixpkgs 'de neredeyse bütün paketlerde override fonksiyonu bulunur. Yani bu durumda override fonksiyonunu kullandığımız paket bize sunuyor olmalı. Dolayısıyla şu haliyle biz kendi paketimizde override fonksiyonunu kullanamayız. Kullanımı tamamen overrideAttrs fonksiyonu ile aynı. Zaten internette bir çok örnek bulabilirsiniz. Zaten resmi dokümanlara'da bakarsanız overrideAttrs fonksiyonunun override fonksiyonundan daha çok kullanıldığını hatta önerildiğini de görebilirsiniz.</p>
+<h3 id="pkgmakeoverradable"><code>&lt;pkg&gt;.makeOverradable</code></h3>
+<p>Bu ise normal bir bir fonksiyonu override edilebilir hale getirir. Normal şartlarda Nix dilinde mkDerivative fonksiyonu da dahil bir fonksiyonu set'ler gibi override edemezsiniz. Ancak yeni bir versiyonunu yazmamız gerekir. Buna daha önce değinmiştik. MkDerivative fonksiyonu özel bir fonksiyon olduğu için dil içinde derivative üzeriden bunu override edebilmemiz mümkün kılınmış. Orada da büyük ihtimal arkada sistem aslında fonksiyonun build alınma sürecinde yapılacaklarla ilgili derivative'deki attribute'ları değiştiriyor. Aslında biz fonksiyonu değil fonksiyonun çalışmasa sonucunda oluşan derivative değerlerini değiştiriyoruz. Yada ikinci ihtimal ki bu daha yüksek bir ihtimal sistem bizden altığı parametrelere göre yeni bir derivative oluşturuyor. Nasıl yaptığı çok önemli değil aslında bizim için. Bizim için önemli olan fonksiyonun sonucunu değiştirebilmek.</p>
+<p>Bazı durumlarda basit bir fonksiyonu da override edilebilir yapmamız gerekebilir. Ancak tabii ki halen bütün kurallar geçerli yani bir fonksiyon immutable'dır yani kendini veya içindeki bir parametreyi veya yaptığı işin bir kısmını doğrudan değiştiremeyiz. Burada ayarlayabildiğimiz sadece sonucu değiştirmek.</p>
+<p><a href="https://nixos.org/manual/nixpkgs/unstable/#sec-lib-makeOverridable">Resmi sayfasındaki</a> örneği doğrudan alıyorum.</p>
+<p>Repl içinden örneği test edebilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="ss">f</span> <span class="o">=</span> <span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span> <span class="p">{</span> <span class="ss">result</span> <span class="o">=</span> a<span class="o">+</span>b<span class="p">;</span> <span class="p">};</span>
+<span class="ss">c</span> <span class="o">=</span> lib<span class="o">.</span>makeOverridable f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">};</span>
+<span class="c1"># c.result = 3</span>
+
+<span class="p">(</span>c<span class="o">.</span>override <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="p">})</span><span class="o">.</span>result
+<span class="c1"># result 6 olacaktır</span>
+</code></pre></div>
+<p>Gördüğümüz üzere biz aslında f fonksiyonunu override etmedik. Halen fonksiyon aynı işlemi yapıyor. Ancak elimizde ki sınucun parametre değerlieni değiştirerek farklı sonuçlar oluşurabiliyoruz.</p>
+<p>Buraya kadar sadece kendi yazdığımız tek bir paketi override etmeyi öğrendik. Şimdi birde bir veya daha fazla paketi overlay ile nasıl override edebileceğimize bakalım. Ardından Nix repo'larındaki veya diğer repo'lardaki paketleri nasıl override edebileceğimize bakalım.</p>
+<h2 id="overlay">Overlay</h2>
+<p>Overlay basitçe iki parametre (final, prev veya self, super) alan ve geriye bir paket seti döndüren fonksiyondur.</p>
+<p>Öncelikle overlay kavramını biraz inceleyelim. Daha sonra uygulamalara geçeriz.</p>
+<p>En basit haliyle overlay <code>final: prev: { f = final.&lt;pkg&gt;; }</code> şeklinde yazılır. Diğer bir şekliyle <code>final: prev: { f = prev.&lt;pkg&gt;; }</code> şeklinde de yazılabilir. Şu haliyle bu yazımla bir şey değiştirmiyoruz tabii ki sadece değiştirme yaparken paketin önceki haline ve son haline ulaşmak için kullanıyoruz. Alttaki kullanımla bir paketin değişimden önceki haline erişip onu değiştirip daha sonra yeni halini (final) döndürüyoruz.</p>
+<div class="highlight"><pre><span></span><code>final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+  <span class="ss">pkg_name</span> <span class="o">=</span> prev<span class="o">.</span>pkg_name<span class="o">.</span>override <span class="p">{</span> <span class="o">...</span> <span class="p">};</span>
+  <span class="ss">myPackage</span> <span class="o">=</span> final<span class="o">.</span>pkg_name<span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Ancak mesela alttaki örnekte infinite recursion durumu oluşur. Yani sonsuz döngüye girer. Çünkü final ifadesi preview ifadesi üzerine kurulur. Eğer son durumdan (final) tekrar son durum (final) oluşturmaya çalışırsak sonsuz döngüye gireriz.</p>
+<div class="highlight"><pre><span></span><code>final<span class="p">:</span> prev<span class="p">:</span> <span class="ss">firefox</span> <span class="o">=</span> final<span class="o">.</span>firefox<span class="o">.</span>override <span class="p">{</span> <span class="o">...</span> <span class="p">};</span>
+</code></pre></div>
+<p>Alttaki örnekte de birden fazla paket üzerinden işlem yapılıyor. Burada da self son hali prev ise önceki hali temsil eder.</p>
+<div class="highlight"><pre><span></span><code>self<span class="p">:</span> super<span class="p">:</span>
+<span class="p">{</span>
+  <span class="ss">boost</span> <span class="o">=</span> super<span class="o">.</span>boost<span class="o">.</span>override <span class="p">{</span>
+    <span class="ss">python</span> <span class="o">=</span> self<span class="o">.</span>python3<span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">rr</span> <span class="o">=</span> super<span class="o">.</span>callPackage <span class="l">./pkgs/rr</span> <span class="p">{</span>
+    <span class="ss">stdenv</span> <span class="o">=</span> self<span class="o">.</span>stdenv_32bit<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Alttaki örnek de ise dah önce de yaptığımız gibi bir paketin kaynağını ve versiyonu değiştiriyoruz.</p>
+<div class="highlight"><pre><span></span><code>self<span class="p">:</span> super<span class="p">:</span> <span class="p">{</span>
+    <span class="l">&lt;pkg&gt;</span> <span class="o">=</span> super<span class="o">.</span><span class="l">&lt;pkg&gt;</span><span class="o">.</span>overrideAttrs <span class="p">(</span>prev<span class="p">:</span> <span class="p">{</span>
+      <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v2.0&quot;</span><span class="p">;</span>
+      <span class="ss">src</span> <span class="o">=</span> pkgs<span class="o">.</span>fetchFromGitHub <span class="p">{</span>
+        <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;username&quot;</span><span class="p">;</span>
+        <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;repo_name&quot;</span><span class="p">;</span>
+        <span class="ss">sha256</span> <span class="o">=</span> cha2560000000000000000<span class="p">;</span>
+      <span class="p">};</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+</code></pre></div>
+<p>Örneklerden de anlayacağınız üzere en başta dediğimiz gibi <code>final: prev: { .......... }</code> şeklinde bir kalıp. Ancak hala tam olarak nedir tam olarak ne olduğu belli değil gibi. Teknik olarak evet bir fonksiyon ama ever bir override ise zaten farklı farklı fonksiyonlar var ve neden overlay diye bir isim?</p>
+<p>Aslında overlay tam salt olarak bir override yani bir değişkeni alıp değiştirmek gibi bir işlem yapmıyor. Override kelimesinin Türkçe karşılığı isim olarak katman, örtü ve fiil olarak örtmek, üstünü kapatmak gibi anlamlara geliyor. <a href="https://blog.layus.be/posts/2020-06-12-nix-overlays.html">Şu sayfada</a> birazdan anlatacağım katman mantığını daha detaylı inceleyebilirsiniz. Görselleri ve anlatımı da aynı sayfadan aldım.</p>
+<p>Alttaki gibi modül ile Firefox'u build aldığımızı ve nixpkgs ile // operatörü ile merge ettiğimizi düşünelim. Aslında paketlerde 71. versiyon yok biz ekledik. Resimde belki görünmüyordur alttaki katmanda firefox 70.1 versiyonunun olduğu yazıyor. Hatta 71 versiyonunda farklı olarak pulseaudio paketi hiç kullanılmamış.</p>
+<div class="highlight"><pre><span></span><code><span class="k">let</span>
+  <span class="ss">nixpkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+  <span class="ss">custom</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">firefox</span> <span class="o">=</span> derive<span class="p">(</span><span class="s2">&quot;71&quot;</span><span class="p">,</span> nixpkgs<span class="o">.</span>zlib<span class="p">,</span> nixpkgs<span class="o">.</span>gcc<span class="p">,</span> nixpkgs<span class="o">.</span>stdenv<span class="p">)</span>
+  <span class="p">}</span>
+<span class="k">in</span>
+  nixpkgs <span class="o">//</span> custom
+</code></pre></div>
+<p>Bu haliyle bile aslında bir overlay yapmış olduk. Yepyeni bir Firefox paketini bütün diğer uygulamaları koruyarak nixpkgs'ye eklemiş olduk. Daha doğrusu önceki versiyonun yerine koymuş olduk. Eğer farklı bir isim vermiş olsaydık örneğin firefox_custom o zaman nixpkgs içinde hem firefox hem de firefox_custom adından iki paketimiz olacaktı.</p>
+<p><img alt="nixpkgs_overlay.png" src="../assets/files/nixpkgs_overlay.png" /><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>Dikkat ederseniz stdenv paketinin hiçbir pakete bağımlılığı yok. Firefox ve zlib paketleri ise ortak gcc paketine bağımlı.</p>
+<p>Şimdi bir şekilde artık gcc paketinin 8.1.1 versiyonunu kullanmak istediğimizi varsayalım. Haliyle bu versiyonu da sisteme koymamız gerekiyor. bu durumda eski veriyonla çalışan Firefox ve onda bağımlı olan zlib bu durumdan etkilenmeyecektir. Bu da Nix'i güçlü kılan özelliklerden birisi.</p>
+<p><img alt="nixpkgs_overlay_2.png" src="../assets/files/nixpkgs_overlay_2.png" /><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>Her eklediğimiz katman önceki bağımlılıkları bozmuyor. Burada açıkça görüleceği üzere bağımlılıklar<a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph"> directed acyclic graph (DAG)</a> olarak çalışır. Türkçesi "yönlendirilmiş döngüsel olmayan grafik" olarak çevrilebilir. Yani bu bağımlılık yapısı hiçbir zaman bir döngü oluşturmaz. Her ekediğimiz değişiklik sistemi bir sonraki katmna götürür.</p>
+<p><img alt="Tred-G.svg.png" src="../assets/files/Tred-G.svg.png" /><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></p>
+<p>Son tahlilde elimizde alttakine benzer bir yapı oluşacaktır.</p>
+<p><img alt="nixpkgs_overlay_3.png" src="../assets/files/nixpkgs_overlay_3.png" /></p>
+<p>Yani velhasıl kelam overlay aslında override'ın daha ötesinde bir kavramdır. Ancak usül olmuş paket değişikliğinin anlatıldığı yerlerde overlay'den bahsetmek ki bizde öyle yaptık. Ancak bence Nix paket yöneticisi nedir sorusunun hemen altında bu konuya değinilebilirdi.</p>
+<p>Şimdi de overlay'i nasıl kullanacağımıza bakalım.</p>
+<p>Konuyu mimarından dinlemek isterseniz Youtube sunumunu <a href="https://www.youtube.com/watch?v=W85mF1zWA2o">NixCov 2017</a> izleyebilirsiniz.</p>
+<h2 id="overlayi-manuel-olarak-uygulamak">Overlay'i Manuel Olarak Uygulamak</h2>
+<ul>
+<li><strong>import \<nixpkgs> { overlays = [ overlay1 overlay2 ]; }</strong></li>
+<li><strong>let pkgs = (nixpkgs.legacyPackages.${system}.extend overlay1).extend overlay2</strong></li>
+<li><strong>let pkgs = import nixpkgs { inherit system; overlays = [ overlay1 overlay2 ]; }</strong></li>
+</ul>
+<p>Artık tek paket üzeriden değil tüm paketler üzerinden işlem yaptığımıza dikkat edin. Öncelikle paketleri veya paketi seçip sonra işlem yapıyoruz. Yada paket seçmeyip yeni paket de ekleyebiliriz. Veya bir paketin özelliklerini değiştirebilir yeni özellikler ekleyebiliriz.</p>
+<p>Şimdi isterseniz overlay'in aslında salt bir override işlemi olmadığını anlamak için kodumuzda biraz deşiklik yapalım. Yeni bir klasör oluşturalım. Ben repo'mda overlay-simple adında bir klasör açtım. Klasör içine yine message.nix adında bir dosya oluşturup alttaki kodları kopyalıyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> pkgs<span class="p">,</span> version<span class="o">?</span> <span class="s2">&quot;v1.0&quot;</span> <span class="p">}:</span>
+
+    <span class="k">let</span>
+      <span class="ss">simpleMessageAppSrc</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/muratcabuk/simple-message-app-with-c/archive/refs/tags/</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+
+      <span class="ss">shaSet</span> <span class="o">=</span> <span class="p">{</span><span class="ss">v10</span><span class="o">=</span><span class="s2">&quot;sha256:1aai9xdkgq2vd0ch10gxhg53qfv4ny2x3jgxlq4r9nrn4g9r8s1z&quot;</span><span class="p">;</span>
+                <span class="ss">v20</span><span class="o">=</span><span class="s2">&quot;sha256:11p3c793yjpm4z4j9shlidbii7wd0kf9qflx8jqhhnwwhqf93mam&quot;</span><span class="p">;</span>
+                <span class="ss">v30</span><span class="o">=</span><span class="s2">&quot;sha256:1a4a2i32da9shc2d3i1ndarmla97bald7lgs1vjmwyjlry0mk4m7&quot;</span><span class="p">;};</span>
+
+      <span class="ss">shaVer</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>concatStringsSep <span class="s2">&quot;&quot;</span> <span class="p">(</span>pkgs<span class="o">.</span>lib<span class="o">.</span>strings<span class="o">.</span>splitString <span class="s2">&quot;.&quot;</span> <span class="s2">&quot;</span><span class="si">${</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="p">);</span>
+
+      <span class="ss">versionSha</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>getAttr shaVer shaSet<span class="p">;</span>
+
+      <span class="c1"># Simple Message App&#39;in kaynak dizini</span>
+      <span class="ss">src</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>fetchTarball <span class="p">{</span>
+        <span class="ss">url</span> <span class="o">=</span> simpleMessageAppSrc<span class="p">;</span>
+        <span class="ss">sha256</span> <span class="o">=</span> versionSha<span class="p">;</span>
+      <span class="p">};</span>
+    <span class="k">in</span>
+
+        pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">(</span>finalAttrs<span class="p">:</span> <span class="p">{</span>
+              <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span><span class="p">;</span>
+              <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">${</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span>
+
+              <span class="ss">src</span> <span class="o">=</span> src<span class="p">;</span>
+
+              <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>gcc <span class="p">];</span>
+              <span class="ss">buildPhase</span> <span class="o">=</span> <span class="s2">&quot;gcc -o message </span><span class="si">${</span>src<span class="si">}</span><span class="s2">/message.c&quot;</span><span class="p">;</span>
+              <span class="ss">installPhase</span> <span class="o">=</span> <span class="s2">&quot;mkdir -p $out/bin; install -t $out/bin message&quot;</span><span class="p">;</span>
+
+              <span class="ss">meta</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="o">.</span>lib<span class="p">;</span> <span class="p">{</span>
+                    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Simple Message App with C&quot;</span><span class="p">;</span>
+                    <span class="ss">license</span> <span class="o">=</span> licenses<span class="o">.</span>mit<span class="p">;</span>
+                    <span class="ss">version</span> <span class="o">=</span>  <span class="s2">&quot;</span><span class="si">${</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">})</span>
+</code></pre></div>
+<p>aynı dizine flake.nix dosyamızı da ekleyip alttaki kodları kopyalayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Flake için örnek paketler&quot;</span><span class="p">;</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">outputs</span> <span class="o">=</span><span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+  <span class="k">let</span>
+
+      <span class="ss">overlay</span> <span class="o">=</span> <span class="p">(</span>final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span> <span class="ss">default</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./message.nix</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span> <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;};</span> <span class="p">});</span>
+
+      <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+
+      <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="k">inherit</span> system<span class="p">;</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>overlay<span class="p">];};</span>
+
+      packages<span class="o">.</span>x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>default<span class="p">;</span>
+
+
+  <span class="k">in</span>
+  <span class="p">{</span>
+    <span class="k">inherit</span> packages<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Kodu alttaki komutla test ettiğimizde message uygulamasında v1.0 yazmış olmamıza rağmen artık v3.0 versiyonunun kullanıldığını göreceğiz. Zaten message.nix dosyamız bir fonksiyon ve version diye bir parametre var ve biz bunu ne atarsak ona göre build alınıyor paketimiz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span>.#dedault<span class="w"> </span>--impure
+</code></pre></div>
+<p>Kodu incelediğimizde önceki kodlarımızdan farklı olarak paket yükleme işini overlay üzerinden yapıyoruz. Aslında overlay kullanmasak bile yüklediğimiz paketin bir overlay oluşturduğunu üstte anlatmıştık. Burada overlay işlemini açıkça yapıyoruz. Böylece yükleme işi yapılırken araya girme şansımız da oluyor. Bu sayede aslında pkgs'ye overlay uygulayarak kendi paketimizi paketler içine eklemiş oluyoruz. Override kavramı üzerinden bakacak olursak mevzuya, pkgs içindeki paketlerimizi güncellemiş yani override yapmış oluyoruz.</p>
+<p>Overlay'yi <code>pkgs = import nixpkgs { inherit system; overlays = [overlay];};</code> satırı ile uygulamış oluyoruz. Bu durumda overlay içinde <code>pkgs = final</code> tanımında final keyword'ü ile aslında pkgs'nin son halini işaret etmiş oluyoruz.</p>
+<p>Bu arada bütün kodları GitHub sayfamda bulabilirsiniz.</p>
+<p>Şimdide repo'muzdaki paketleri nasıl overlay ile toplu halde ve farklı sistemleri de destekleyecek şekilde yükleyebiliriz ona bakalım.</p>
+<p>Kendi Github sayfamda nix-examples repo'sunda <a href="https://github.com/muratcabuk/nix-examples/tree/overlay-example">overlay-example</a> branch'inde overlay örneğinin tüm kodunu görebilirsiniz.</p>
+<p>Asıl odaklanmamız gereken overlay ve flake dosyalarımızı burada inceleyeceğiz zaten.</p>
+<p>Overlay'imizi artık başka örneklerde de görebileceğiniz üzere overlay.nix dosyasına taşıdık. İlk örneğimizden farklı olarak bu sefer overlay.nix dosyasında bir çok paketi overlay ile yüklüyoruz. Ayrıca hello adındaki bir paketi de nixpkgs'den yükleyip override ediyoruz. Aslında flake dosyasında altta görebileceğiniz üzere hello paketinin son versiyonunu da yüklüyoruz. Örnek olması açısından 2 farklı versiyonu override ve overlay yardımıyla nasıl kullanabileceğimizi de görelim istedim. Tabi burada şunu bilmemiz gerekiyor, eğer nixpkgs altındaki hello derivative fonksiyonu hello uygulamasının 2.9 versiyonunu build alıp bize veremeyecek şekilde olsaydı o zaman build sürecini de override etmek zorunda kalacaktır.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># overlay</span>
+final<span class="p">:</span> prev<span class="p">:</span> <span class="p">{</span>
+              <span class="ss">defaultapp</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./pkgs/default</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+              <span class="ss">defaultfile</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./pkgs/defaultfile</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;};</span>
+              <span class="ss">defaultalt</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./pkgs/defaultalt</span><span class="p">{</span><span class="ss">pkgs</span><span class="o">=</span>final<span class="p">;};</span>
+              <span class="ss">nixapp</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./pkgs/nixapp</span> <span class="p">{</span> <span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span> <span class="p">};</span>
+              <span class="ss">message</span> <span class="o">=</span> <span class="p">(</span><span class="nb">import</span> <span class="l">./pkgs/message</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span> <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;});</span>
+              <span class="ss">testapp</span> <span class="o">=</span> <span class="p">(</span><span class="nb">import</span> <span class="l">./pkgs/testapp</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> final<span class="p">;</span> <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;});</span>
+              <span class="ss">hello-custom</span> <span class="o">=</span> final<span class="o">.</span>hello<span class="o">.</span>overrideAttrs <span class="p">(</span>old<span class="p">:</span> <span class="k">rec</span> <span class="p">{</span>
+                <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;hello-custom&quot;</span><span class="p">;</span>
+                <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.9&quot;</span><span class="p">;</span>
+                      <span class="ss">src</span> <span class="o">=</span> final<span class="o">.</span>fetchurl <span class="p">{</span>
+                      <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;mirror://gnu/hello/hello-</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+                      <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256-7Lt6IhQZbFf/k0CqcUWOFVmr049tjRaWZoRpNd8ZHqc=&quot;</span><span class="p">;</span>
+                      <span class="p">};});</span>
+              <span class="p">}</span>
+</code></pre></div>
+<p>Flake dosyamızda ise alttaki gibi overlay'i uyguluyoruz. Paketlerimizi iki farklı sistem için oluşturuyoruz</p>
+<p>Her sistem için doğal olarak iki farklı paket oluşturmamız gerekiyor. Bundan dolayı pkgs değişkenini her sistem için ayrı ayrı oluşturuyoruz. <code>forAllsystems</code> fonksiyonu ile de bu işlemi yapıyoruz. Overlay ile override edilen paketler de dahil bütün paketlere yüklendikten sonra packages ile dışarıya output olarak açılıyor.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># flake</span>
+<span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Flake için örnek paketler&quot;</span><span class="p">;</span>
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">outputs</span> <span class="o">=</span><span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+  <span class="k">let</span>
+      <span class="ss">forAllSystems</span> <span class="o">=</span> nixpkgs<span class="o">.</span>lib<span class="o">.</span>genAttrs <span class="p">[</span>
+        <span class="s2">&quot;aarch64-linux&quot;</span>
+        <span class="s2">&quot;x86_64-linux&quot;</span>
+      <span class="p">];</span>
+
+      <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">import</span> <span class="l">./overlay.nix</span><span class="p">)];</span>
+
+      <span class="ss">packages</span> <span class="o">=</span> forAllSystems <span class="p">(</span>system<span class="p">:</span>
+          <span class="k">let</span>
+            <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span>
+              <span class="k">inherit</span> system<span class="p">;</span>
+              <span class="ss">overlays</span> <span class="o">=</span> overlays<span class="p">;</span>
+            <span class="p">};</span>
+          <span class="k">in</span> <span class="p">{</span>
+            <span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultapp<span class="p">;</span>
+            <span class="ss">defaultfile</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultfile<span class="p">;</span>
+            <span class="ss">defaultalt</span> <span class="o">=</span> pkgs<span class="o">.</span>defaultalt<span class="p">;</span>
+            <span class="ss">nixapp</span> <span class="o">=</span> pkgs<span class="o">.</span>nixapp<span class="p">;</span>
+            <span class="ss">message</span> <span class="o">=</span> pkgs<span class="o">.</span>message<span class="p">;</span>
+            <span class="ss">testapp</span> <span class="o">=</span> pkgs<span class="o">.</span>testapp<span class="p">;</span>
+            <span class="ss">hello</span> <span class="o">=</span> pkgs<span class="o">.</span>hello<span class="p">;</span>
+            <span class="ss">hello-custom</span> <span class="o">=</span> pkgs<span class="o">.</span>hello-custom<span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">);</span>
+  <span class="k">in</span>
+  <span class="p">{</span>
+    <span class="k">inherit</span> packages<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="overlayi-otomatik-olarak-uygulamak">Overlay'i Otomatik Olarak Uygulamak</h2>
+<p><strong>Kullanıcı Bazında Uygulamak</strong></p>
+<p><code>~/.config/nixpkgs/overlays.nix</code> dizininde, yani kullanıcının home dizinindeki <code>.config</code> klasöründe nixpkgs klasörü altında overlays.nix dosyasına overlay'leri ekleyebiliriz. Böylece sistem otomatik olarak yükleyecektir.</p>
+<p>Yada alttaki dizinlerde default.nix adında bir dosya oluşturup yine aynı dizinde oluşturduğumuz overlay'leri ekleyebiliriz.</p>
+<div class="highlight"><pre><span></span><code>ll<span class="w">  </span>~/.nix-defexpr/
+
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>kullanici_grubu<span class="w"> </span>kullanici_adi<span class="w"> </span><span class="m">51</span><span class="w"> </span>Eki<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">23</span>:04<span class="w"> </span>channels<span class="w"> </span>-&gt;<span class="w"> </span>/home/kullanici_adi/.local/state/nix/profiles/channels
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>kullanici_grubu<span class="w"> </span>kullanici_adi<span class="w"> </span><span class="m">44</span><span class="w"> </span>Eki<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">23</span>:04<span class="w"> </span>channels_root<span class="w"> </span>-&gt;<span class="w"> </span>/nix/var/nix/profiles/per-user/root/channels
+</code></pre></div>
+<p><strong>System Bazında Uygulamak</strong></p>
+<p>Sisteme path olarak nixpkgs-overlays kullanılarak <code>NIX_PATH="$NIX_PATH:nixpkgs-overlays=/etc/nixos/overlays"</code> dizini eklenir. Ve bu dizin altında overlay'ler eklenir.</p>
+<p>Bu arada otomatik yükleme yaparken <code>~/.config/nixpkgs/overlays/*.nix</code> şeklinde joker karakter de kullanabiliriz.</p>
+<p>Bu path'ların bazılarının tanımını nixpkgs repo'unda da görebilirsiniz. Daha önce ilk yazılarımızda bu öze path'lere değinmiştik. Mesela alttaki kod bloğu <code>pkgs/top-leve/impure.nix</code> dizininde görebilirsiniz. Resmi GitHub sayfasında <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/impure.nix">şu adreste</a> de görebilirsiniz.</p>
+<div class="highlight"><pre><span></span><code>      <span class="ss">pathOverlays</span> <span class="o">=</span> try <span class="p">(</span><span class="nb">toString</span> <span class="l">&lt;nixpkgs-overlays&gt;</span><span class="p">)</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+      <span class="ss">homeOverlaysFile</span> <span class="o">=</span> homeDir <span class="o">+</span> <span class="s2">&quot;/.config/nixpkgs/overlays.nix&quot;</span><span class="p">;</span>
+      <span class="ss">homeOverlaysDir</span> <span class="o">=</span> homeDir <span class="o">+</span> <span class="s2">&quot;/.config/nixpkgs/overlays&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p>Otomatik olarak uygulama metodunu kullanacağınızı zannetmiyorum. En azında bu yazıyı yazdığım ana kadar ben kullanma ihtiyacı duymadım. Bu nedenle burayla alakalı örnek yapmayacağım. Bunu da kendinizi test etmek için ödev olsun diyelim.</p>
+<p>Bir sonraki yazımızda artık kendi paketlerimizi ve Nix repo'sundaki paketleri kullanarak kendimize nasıl profile veya development ortamları oluşturabileceğimizi göreceğiz. Daha önce gördüğümüz <code>nix shell ve nix profile</code> gibi komutları declarative yolla yönetmeyi ve daha önce görmediğimiz <code>nix develop</code> komutunu da göreceğiz.</p>
+<h2 id="referanslar">Referanslar</h2>
+<ul>
+<li><a href="https://ryantm.github.io/nixpkgs/using/overrides/#chap-overrides">https://ryantm.github.io/nixpkgs/using/overrides/#chap-overrides</a></li>
+<li><a href="https://ryantm.github.io/nixpkgs/using/overlays/#chap-overlays">https://ryantm.github.io/nixpkgs/using/overlays/#chap-overlays</a></li>
+<li><a href="https://bobvanderlinden.me/customizing-packages-in-nix/">https://bobvanderlinden.me/customizing-packages-in-nix/</a></li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://blog.layus.be/posts/2020-06-12-nix-overlays.html">Resim Kaynağı</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://blog.layus.be/posts/2020-06-12-nix-overlays.html">Resim Kaynağı</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">Resim Kaynağı</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

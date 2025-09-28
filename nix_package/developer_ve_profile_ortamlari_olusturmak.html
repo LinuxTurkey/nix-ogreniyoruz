@@ -1,0 +1,1299 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nix_package/developer_ve_profile_ortamlari_olusturmak.html">
+      
+      
+        <link rel="prev" href="override_ve_overlay.html">
+      
+      
+        <link rel="next" href="../nix_ile_nix_konfigurasyonu.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Developer ve Profile Ortamları Oluşturmak - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Developer ve Profile Ortamları Oluşturmak - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/developer_ve_profile_ortamlari_olusturmak.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nix_package/developer_ve_profile_ortamlari_olusturmak.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Developer ve Profile Ortamları Oluşturmak - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/developer_ve_profile_ortamlari_olusturmak.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nix-paket-yoneticisi-ile-developer-ve-profile-ortamlar-olusturmak" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Developer ve Profile Ortamları Oluşturmak
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/01_nix_dili_ve_ozellikleri.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/02_nix_dili_alistirmalari.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_shell_ve_profile.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="override_ve_overlay.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-shell-declarative-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Shell Declarative Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-develop-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Develop Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developer-ortamlar-icin-nix-tabanl-diger-araclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developer Ortamları için Nix Tabanlı Diğer Araçlar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-profile-ile-kalc-profil-olusturmak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Profile ile Kalıcı Profil Oluşturmak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaynaklar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kaynaklar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-shell-declarative-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Shell Declarative Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-develop-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Develop Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#developer-ortamlar-icin-nix-tabanl-diger-araclar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developer Ortamları için Nix Tabanlı Diğer Araçlar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-profile-ile-kalc-profil-olusturmak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Profile ile Kalıcı Profil Oluşturmak
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaynaklar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kaynaklar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nix_package/developer_ve_profile_ortamlari_olusturmak.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nix_package/developer_ve_profile_ortamlari_olusturmak.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="nix-paket-yoneticisi-ile-developer-ve-profile-ortamlar-olusturmak">Nix Paket Yöneticisi ile Developer ve Profile Ortamları Oluşturmak</h1>
+<p>Önceki yazılarımızda <code>nix shell</code> ve <code>nix profile</code> komutlarını görmüştük. Ancak oralara yatığımız örneklerde imperative bir yol izlemiştik. Kurmak istediğimiz developer ortamı için <code>nix shell</code> komutu ile bütün uygulamaları ve paketleri manuel olarak her defasından yüklemek zorundaydık. Yada oluşturduğumuz bir profile her defasında yeniden oluşturmak durumundaydık. İlgili yazımızda da belirttiğimiz gibi bu zaten Nix felsefesine çok da uyan bir yaklaşım değil. Zaten o zamanda bunu declarative versiyonunu ileride göreceğimizden bahsetmiştik. Çünkü arada declarative kurguyu biraz anlamamız gerekiyordu. Artık kaldığımız yeren devam edebiliriz.</p>
+<h2 id="nix-shell-declarative-kullanm">Nix Shell Declarative Kullanımı</h2>
+<p>Yeni kurguda aslında <code>nix shell</code> doğrudan nix dosyaları üzerinden declarative olarak kurum yapmıyor. Ancak <code>nix develop</code> komutu bu işi yapıyor. Ancak declarative sayılabilecek güzel kullanımları mevcut. Detayları resmi dokümanlarından da bakabilirsiniz. Bir kısmını burada test edeceğiz.</p>
+<p>Mesela alttaki gibi kullanımları olduğunu daha önce görmüştük.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs#youtube-dl
+youtube-dl<span class="w"> </span>--version
+
+<span class="c1">#2021.12.17</span>
+
+nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs/nixos-20.03#hello
+hello
+<span class="c1"># Hello, world!</span>
+
+nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs#hello<span class="w"> </span>--command<span class="w"> </span>hello<span class="w"> </span>--greeting<span class="w"> </span><span class="s1">&#39;Hi everybody!&#39;</span>
+<span class="c1"># Hi everybody!</span>
+
+<span class="c1"># aynı diznide yer alan bir flake.nix dosyasının export ettiği paketleri yüklyebiliriz.</span>
+nix<span class="w"> </span>shell<span class="w"> </span>.
+</code></pre></div>
+<p>Daha bir çok örnek bulabilirsiniz. Temel amacı terminal açıkken bir uygulamayı kullanmak veya sadece test emek için kurmamızı sağlıyor. Bunu haricinde <code>nix shell</code> komutunu <a href="https://en.wikipedia.org/wiki/Shebang_%28Unix%29">shebang interpreter</a> olarak da kullanılabilir.</p>
+<p>Örneğin alttaki python kodunu bir dosyaya kaydedip (örneğin test.py) daha sonra <code>python3 test.py</code> komutuyla çalıştırdığımızda <code>ModuleNotFoundError: No module named prettytable</code> hatası alırız. Çünkü prettytable modülü yüklü değil.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">prettytable</span>
+
+<span class="c1"># Print a simple table.</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">prettytable</span><span class="o">.</span><span class="n">PrettyTable</span><span class="p">([</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N^2&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+<p>Şimdi aynı dosyyı alttaki gibi editleyelim. <code>#!</code> başlayan satırlara shebang diyoruz. Bu satırlar ile ilgili dosyanın öncelikle nix shell ile açılıp gerekli paketler yüklendikten sonra python ile çalıştıracağını belirtiyoruz. <code>test.py</code> dosyasını öncelikle <code>chmod +x test.py</code> komutuyka çalıştırılabilir yapıp daha sonra <code>./test.py</code> ile terminalden çalıştırıoyruz. Böyllece <code>prettytable</code> modülü yüklendikten sonra python kodu çalıştırılmış oluyor.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#! /usr/bin/env -S nix shell github:tomberek/-#python3With.prettytable --command python</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">prettytable</span>
+
+<span class="c1"># Print a simple table.</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">prettytable</span><span class="o">.</span><span class="n">PrettyTable</span><span class="p">([</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;N^2&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span> <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</code></pre></div>
+<p>Mesela alttaki shell script'inde ise çok satırlı bir Nix expression çalıştırılıyor. Terraform çalıştırılmadan önce expression çalıştırılıyor ilgili plugin'ler yüklendikten sonra Terraform çalıştırılıyor.</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#! /usr/bin/env nix</span>
+<span class="c1">#! nix shell --impure --expr ``</span>
+<span class="c1">#! nix with (import (builtins.getFlake &#39;&#39;nixpkgs&#39;&#39;) {});</span>
+<span class="c1">#! nix terraform.withPlugins (plugins: [ plugins.openstack ])</span>
+<span class="c1">#! nix ``</span>
+<span class="c1">#! nix --command bash</span>
+
+terraform<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h2 id="nix-develop-kullanm">Nix Develop Kullanımı</h2>
+<p><code>Nix develop</code> komutu daha önce <code>nix-shell</code> komutu yerine geldi. Önceden (genellikle) adı shell.nix olan bir dosya içinde mkShell fonksiyonu yazılır ve <code>nix shell</code> komutu shell.nix dosyasının bulunduğu dizinde çalıştırıldığında ilgili uygulamalar kurulurdu. Ancak yeni versiyonda artık bence daha anlamlı olan <code>nix develop</code> komutu geldi. Amacımız halen aynı yani üzerinden çalışmakta olduğumuz projenin isterleri olan uygulama ve paketlerin kurulumunu yapmak. Ancak bu sefer tek tek yüklemiyoruz bunun yerine ilgili paketve uygulamaları flake dosyamıza yazıyoruz ve oradan yüklüyoruz.</p>
+<p>Flake doaylarımızla bu yazıya kadar derivative ve paxkage oluşturduk. Şimdi ise flake dosyalarımızı kullanarak <code>nix develop</code> komutu ile bir developer ortamı oluşturacağız. Bunun içinde daha önce paket export ederken kullandığımız <code>packages.&lt;system&gt;.default</code> yapısına bencer olan <code>devShells.&lt;system&gt;.default</code> yapısını kullanıyoruz. <a href="https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-develop.html">Resmi dokümanlardan</a> da konuyu detaylı inceleyebilirsiniz.</p>
+<p>Şimdi biraz örnek yapalım. Diyelimki bir backend'i dotnet 8, frontend'i ise NodeJs 18 olan bir web uygulaması geliştiriyoruz. Bu uygulama için gerekli olan .net core sdk'sını, nodejs'i, npm'i, yarn'ı ve pnpm'i kullanmak istiyoruz. Bunun için aşağıdaki gibi bir flake dosyası oluşturabiliriz.</p>
+<p>Burada bir çok şey tanıdık zaten tek fark <strong>in</strong> bloğundaki <code>devShells.&lt;system&gt;.default</code> yapısı. Bu yapının içine gerekli paketleri yazıyoruz. Dikkat ederseniz <code>node2nix</code> paketini de ekledim. Bu paketin amacı nodejs paketlerini nix paketlerine dönüştürmek. Detaylar için <a href="https://github.com/svanderburg/node2nix">Github sayfasını</a> ziyaret edebilirsiniz. Ayrıca Javascript development ortamı için <a href="https://nixos.org/manual/nixpkgs/stable/#language-javascript">resmi dokümanları</a> da kesinlikle ziyaret edin. Dotnet için de yine <a href="https://nixos.org/manual/nixpkgs/stable/#dotnet">resmi dokümanlara</a> bi göz atmanızı tavsiye ederim.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Dotnet çalışma ortamım&quot;</span><span class="p">;</span>
+
+  inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span>
+    self<span class="p">,</span>
+    nixpkgs<span class="p">,</span>
+  <span class="p">}:</span> <span class="k">let</span>
+    <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+
+    <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span>final<span class="p">:</span> prev<span class="p">:</span> <span class="k">rec</span> <span class="p">{</span>
+          <span class="ss">nodejs</span> <span class="o">=</span> prev<span class="o">.</span>nodejs_18<span class="p">;</span>
+          <span class="c1"># nodejs paketlerinden birini yüklüyoruz</span>
+          <span class="ss">pnpm</span> <span class="o">=</span> prev<span class="o">.</span>nodePackages<span class="o">.</span>pnpm<span class="p">;</span>
+          <span class="c1"># yarn&#39;ı nodejs ile uyumlu yüklüyoruz</span>
+          <span class="ss">yarn</span> <span class="o">=</span> <span class="p">(</span>prev<span class="o">.</span>yarn<span class="o">.</span>override <span class="p">{</span> <span class="k">inherit</span> nodejs<span class="p">;</span> <span class="p">});</span>
+        <span class="p">})</span>
+      <span class="p">];</span>
+
+    <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span><span class="k">inherit</span> system overlays<span class="p">;};</span>
+
+
+  <span class="k">in</span> <span class="p">{</span>
+     devShells<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+                <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span>
+                        <span class="p">[</span>
+                          dotnet-sdk_8
+                          <span class="c1"># https://github.com/svanderburg/node2nix</span>
+                          <span class="c1"># npm yerine bunu kullanmak özellikle nix paketi oluşturulacaksa daha efektif</span>
+                          node2nix
+                          nodejs
+                          pnpm
+                          yarn
+                        <span class="p">];</span>
+                <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Asp.net core ile proje oluşturduğumuz klasörün root dizinine bu flake dosyasını koyup <code>nix develop</code> komutunu çalıştırdığımızda ilgili paketler yüklenecek. Kurulum bittiğinde de bizi otomatik olarak terminal bu araçların kurulu olduğu bir terminal olacak. Eğer terminalde <code>which dotnet</code> komutunu çalıştırırsak /nix/store/ ile başlayan bir dizin göreceğiz. Başka bir terminalde aynı komutu test ettiğinizde eğer nix paket yöneticisi dışında dotnet yüklediysek onun adresini göreceğiz, yüklemediysek boş dönecektir. Herhangi bir terminalde proje dizinideyken <code>nix develop</code> komutunu çalıştırırsak terminalimiz projemizin bütün bağımlılıklarının yüklenmiş olduğu bir terminale dönüşecektir.</p>
+<p>Terminalde alttaki testleri yaparak işlemin doğru yapıldığından emin olabiliriz.</p>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--version
+<span class="c1"># v18.19.1</span>
+
+dotnet<span class="w"> </span>--version
+<span class="c1"># 8.0.101</span>
+
+npm<span class="w"> </span>--version
+<span class="c1"># 10.2.4</span>
+
+
+which<span class="w"> </span>node
+<span class="c1"># /nix/store/1ihd9lyhn8q73n9s3iaxbilx4mn4nc5b-nodejs-18.19.1/bin/node</span>
+</code></pre></div>
+<p>Birden fazla sistem için alttaki gibi bir yapı kullanabilirsiniz.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Dotnet çalışma ortamım&quot;</span>
+
+  inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span>
+    self<span class="p">,</span>
+    nixpkgs<span class="p">,</span>
+  <span class="p">}:</span> <span class="k">let</span>
+    <span class="ss">supportedSystems</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;x86_64-linux&quot;</span> <span class="s2">&quot;aarch64-linux&quot;</span> <span class="s2">&quot;x86_64-darwin&quot;</span> <span class="s2">&quot;aarch64-darwin&quot;</span><span class="p">];</span>
+    <span class="ss">forEachSupportedSystem</span> <span class="o">=</span> f<span class="p">:</span>
+      nixpkgs<span class="o">.</span>lib<span class="o">.</span>genAttrs supportedSystems <span class="p">(</span>system<span class="p">:</span>
+        f <span class="p">{</span>
+          <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span><span class="k">inherit</span> system<span class="p">;};</span>
+        <span class="p">});</span>
+  <span class="k">in</span> <span class="p">{</span>
+    <span class="ss">devShells</span> <span class="o">=</span> forEachSupportedSystem <span class="p">({</span>pkgs<span class="p">}:</span> <span class="p">{</span>
+      <span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+        <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+          dotnet-sdk_7
+        <span class="p">];</span>
+      <span class="p">};</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>mkshell fonksiyonunu <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/mkshell/default.nix">resmi repo'daki adresinden</a> inceleyecek olursak alttaki gibi bir yapı göreceğiz. Üstte yaptığımız örnekte doğrudan development ortamının ihtiyacı olan paketleri belirledik. Alttaki listede gördüğümüz input'lar ise bu paketlerin input'larından development ortamının ihtiyacı olan paketleri belirlemek için kullanılıyor.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span> lib<span class="p">,</span> stdenv<span class="p">,</span> buildEnv <span class="p">}:</span>
+
+<span class="c1"># A special kind of derivation that is only meant to be consumed by the</span>
+<span class="c1"># nix-shell.</span>
+<span class="p">{</span> name <span class="o">?</span> <span class="s2">&quot;nix-shell&quot;</span>
+<span class="p">,</span> <span class="c1"># a list of packages to add to the shell environment</span>
+  packages <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> <span class="c1"># propagate all the inputs from the given derivations</span>
+  inputsFrom <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> buildInputs <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> nativeBuildInputs <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> propagatedBuildInputs <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> propagatedNativeBuildInputs <span class="o">?</span> <span class="p">[</span> <span class="p">]</span>
+<span class="p">,</span> <span class="o">...</span>
+<span class="p">}@</span>attrs<span class="p">:</span>
+</code></pre></div>
+<p>Örneğin daha önceki uygulamalarımızda kullandığımız message uygulamamızı kullanarak mevzuyu anlamaya çalışalım.</p>
+<p>Bu C diliyle yazılmış uygulamadan derivative oluşturacak message.nix adında aynı dizinde bir dosya oluşturalım.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>pkgs<span class="p">}:</span>
+        pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">(</span>finalAttrs<span class="p">:</span> <span class="k">rec</span><span class="p">{</span>
+              <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span><span class="p">;</span>
+              <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v3.0&quot;</span><span class="p">;</span>
+
+              <span class="ss">src</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>fetchTarball <span class="p">{</span>
+                        <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/muratcabuk/simple-message-app-with-c/archive/refs/tags/</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+                        <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256:1a4a2i32da9shc2d3i1ndarmla97bald7lgs1vjmwyjlry0mk4m7&quot;</span><span class="p">;</span>
+                    <span class="p">};</span>
+
+              <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>gcc <span class="p">];</span>
+              <span class="ss">nativeBuildInputs</span> <span class="o">=</span> <span class="p">[</span> pkgs<span class="o">.</span>autoconf pkgs<span class="o">.</span>libtool pkgs<span class="o">.</span>makeWrapper <span class="p">];</span>
+              <span class="ss">buildPhase</span> <span class="o">=</span> <span class="s2">&quot;gcc -o message </span><span class="si">${</span>src<span class="si">}</span><span class="s2">/message.c&quot;</span><span class="p">;</span>
+              <span class="ss">installPhase</span> <span class="o">=</span> <span class="s2">&quot;mkdir -p $out/bin; install -t $out/bin message&quot;</span><span class="p">;</span>
+
+              <span class="ss">meta</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="o">.</span>lib<span class="p">;</span> <span class="p">{</span>
+                    <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;message uygulamsı&quot;</span><span class="p">;</span>
+                    <span class="ss">license</span> <span class="o">=</span> licenses<span class="o">.</span>mit<span class="p">;</span>
+                    <span class="ss">version</span> <span class="o">=</span>  <span class="s2">&quot;</span><span class="si">${</span>version<span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span>
+                <span class="p">};</span>
+        <span class="p">})</span>
+</code></pre></div>
+<p>Amacımız hem derivative oluşturmak hem de development ortamında ihtiyacım olan paketlerin bir kısmını da bu derivative'in input'larından belirlemek. Bunun için alttaki gibi bir flake yazıyoruz.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Message uygulaması development ortamı&quot;</span><span class="p">;</span>
+
+  inputs<span class="o">.</span>nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span>
+    self<span class="p">,</span>
+    nixpkgs<span class="p">,</span>
+  <span class="p">}:</span> <span class="k">let</span>
+    <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+
+    <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span><span class="k">inherit</span> system<span class="p">;};</span>
+
+    packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>callPackage <span class="l">./message.nix</span> <span class="p">{</span><span class="ss">pkgs</span> <span class="o">=</span> pkgs<span class="p">;};</span>
+  <span class="k">in</span> <span class="p">{</span>
+    devShells<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span><span class="ss">default</span> <span class="o">=</span> pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+      <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>dotnet-sdk_7<span class="p">];</span>
+      <span class="ss">inputsFrom</span> <span class="o">=</span> <span class="p">[</span>packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>default<span class="p">];</span>
+      <span class="ss">nativeBuildInputs</span> <span class="o">=</span> <span class="p">[</span>packages<span class="o">.</span><span class="si">${</span>system<span class="si">}</span><span class="o">.</span>default<span class="p">];</span>
+    <span class="p">};</span>
+
+    <span class="ss">packages</span> <span class="o">=</span> packages<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Dikkat ederseniz development ortamımız için doğrudan belirlediğimiz paket sadece dotnet-sdk_7 oldu. Diğer paketleri ise <code>inputsFrom</code> ve <code>nativeBuildInputs</code> ile <code>message.nix</code> dosyasından alıyoruz. Bu sayede <code>nix develop</code> komutu ile development ortamımızı oluşturduğumuzda <code>message.nix</code> dosyasında belirlediğimiz paketler de otomatik olarak yüklenecek. Test etmek amacıyla <code>nix develop</code> komutu çalıştırıp terminalde gcc komutunu çalıştırırsak onunda yüklendiğini göreceğiz. Ayrıca yazdığımız uygulamayı da test edebiliriz. Ayrıca istersek <code>nix run .#</code> komutu ile yazdığımız uygulamayı da test edebiliriz.</p>
+<p>Aslında bu konu belki de Nix paket yöneticisi için paket yazmayı düşünen developer'lar için daha fazla vakit ayırmaları gereken bir konu.</p>
+<ul>
+<li>Farklı programlama dillerini içeren development ortamları oluşturmak için template'ler için güzel bir <a href="https://github.com/the-nix-way/dev-templates">Github reposu</a></li>
+<li>Bir çok programlama dilini içeren örnek development ortamları. Örnek uygulamalar da mevcut. <a href="https://github.com/NixOS/templates">NixOS resmi repos'undan</a> inceleyebilirsiniz</li>
+<li>Verloper'lar için faydalı bir derleme olmuş. Genel anlamda resmi dokümanların örneklerle anlatılmış bir özeti gibi. <a href="https://ryantm.github.io/nixpkgs/languages-frameworks/dotnet/#dotnet">Şu linkten</a> inceleyebilirsiniz. Soldaki menüden ilgilendiğiniz dili seçmelisiniz</li>
+</ul>
+<h2 id="developer-ortamlar-icin-nix-tabanl-diger-araclar">Developer Ortamları için Nix Tabanlı Diğer Araçlar</h2>
+<p>Developer ortamlarınız için bu işe daha fazla odaklanmış, daha profesyonel ve daha fazla özellik sunan bir çok araç mevcut. Bunlardan bazılarını altta listeledim. Özellikle birden fazla kişiyle çalışıyorsanız ve herkesin doğrudan NixOS veya Nix paket yöneticisi le muhatap olmasını da istemiyorsanız bu araçları kullanmanızı tavsiye ederim. Hatta bir çok yerde dev ortamları için developer'ların alttaki araçları nix develop komutu yerine tercih ettiklerini okudum.</p>
+<ul>
+<li>
+<p><a href="https://github.com/jetpack-io/devbox">devbox</a>: Aralarında en çok kullanılan ve en çok yıldız alan proje bu. İncelemenizi kesinlikle tavsiye ederim. Dockerhub benzeri <a href="https://www.nixhub.io">nixhub</a> adında bir paket deposu var. Burada arama yapabiliyorsunuz. Go dili ile yazılmış bir cli'ı var. Quickstart için <a href="https://www.jetpack.io/devbox/docs/quickstart/">şu sayfayı</a> ziyaret edebilirsiniz.</p>
+</li>
+<li>
+<p><a href="https://numtide.github.io/devshell/">devshell</a></p>
+</li>
+<li>
+<p><a href="https://nixpacks.com/docs">devpacks</a></p>
+</li>
+<li>
+<p><a href="https://devenv.sh/">devenv</a></p>
+</li>
+</ul>
+<h2 id="nix-profile-ile-kalc-profil-olusturmak">Nix Profile ile Kalıcı Profil Oluşturmak</h2>
+<p>Daha önce "nix profile" komutunu görmüştük. Temelde <code>niz shell</code> komutu geçici kurulum yaparken <code>nix profile</code> ise kalıcı kurulum yapar demiştik. Yukarıda gördüğümüz <code>nix develop</code> ise proje bazlı kurulum yapıyordu. Ancak <code>nix profile</code> komutu incelediğimiz yazımızda declarative bir kullanımı yoktu. Ancak <code>nix profile</code> komutu ile de declarative bir şekilde kalıcı bir profile oluşturabiliriz. Böylece sistemimizi kurduktan sonra bütün uygulama kurulumlarını tek bir yerden yönetebiliriz.</p>
+<p>Basit bir örnekle başlayalım. Alttaki kodları flake.nix adında bir doya oluşturup içine kopyalayalım.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;Murat Cabuk Profile&quot;</span><span class="p">;</span>
+
+  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+      nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs/nixos-unstable&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+
+  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs<span class="p">,</span> <span class="p">}:</span>
+        <span class="p">{</span>
+        packages<span class="o">.</span>x86_64-linux<span class="o">.</span><span class="ss">default</span> <span class="o">=</span> <span class="k">let</span>
+           <span class="ss">system</span> <span class="o">=</span> <span class="s2">&quot;x86_64-linux&quot;</span><span class="p">;</span>
+           <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span><span class="k">inherit</span> system<span class="p">;};</span>
+           <span class="c1"># pkgs = nixpkgs.legacyPackages.&quot;x86_64-linux&quot;;</span>
+        <span class="k">in</span> pkgs<span class="o">.</span>buildEnv <span class="p">{</span>
+                <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;murat-cabuk-profile&quot;</span><span class="p">;</span>
+                <span class="ss">paths</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+                                    ffmpeg
+                                    jq<span class="o">.</span>override <span class="p">{</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;pjq&quot;</span><span class="p">;</span> <span class="p">}</span>
+                                    vim
+                                    <span class="p">];</span>
+                <span class="ss">pathsToLink</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;/share/man&quot;</span> <span class="s2">&quot;/share/doc&quot;</span> <span class="s2">&quot;/share/info&quot;</span> <span class="s2">&quot;/bin&quot;</span> <span class="s2">&quot;/etc&quot;</span> <span class="p">];</span>
+                <span class="ss">extraOutputsToInstall</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;man&quot;</span> <span class="s2">&quot;doc&quot;</span> <span class="s2">&quot;info&quot;</span> <span class="p">];</span>
+                <span class="ss">postBuild</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">                                echo işleme tamam &gt;&gt; log.txt</span>
+<span class="s s-Multiline">                            &#39;&#39;</span><span class="p">;</span>
+                        <span class="p">};</span>
+
+
+        <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bu flake dosyasının olduğu dizinde <code>nix profile install .</code> komutunu çalıştırdığımızda eklediğimiz uygulamalar kurulacaktır. Eğer uygulamada bir güncelleme yaparsak <code>nix profile upgrade &lt;profile_index&gt;</code> komutu ile güncelleyebiliriz. Profile indeksini almak için <code>nix profile list</code> komutu ile öğrenebiliriz.</p>
+<p>Burada artık overlay ve override gibi konulara girmiyorum eski yazılardan bakılabilir. Ayrıca <code>nix profile</code> komutu ile ilgili daha fazla bilgi için <a href="https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-profile.html">resmi dokümanları</a> inceleyebilirsiniz.</p>
+<p>Daha karmaşık örnekler için de NixOS <a href="https://nixos.org/manual/nixpkgs/stable/#sec-declarative-package-management">resmi dokümanlarını</a> da okuyabilirsiniz.</p>
+<p>Evet buraya kadar gördüklerimizde NixOS'a hiç ihtiyacımız olmadı. Zaten ilk yazılarda da belirttiğim gibi Nix temelde distro bağımsız bir paket yöneticisi yani temel amacı aslında bu. NixOS ise Nix Dilinin ve paket yöneticisinin yetenekleri üzerine inşa edilmiş bir Linux dağıtımı.</p>
+<p>Bir çok developer üstteki dev ortamları oluşturma aracını NixOS'a hiç bulaşmadan hatta hiç Nix dilini öğrenmeden kullanıyor. Yada bir çok kullanıcı NixOS'u sadece Konfigürasyon yapacak kadar öğreniyor. Yani Nix dilinden bile habersiz NixOS kullanan dolusuyla son kullanıcı var.</p>
+<p>Tabi bizim amacımız Nix dilini de paket yöneticisini de ve NixOS'u da mümkün oldukça hakkını vererek öğrenebilmek. Tabi bütün bunlar sadece bu yazıları okuyarak olmayacaktır. Ancak size ciddi bir başlangıç yapmanızı sağlayacaktır.</p>
+<p>Sonraki yazımızda NixOS'a geçiş yapacağız ancak ilk etapta nasıl kurulur konusuna girmeyeceğiz. Çünkü ilk kurulum için aslında normal herhangi bir Linux dağıtımından farklı kurulmuyor. Ancak elimizde bir Nix konfigürasyonu varsa durum biraz değişiyor. Eğer elimizde konfigürasyon dosyaları varsa bu durumda sadece flake.nix dosyasını da içeren root dizinin vermemiz kurulum için yeterli olacaktır.</p>
+<p>İlk etapta Youtube'dan bulacağınız herhangi bir kurulum video'su ile sisteminizi kurabilirsiniz. MEvzumuz ilk etapta zaten kurulum detayları ile ilgilenmek değil. Ancak elimizde orta halli bir NixOS konfigürasyonu oluştuğunda artık sıfırdan manuel kurulu yerine declarative yöntemle kurulum yapacağız.</p>
+<h2 id="kaynaklar">Kaynaklar</h2>
+<ul>
+<li><a href="https://nixos.wiki/wiki/Development_environment_with_nix-shell">https://nixos.wiki/wiki/Development_environment_with_nix-shell</a></li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/#sec-pkgs-mkShell">https://nixos.org/manual/nixpkgs/stable/#sec-pkgs-mkShell</a></li>
+<li><a href="https://nixos.wiki/wiki/Nixpkgs/Create_and_debug_packages">https://nixos.wiki/wiki/Nixpkgs/Create_and_debug_packages</a></li>
+<li><a href="https://github.com/nix-community/nixpkgs-fmt">https://github.com/nix-community/nixpkgs-fmt</a></li>
+<li><a href="https://blog.ysndr.de/posts/guides/2021-12-01-nix-shells/">https://blog.ysndr.de/posts/guides/2021-12-01-nix-shells/</a></li>
+<li><a href="https://github.com/the-nix-way/dev-templates">https://github.com/the-nix-way/dev-templates</a></li>
+<li><a href="https://discourse.nixos.org/t/problem-combining-multiple-dotnet-sdks-in-usable-flake/32431">https://discourse.nixos.org/t/problem-combining-multiple-dotnet-sdks-in-usable-flake/32431</a></li>
+<li><a href="https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/dotnet.section.md">https://github.com/NixOS/nixpkgs/blob/master/doc/languages-frameworks/dotnet.section.md</a></li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/#sec-building-environment">https://nixos.org/manual/nixpkgs/stable/#sec-building-environment</a></li>
+<li><a href="https://ianthehenry.com/posts/how-to-learn-nix/how-to-learn-nixpkgs/">https://ianthehenry.com/posts/how-to-learn-nix/how-to-learn-nixpkgs/</a></li>
+<li><a href="https://jade.fyi/blog/flakes-arent-real/">https://jade.fyi/blog/flakes-arent-real/</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

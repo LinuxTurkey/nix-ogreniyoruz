@@ -1,0 +1,1421 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://nixogreniyoruz.kavakci.dev/nix_package/nix_shell_ve_profile.html">
+      
+      
+        <link rel="prev" href="nix_paket_yoneticisi.html">
+      
+      
+        <link rel="next" href="nix_flake_nedir.html">
+      
+      
+      <link rel="icon" href="../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Nix Shell ve Profile - NixOS Öğreniyoruz - Murat Çabuk</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%208a4%204%200%200%200-4%204%204%204%200%200%200%204%204%204%204%200%200%200%204-4%204%204%200%200%200-4-4%22/%3E%3C/svg%3E');}</style>
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="Nix Shell ve Profile - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  property="og:description"  content="None" >
+      
+        <meta  property="og:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/nix_shell_ve_profile.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://nixogreniyoruz.kavakci.dev/nix_package/nix_shell_ve_profile.html" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="Nix Shell ve Profile - NixOS Öğreniyoruz - Murat Çabuk" >
+      
+        <meta  name="twitter:description"  content="None" >
+      
+        <meta  name="twitter:image"  content="https://nixogreniyoruz.kavakci.dev/assets/images/social/nix_package/nix_shell_ve_profile.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nix-shell-ve-profile" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-header__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NixOS Öğreniyoruz - Murat Çabuk
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Nix Shell ve Profile
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="slate" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="default" data-md-color-primary="#7EBAE4" data-md-color-accent="#7EBAE4"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="NixOS Öğreniyoruz - Murat Çabuk" class="md-nav__button md-logo" aria-label="NixOS Öğreniyoruz - Murat Çabuk" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m7.352 1.592-1.364.002L5.32 2.75l1.557 2.713-3.137-.008-1.32 2.34h11.69l-1.353-2.332-3.192-.006-2.214-3.865zm6.175 0-2.687.025 5.846 10.127 1.341-2.34-1.59-2.765 2.24-3.85-.683-1.182h-1.336l-1.57 2.705-1.56-2.72zm6.887 4.195-5.846 10.125 2.696-.008 1.601-2.76 4.453.016.682-1.183-.666-1.157-3.13-.008L21.778 8.1l-1.365-2.313zM9.432 8.086l-2.696.008-1.601 2.76-4.453-.016L0 12.02l.666 1.157 3.13.008-1.575 2.71 1.365 2.315zM7.33 12.25l-.006.01-.002-.004-1.342 2.34 1.59 2.765-2.24 3.85.684 1.182H7.35l.004-.006h.001l1.567-2.698 1.558 2.72 2.688-.026-.004-.006h.01zm2.55 3.93 1.354 2.332 3.192.006 2.215 3.865 1.363-.002.668-1.156-1.557-2.713 3.137.008 1.32-2.34z"/></svg>
+
+    </a>
+    NixOS Öğreniyoruz - Murat Çabuk
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    LinuxTurkey/nix-ogreniyoruz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Dili
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/01_nix_dili_ve_ozellikleri.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ve Özellikleri
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/02_nix_dili_alistirmalari.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dili ile İlgili Alıştırmalar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_lang/03_nix_dili_gomulu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Dilinde Gömülü Fonksiyonlar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Nix Paket Yöneticisi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_paket_yoneticisi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Paket Yöneticisi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="nix_shell_ve_profile.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Shell ve Profile
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-shell-ve-nix-run-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Shell ve Nix Run Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-profile-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Profile Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diger-temel-baz-komutlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diğer Temel Bazı Komutlar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nix_flake_nedir.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix Flake Nedir?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="override_ve_overlay.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Override ve Overlay
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer_ve_profile_ortamlari_olusturmak.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Developer ve Profile Ortamları Oluşturmak
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Sonrası
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Sonrası
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nix_ile_nix_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nix ile NixOS Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../module_ve_option_kullanimi.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Module ve Option Kullanımı
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_kurulumu_ve_konfigurasyonu.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS Kurulumu ve Konfigürasyonu
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nixos_cloud_ve_uzak_ortam.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nix-shell-ve-nix-run-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Shell ve Nix Run Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nix-profile-kullanm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nix Profile Kullanımı
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diger-temel-baz-komutlar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diğer Temel Bazı Komutlar
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referanslar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Referanslar
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/edit/main/src/nix_package/nix_shell_ve_profile.md" title="Düzenle" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LinuxTurkey/nix-ogreniyoruz/raw/main/src/nix_package/nix_shell_ve_profile.md" title="Sayfanın kaynağını görüntüle" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="nix-shell-ve-profile">Nix Shell ve Profile</h1>
+<p>Bu makalede yine öncekilerde yaptığımız gibi ufak örneklerle mevzuyu anlamaya çalışacağız. Bir sonraki yazımızda da nix dosyaları üzeriden daha karmaşık örnekler yapacağız.</p>
+<h2 id="nix-shell-ve-nix-run-kullanm">Nix Shell ve Nix Run Kullanımı</h2>
+<p>Nix shell hakkında resmi dokümanlara bakacak olursanız development ortamı oluşturmak için kullanılır der. Özellikle biden fazla dilde ve birden fazla versiyonla çalışıyorsanız hakikaten çok kullanışlı. Yazılım geliştirme dışında başka bir alan gelmiyor aklıma ancak aynı aracın farklı versiyonlarıyla çalışıyorsanız kullanışlı olabilir. Ayrıca sonraki makalelerimizde göreceğimiz üzere shell'i nix dosyaları ile kullanmak da mümkün. Bu sayede sisteminizde ilgili yazılımları devamlı kurulu tutmak zorunda değilsiniz.</p>
+<p>İsterseniz biraz alıştırma yapalım. Bu makalede amacımız cli üzerinden komutlarla bir şeyler yaparak shell'i anlamaya çalışmak. Bir sonraki makalemizde nix dosyaları ile declarative olarak yapacağız aynı örnekleri.</p>
+<p>Şimdi Python version 2 ile bir uygulama geliştireceğimizi ve bunu sadece ilgili dizindeyken kullanacağımızı varsayalım. Usulündendir önce uygulamayı arayalım.<a href="https://search.nixos.org">resmi paket sayfasından</a> da arama yapabilirsiniz. Dikkat etmeniz gereken konu biz channel kullanmıyoruz flake üzerinden gidiyoruz bundan dolayı alttaki adresleri kullanmalısınız. Options'ları henüz görmedik ama ileride değineceğiz.</p>
+<ul>
+<li>Package ararken: <a href="search.nixos.org/flakes?type=packages">search.nixos.org/flakes?type=packages</a></li>
+<li>Options ararken: <a href="search.nixos.org/flakes?type=options">search.nixos.org/flakes?type=options</a></li>
+</ul>
+<p>Repl kullanırken de arama yapabiliriz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>repl
+:load<span class="w"> </span>&lt;nixpkgs&gt;
+
+<span class="c1"># Added 19423 variables.</span>
+<span class="c1"># örneğin firef yazıp tab a basacak olursak  alttaki gibi bir liste göreceğiz.</span>
+
+fire<span class="w">               </span>firectl<span class="w">           </span>firefox-bin-unwrapped<span class="w">    </span>firefox-esr-unwrapped<span class="w">     </span>firestarter
+firebase-tools<span class="w">     </span>firefly-desktop<span class="w">   </span>firefox-devedition<span class="w">       </span>firefox-mobile<span class="w">            </span>firewalld
+</code></pre></div>
+<p>Ancak biz komut satırını kullanarak çalışacağız. Aramada öncelikle nerede arama yapacağımızı söylüyoruz. Burada nixpkgs ile Nix'in standart repo'sunda arama yaptığımızı ve python2 ile de aradığımız kelimeyi belirtiyoruz.</p>
+<p>Arama sonucunda legacyPackages yazdığına bakmayın yani burada sanki eski bir repo üzerinde arama yapıyormuşuz gibi görünüyor ama öyle değil aslında sadece kötü bir isimlendirme diyebiliriz.</p>
+<p>Bu arada biz arama yaparken hangi repo'da arma yaptığımız belirtmeliyiz. Bunun için arama yapacağımız repo adını nixpkgs olarak yazdık ancak unutmayalım bu sadece GitHub'daki bir adres. Aslında Github'da NixOS kullanıcısının nixpkgs adlı reposunda arama yapıyoruz. komutun uzun halide aşağıda yazıyor.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>search<span class="w"> </span>nixpkgs<span class="w"> </span>python<span class="w">   </span><span class="c1"># veya nix search github:NixOS/nixpkgs#python</span>
+
+<span class="c1"># sonuç</span>
+
+<span class="c1"># ---------------- kısaltıldı</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.python2 (2.7.18.7)</span>
+<span class="c1">#   A high-level dynamically-typed programming language</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.python27 (2.7.18.7)</span>
+<span class="c1">#   A high-level dynamically-typed programming language</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.python27Full (2.7.18.7)</span>
+<span class="c1">#   A high-level dynamically-typed programming language</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.python2Full (2.7.18.7)</span>
+<span class="c1">#   A high-level dynamically-typed programming language</span>
+
+<span class="c1"># --------------- kısaltıldı</span>
+</code></pre></div>
+<p>Evet aradığımızı bulduk artık yükleyebiliriz. Listede ilk sıradaki python2 paketini kuruyoruz.Şunu unutmamamız gerekiyor aslında nixpkgs bir flake ve onun bir output'u python2'yi kuruyoruz. Arada neden # işareti olduğunu ileride daha detaylı inceleyeceğiz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs#python2
+</code></pre></div>
+<p>Ancak bu komutu çalıştırdığımızda hata aldık. Hatanın detaylarını inceleyecek olursak alttaki mesajı göreceğiz.</p>
+<div class="highlight"><pre><span></span><code>error: Package ‘python-2.7.18.7’ in /nix/store/fjvkr94j3lwca8y66zccn15rjwzqn0rd-source/pkgs/development/interpreters/python/cpython/2.7/default.nix:335 is marked as insecure, refusing to evaluate.
+
+Known issues:
+        - Python 2.7 has reached its end of life after 2020-01-01. See https://www.python.org/doc/sunset-python-2/.
+
+       You can install it anyway by allowing this package, using the
+       following methods:
+
+       a) To temporarily allow all insecure packages, you can use an environment
+          variable for a single invocation of the nix tools:
+
+            $ export NIXPKGS_ALLOW_INSECURE=1
+
+          Note: When using `nix shell`, `nix build`, `nix develop`, etc with a flake,
+                then pass `--impure` in order to allow use of environment variables.
+
+       b) for `nixos-rebuild` you can add ‘python-2.7.18.7’ to
+          `nixpkgs.config.permittedInsecurePackages` in the configuration.nix,
+          like so:
+
+            {
+              nixpkgs.config.permittedInsecurePackages = [
+                &quot;python-2.7.18.7&quot;
+              ];
+            }
+
+       c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
+          ‘python-2.7.18.7’ to `permittedInsecurePackages` in
+          ~/.config/nixpkgs/config.nix, like so:
+
+            {
+              permittedInsecurePackages = [
+                &quot;python-2.7.18.7&quot;
+              ];
+            }
+</code></pre></div>
+<p>Hata bize güvenli olmayan bir paketi yüklemeye çalıştığımız söylüyor. Bunun sebebini açıkça söylemiş çünkü Python 2.7 yakında tedavülden kalkacakmış. Ama tabii ki biz yine de kurmak isteyeceğiz.</p>
+<p>Ayrıca bir paketi kuramamamızın başka sebepleri de olabilir.</p>
+<ul>
+<li>Bozuk paketler</li>
+<li>Paketi kurduğumuz sitem pakete uyumlu olmayabilir</li>
+<li>Paket free olmayabilir</li>
+<li>Paket güvenilir olamayabilir.</li>
+</ul>
+<p>Sadece bu durum için çözmek istiyorsak Kurulum yapmadan önce alttaki komutları çalıştırmalıyız.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NIXPKGS_ALLOW_BROKEN</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NIXPKGS_ALLOW_UNFREE</span><span class="o">=</span><span class="m">1</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">NIXPKGS_ALLOW_INSECURE</span><span class="o">=</span><span class="m">1</span>
+</code></pre></div>
+<p>Bizim durumumuz insecure uygulama olduğu için sonuncu seçenekle devam ediyoruz. Hata mesajında ayrıca environment variable'ı kullanabilmek için impure etiketini de komutumuza eklememiz gerektiği söylenmiş.</p>
+<p>Tam bu noktada <strong>pure</strong> ve <strong>impure</strong> kavramlarında değinelim. Bir nix expression, flake, paket vb artık nix ilgili ne varsa :) bulunduğu ortama vay kullanıcıya bağlı bir kod içermiyorsa buna pure diyoruz. Eğer Nix dışında bir yerlere dokunuyorsa veya bağımlılığı vs varsa o zaman impure diyoruz. Burada da hata mesajında denildiği gibi environment variable kullanımı gerektiği için impure eklememiz isteniyor. Bu arada default olan pure'dur.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">NIXPKGS_ALLOW_INSECURE</span><span class="o">=</span><span class="m">1</span>
+nix<span class="w"> </span>shell<span class="w"> </span>nixpkgs#python2<span class="w"> </span>--impure
+</code></pre></div>
+<p>Artık Python'ı kurabiliyoruz. Şimdi denildiği gibi,</p>
+<ul>
+<li>sadece bu dizinde mi kullanabiliyoruz,</li>
+<li>sadece burada kullanabiliyorsak bunu nasıl yapabiliyor</li>
+<li>ve terminali kapattığımızda neler oluyor gibi soruların cevabını araştıralım.</li>
+</ul>
+<p>Öncelikle hakikaten Python 2.7 çalışıyor mu buna bakalım. Yine aynı dizinde açtığımız terminal de <code>python2</code> komutunu çalıştırdığımızda python repl'ine giriş yapmış olmalıyız. Çıkmak için <code>exit()</code> fonksiyonunu çalıştırıyoruz.</p>
+<p>Bu terminal açıkken başka bir terminal açıp python2 çalıştırdığınızda çalışmadığını görebilirsiniz. Hatta aynı dizinde bile çalıştırsanız çalışmayacak. Aslında Nix burada ilgili paketi sistemimize kuruyor ve biz terminalde nix shell komutu ile çalıştırdığımızda bizim adımıza shell içinde kurduğumuz paketleri PATH olarak tanımlıyor.</p>
+<p>Bunu denemek için isterseniz aynı dizinde <code>nix shell</code> komutundan önce <code>cat $PATH</code> komutunu çalıştırın birde <code>nix shell</code> komutundan sonra çalıştırın. Alttaki gibi bir satırı da listede görüyor olacaksınız.</p>
+<div class="highlight"><pre><span></span><code>/home/kullanici_adiniz/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7
+</code></pre></div>
+<p>Terminalden çıkıp tekrar girdiğimizde python2 komutunun çalıştırılmadığını görebilirsiniz. Tekrar kurulum komutu çalıştırdığınızda çok hızlı kurulduğunu görebilirsiniz. Çünkü bir çok bağımlılık zaten store'da olduğu için ilki kadar yavaş olmayacaktır.</p>
+<p>Ayrıca Nix belirli aralıkla kendi garbage collector'ü ile sistemde kullanılmayan veya bozuk paketleri temizler.</p>
+<p>Garbage collection'ı manuel tetiklemek için nix store gc komutu kullanılır.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Delete unreachable paths in the Nix store:</span>
+nix<span class="w"> </span>store<span class="w"> </span>gc
+
+<span class="c1"># Delete up to 1 gigabyte of garbage:</span>
+<span class="w"> </span>nix<span class="w"> </span>store<span class="w"> </span>gc<span class="w"> </span>--max<span class="w"> </span>1G
+</code></pre></div>
+<p><code>nix shell</code> komutunu alttaki gibi kullanmak da mümkün.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>shell<span class="w"> </span><span class="s1">&#39;github:NixOS/nixpkgs/23.11#&#39;</span><span class="o">{</span>vim,tree<span class="o">}</span>
+</code></pre></div>
+<p>Bir de <code>nix run</code> komutu var bunun da yaptığı paketi kurup doğrudan çalıştırmak başka da bir alameti farikası yok. Mesela alttaki kodda doğrudan git clone komutu çalıştırılmış.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>run<span class="w"> </span>nixpkgs#git<span class="w"> </span>clone<span class="w"> </span>git@github.com:ryan4yin/nix-config.git
+</code></pre></div>
+<p>Bu şekilde nix shell'i anlık bir şeyi test etmek için kullanabilirsiniz. Ancak tabii ki shell bu kadar değil her defasından diyelim ki projenizde gerekli 8-10 adet paketi elle kurmanız anlamsız olacaktır. Bunu da declarative yolla nix dosyasında yazarak te seferde yapmak mümkün. Bu kullanımı da sonraki makalelerimizde göreceğiz.</p>
+<h2 id="nix-profile-kullanm">Nix Profile Kullanımı</h2>
+<p>Profile'in shell'den farkı sistem restart olduktan sonra da paketleri saklamasıdır.</p>
+<p>Profile'leri bir kullanıcı profili gibi düşünmemeliyiz. Daha çok sistemin belli bir stat'ini tutan bir yapıdır. Bir kullanıcının birden fazla profili olabilir. Alttaki şekil bunu çok güzel anlatmış.</p>
+<p><img alt="nix manuel" src="files/NixManual-User-environments.webp" /></p>
+<p>Sistemde profile komutu ile her kurulum yaptığımızda state değişikliği ile bir profile oluşur. Profiller store üzeriden symbolic linklerle aynı paketin birden fazla versiyonu ile çalışabilir. Yani bir çok kullanıcı ve profile için tekrar tekrar aynı paketin kurulumu yapılmaz. Bir pakete ihtiyaç kalmadığında da garbage collection ile silinir.</p>
+<p>Öncelikle hızlıca bir komutları inceleyelim.</p>
+<ul>
+<li><strong>nix profile diff-closures</strong>: İki profil arasındaki farkları gösterir.</li>
+<li><strong>nix profile history</strong>: profilin bütün geçmişini gösterir. Profilde her bir hareket soranı bir history kaydı oluşur.</li>
+<li><strong>nix profile install</strong>: Profile paket kurar.</li>
+<li><strong>nix profile list</strong>: Profildeki kurulu paketleri listeler.</li>
+<li><strong>nix profile remove</strong>: Profilden paket siler.</li>
+<li><strong>nix profile rollback</strong>: Özellikle belirtilmezse bir önceki versiyona geçiş yapar.</li>
+<li><strong>nix profile upgrade</strong>: Paketleri en son flake versiyonuna yükseltir.</li>
+<li><strong>nix profile wipe-history</strong>: Aktif olmayan yani açık oturumda kullanılmayan diğer profilleri siler.</li>
+</ul>
+<p>closure: Nix closure, bir paketin bağımlılıklarıyla birlikte birleştirilmiş bir dizin yapısıdır. Bu, bir paketin tamamını ve ona bağlı tüm bağımlılıkları içerir.</p>
+<p>Şimdide biraz alıştırma yapalım.</p>
+<p>Şimdi de mesela NodeJs, Python ve Git kurmayı deneyelim.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>search<span class="w"> </span>nixpkgs<span class="w"> </span>nodejs
+
+<span class="c1"># sonuç</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-18_x (18.19.0)</span>
+<span class="c1"># Event-driven I/O framework for the V8 JavaScript engine</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-slim (20.10.0)</span>
+<span class="c1"># Event-driven I/O framework for the V8 JavaScript engine</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-slim-18_x (18.19.0)</span>
+<span class="c1"># Event-driven I/O framework for the V8 JavaScript engine</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-slim_18 (18.19.0)</span>
+<span class="c1"># Event-driven I/O framework for the V8 JavaScript engine</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-slim_20 (20.10.0)</span>
+<span class="c1"># Event-driven I/O framework for the V8 JavaScript engine</span>
+
+<span class="c1"># * legacyPackages.x86_64-linux.nodejs-slim_21 (21.5.0)</span>
+</code></pre></div>
+<p>Biz nodejs-slim_18 versiyonunu kuralım</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>install<span class="w"> </span>nixpkgs#nodejs-slim_18
+nix<span class="w"> </span>profile<span class="w"> </span>install<span class="w"> </span>nixpkgs#python2<span class="w"> </span>--impure
+</code></pre></div>
+<p>Öncelikle hemen <code>~/.nix-profile</code> dizinine yani aktif profile klasörümüze bi bakalım. Artık sadece manifest.json dosyamız yok. Dikkat ederseniz</p>
+<div class="highlight"><pre><span></span><code>ll<span class="w"> </span>~/.nix-profile
+
+dr-xr-xr-x<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">250</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>bin
+dr-xr-xr-x<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">26</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>include
+dr-xr-xr-x<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">128</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>lib
+-r--r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">577</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>manifest.json
+dr-xr-xr-x<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">30</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>share
+</code></pre></div>
+<p>Bir de bin klasörüne bakalım. Görebildiğimiz gibi kurulumu yaptığımız NodeJs ve Python2 ile ilgili bütün binary'ler buraya sembolik link olarak bağlanmış. Aslında bütün binary ve diğer kütüphaneler store'a kaydediliyor.</p>
+<div class="highlight"><pre><span></span><code>ll<span class="w"> </span>~/.nix-profile/bin
+
+<span class="c1"># total 64K</span>
+<span class="c1"># lrwxrwxrwx 1 root root 68 Oca  1  1970 2to3 -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/2to3</span>
+<span class="c1"># lrwxrwxrwx 1 root root 76 Oca  1  1970 corepack -&gt; /nix/store/k748i73qqihzqc4d4671jgxx8828n06m-nodejs-slim-18.19.0/bin/corepack</span>
+<span class="c1"># lrwxrwxrwx 1 root root 68 Oca  1  1970 idle -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/idle</span>
+<span class="c1"># lrwxrwxrwx 1 root root 72 Oca  1  1970 node -&gt; /nix/store/k748i73qqihzqc4d4671jgxx8828n06m-nodejs-slim-18.19.0/bin/node</span>
+<span class="c1"># lrwxrwxrwx 1 root root 67 Oca  1  1970 pdb -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/pdb</span>
+<span class="c1"># lrwxrwxrwx 1 root root 70 Oca  1  1970 pdb2.7 -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/pdb2.7</span>
+<span class="c1"># lrwxrwxrwx 1 root root 69 Oca  1  1970 pydoc -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/pydoc</span>
+<span class="c1"># lrwxrwxrwx 1 root root 70 Oca  1  1970 python -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python</span>
+<span class="c1"># lrwxrwxrwx 1 root root 71 Oca  1  1970 python2 -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python2</span>
+<span class="c1"># lrwxrwxrwx 1 root root 73 Oca  1  1970 python2.7 -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python2.7</span>
+<span class="c1"># lrwxrwxrwx 1 root root 80 Oca  1  1970 python2.7-config -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python2.7-config</span>
+<span class="c1"># lrwxrwxrwx 1 root root 78 Oca  1  1970 python2-config -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python2-config</span>
+<span class="c1"># lrwxrwxrwx 1 root root 77 Oca  1  1970 python-config -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/python-config</span>
+<span class="c1"># lrwxrwxrwx 1 root root 72 Oca  1  1970 smtpd.py -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/smtpd.py</span>
+<span class="c1"># lrwxrwxrwx 1 root root 73 Oca  1  1970 smtpd.pyc -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/smtpd.pyc</span>
+<span class="c1"># lrwxrwxrwx 1 root root 73 Oca  1  1970 smtpd.pyo -&gt; /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/smtpd.pyo</span>
+</code></pre></div>
+<p>Peki bu binary'leri nasıl kullanacağız. Yani sonuçta şuan NixOS kullanmıyorsak ve kullandığımız Linux dağıtımında da NodeJs'in farklı bir versiyonu kuruluysa sistem onu çalıştıracaktır. Bunun içinde <code>nix shell</code> komutunu kullanabilir. Zaten kendi makinenizde bir Node sürümü kurulu ise terminalde <code>nix shell nixpkgs#nodejs-slim_18</code> komutu ile NodeJs 18'i active edebilirsiniz. Bu durumda tekrar kurulum yapılmayacağını sadece PAth tanımlaması yapılacağını hatırlayalım.</p>
+<p>Şimdi de Git'i kurabiliriz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>search<span class="w"> </span>nixpkgs#git
+<span class="c1"># * legacyPackages.x86_64-linux.git (2.42.0)</span>
+
+nix<span class="w"> </span>profile<span class="w"> </span>install<span class="w"> </span>nixpkgs#git
+</code></pre></div>
+<p>Tekrar bin dizinie bakacak olursak</p>
+<div class="highlight"><pre><span></span><code>ll<span class="w"> </span>~/.nix-profile/bin
+
+<span class="c1"># sonuç</span>
+<span class="c1"># ------------------------Kısaltıldı</span>
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">62</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>git<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0/bin/git
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">79</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>git-credential-netrc<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0/bin/git-credential-netrc
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">72</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>git-cvsserver<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0/bin/git-cvsserver
+<span class="c1"># --------------------- Kısaltıldı</span>
+</code></pre></div>
+<p>Şimdi de profile history'ye bi göz atalım. Dikkat ederseniz her kurduğumuzda profile yeni bir versiyon eklenmiş. Aktif profilimiz üzerindeki değişiklikleri listeliyor. Bu arada burada göstermiyorum ancak büyük ihtimal kendi ekranınızda listede aktif olarak kullandığınız versiyonu daha renkli göreceksiniz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span><span class="nb">history</span>
+
+<span class="c1"># sonuç</span>
+
+Version<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.hello:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">2</span>.12.1
+
+Version<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">1</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.mysql:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man
+
+Version<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">2</span>:
+github:nixos/nixpkgs/nixpkgs-unstable#legacyPackages.x86_64-linux.mysql:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man
+
+Version<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">3</span>:
+github:nixos/nixpkgs/nixpkgs-unstable#legacyPackages.x86_64-linux.mysql:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man
+
+Version<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">4</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.mysql:<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man<span class="w"> </span>-&gt;<span class="w"> </span>∅
+github:nixos/nixpkgs/nixpkgs-unstable#legacyPackages.x86_64-linux.mysql:<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man<span class="w"> </span>-&gt;<span class="w"> </span>∅
+github:nixos/nixpkgs/nixpkgs-unstable#legacyPackages.x86_64-linux.mysql:<span class="w"> </span><span class="m">10</span>.11.6,<span class="w"> </span><span class="m">10</span>.11.6-man<span class="w"> </span>-&gt;<span class="w"> </span>∅
+
+Version<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="o">(</span><span class="m">2023</span>-12-08<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">5</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.hello:<span class="w"> </span><span class="m">2</span>.12.1<span class="w"> </span>-&gt;<span class="w"> </span>∅
+
+Version<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="o">(</span><span class="m">2024</span>-01-09<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">6</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.nodejs-slim_18:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">18</span>.19.0
+
+Version<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="o">(</span><span class="m">2024</span>-01-09<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">7</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.python2:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">2</span>.7.18.7
+
+Version<span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="o">(</span><span class="m">2024</span>-01-09<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">8</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.git:<span class="w"> </span>∅<span class="w"> </span>-&gt;<span class="w"> </span><span class="m">2</span>.42.0
+</code></pre></div>
+<p>Sistemdeki profil listesini alalım</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>list
+
+<span class="c1"># sonuç</span>
+
+Index:<span class="w">              </span><span class="m">0</span>
+Flake<span class="w"> </span>attribute:<span class="w">    </span>legacyPackages.x86_64-linux.nodejs-slim_18
+Original<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w"> </span>flake:nixpkgs
+Locked<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w">   </span>github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6
+Store<span class="w"> </span>paths:<span class="w">        </span>/nix/store/k748i73qqihzqc4d4671jgxx8828n06m-nodejs-slim-18.19.0
+
+Index:<span class="w">              </span><span class="m">1</span>
+Flake<span class="w"> </span>attribute:<span class="w">    </span>legacyPackages.x86_64-linux.python2
+Original<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w"> </span>flake:nixpkgs
+Locked<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w">   </span>github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6
+Store<span class="w"> </span>paths:<span class="w">        </span>/nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7
+
+Index:<span class="w">              </span><span class="m">2</span>
+Flake<span class="w"> </span>attribute:<span class="w">    </span>legacyPackages.x86_64-linux.git
+Original<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w"> </span>flake:nixpkgs
+Locked<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w">   </span>github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6
+Store<span class="w"> </span>paths:<span class="w">        </span>/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0
+</code></pre></div>
+<p>Şimdide profilden Git'i silelim. Bunun için Nix listesindeki Store path adresini kullanıyoruz.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>remove<span class="w"> </span>/nix/store/31ypk253113v59lslsx8nbqpx794rlan-git-2.42.0
+</code></pre></div>
+<p>Şimdi listeye bir bakalım</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>list
+Index:<span class="w">              </span><span class="m">0</span>
+Flake<span class="w"> </span>attribute:<span class="w">    </span>legacyPackages.x86_64-linux.nodejs-slim_18
+Original<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w"> </span>flake:nixpkgs
+Locked<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w">   </span>github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6
+Store<span class="w"> </span>paths:<span class="w">        </span>/nix/store/k748i73qqihzqc4d4671jgxx8828n06m-nodejs-slim-18.19.0
+
+Index:<span class="w">              </span><span class="m">1</span>
+Flake<span class="w"> </span>attribute:<span class="w">    </span>legacyPackages.x86_64-linux.python2
+Original<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w"> </span>flake:nixpkgs
+Locked<span class="w"> </span>flake<span class="w"> </span>URL:<span class="w">   </span>github:NixOS/nixpkgs/24fe8bb4f552ad3926274d29e083b79d84707da6
+Store<span class="w"> </span>paths:<span class="w">        </span>/nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7
+</code></pre></div>
+<p>Bir de history'ye bakalım. Dikkat ederseniz <code>2.42.0 -&gt; ∅</code> diye bir tanım var. Bu da Git'in kaldırıldığını gösteriyor.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span><span class="nb">history</span>
+
+<span class="c1"># ----------------- kısaltıldı</span>
+
+Version<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="o">(</span><span class="m">2024</span>-01-09<span class="o">)</span><span class="w"> </span>&lt;-<span class="w"> </span><span class="m">9</span>:
+flake:nixpkgs#legacyPackages.x86_64-linux.git:<span class="w"> </span><span class="m">2</span>.42.0<span class="w"> </span>-&gt;<span class="w"> </span>∅
+</code></pre></div>
+<p>Şimdi profilimizdeki bir versiyonu geri yükleyelim mesela amacımız Python'ın yüklenmediği ve onun üzerine GoLang'ın kurulduğu bir durum olsun. Bu bende history'dei 6 numaralı versiyon. Sizde farklı olabilir.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>rollback<span class="w"> </span>--to<span class="w"> </span><span class="m">6</span>
+</code></pre></div>
+<p>tekrar history'ye bakacak olursanız üzerinde olduğunuz versiyonun aktif olduğunu göreceksiniz.</p>
+<p>Şimdi tam buradayken GoLang'ı kurup bir de history'ye öyle bakalım. Öncelikle GoLang'ı arayalım sonrada kuralım.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>search<span class="w"> </span>nixpkgs#go
+<span class="c1"># * legacyPackages.x86_64-linux.go (1.21.5)</span>
+<span class="c1"># The Go Programming language</span>
+
+nix<span class="w"> </span>profile<span class="w"> </span>install<span class="w"> </span>nixpkgs#go
+</code></pre></div>
+<p>Şimdi history'ye bakalım</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>histrory
+
+<span class="c1"># -------------------- kısaltıldı</span>
+
+<span class="c1"># Version 6 (2023-12-08) &lt;- 5:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.hello: 2.12.1 -&gt; ∅</span>
+
+<span class="c1"># Version 7 (2024-01-09) &lt;- 6:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.nodejs-slim_18: ∅ -&gt; 18.19.0</span>
+
+<span class="c1"># Version 8 (2024-01-09) &lt;- 7:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.python2: ∅ -&gt; 2.7.18.7</span>
+
+<span class="c1"># Version 9 (2024-01-09) &lt;- 8:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.git: ∅ -&gt; 2.42.0</span>
+
+<span class="c1"># Version 10 (2024-01-09) &lt;- 9:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.git: 2.42.0 -&gt; ∅</span>
+
+<span class="c1"># Version 11 (2024-01-10) &lt;- 10:</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.go: ∅ -&gt; 1.21.5</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.hello: ∅ -&gt; 2.12.1</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.nodejs-slim_18: 18.19.0 -&gt; ∅</span>
+<span class="c1"># flake:nixpkgs#legacyPackages.x86_64-linux.python2: 2.7.18.7 -&gt; ∅</span>
+</code></pre></div>
+<p>Yeni eklenen ve bende aktif olan versiyon 11'de Go'nun kurulduğunu ve versiyon 6'da iken kurulum yaptığımız için aradaki NodeJs ve Python2'nin silindiğini görebilirsiniz.</p>
+<p>Hatta bunu profilimizdeki bin klasöründen de test edelim. Göreceğiniz üzere profilimizden silinmiş.</p>
+<div class="highlight"><pre><span></span><code>ll<span class="w"> </span>~/.nix-profile/bin
+
+total<span class="w"> </span>12K
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">60</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>go<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/6qd8p8gilzgplpk2ni3109m0k71r21s7-go-1.21.5/bin/go
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">63</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>gofmt<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/6qd8p8gilzgplpk2ni3109m0k71r21s7-go-1.21.5/bin/gofmt
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">66</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>hello<span class="w"> </span>-&gt;<span class="w"> </span>/nix/store/sbldylj3clbkc0aqvjjzfa6slp4zdvlj-hello-2.12.1/bin/hello
+</code></pre></div>
+<p>Şimdi birde store'a bakalım. Profilimizden gitmiş olamsına rağmen halen Python2'nin halen store'da olduğunu görebiliriz. Bunun birkaç sebebi olabilir</p>
+<ul>
+<li>Başka bir kullanıcı bu versiyonu kullanıyor olabilir.</li>
+<li>Sistem kulalnıyor olabilir. Yanibir paket için belki bu versiyon gereklidir.</li>
+<li>Garbage collection henüz çalışmamış olabilir.</li>
+<li>Son olarak yukardakiler olmasa bile bizim profile'de bir versiyonu kullanıyor olabiliriz.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>ll<span class="w"> </span>/nix/store/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>python-2
+
+
+dr-xr-xr-x<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w">       </span>root<span class="w">         </span><span class="m">58</span><span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7
+-r--r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w">       </span>root<span class="w">       </span><span class="m">7</span>,9K<span class="w"> </span>Oca<span class="w">  </span><span class="m">1</span><span class="w">  </span><span class="m">1970</span><span class="w"> </span>rfnbbfml49p3lmh92jd3mlqzjq1fg6aj-python-2.7.18.7.drv
+</code></pre></div>
+<p>Bu durumda bize son madde uygun görünüyor yani bizim profilimizde history'de Python2 kurulu görünüyor. O zaman iddiamıza göre history'yi temizler ve garbage collertor'ü de çalıştıracak olursak hakiakten Python2'nin silindiğini görmemiz gerekiyor.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># aktif olamayan bütün history&#39;leri silelim</span>
+nix<span class="w"> </span>profile<span class="w"> </span>wipe-history
+
+<span class="c1"># garbage collector&#39;ü çalıştıralım</span>
+nix<span class="w"> </span>store<span class="w"> </span>gc
+
+<span class="c1"># store&#39;a bakalım</span>
+
+ll<span class="w"> </span>/nix/store/<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>python-2
+</code></pre></div>
+<p>Sonuçta Python2'nin silindiğini gördük.</p>
+<p>Son olarak herhangi bir paketi veya bütün paketleri upgrade etmek için de <code>nix profile upgrade</code> komutu kullanılır.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>profile<span class="w"> </span>upgrade<span class="w"> </span><span class="s1">&#39;.*&#39;</span>
+
+nix<span class="w"> </span>profile<span class="w"> </span>upgrade<span class="w"> </span>packages.x86_64-linux.hello
+
+nix<span class="w"> </span>profile<span class="w"> </span>upgrade<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="c1"># profile idex numarası</span>
+</code></pre></div>
+<p>Evet profile için de bu kadar yeterli. Tabi profilleri de declarative yolla yani bir nix dosyasıyla kullanmak mümkün bunu da bir sonraki makalelerimizde göreceğiz.</p>
+<h2 id="diger-temel-baz-komutlar">Diğer Temel Bazı Komutlar</h2>
+<ul>
+<li><strong>nix run</strong>: Uygulamayı build alır ve çalıştırır. Mesela flake ile bir derivative yazdık ve çalıştırmak isityoruz diyelim. <strong>packages.\&lt;system&gt;.default</strong> komutu ie çalıştırabiliriz. veya hali hazırda nixpkgs içindeki bir uygulamayı çalıştırmak için <strong>packages.\&lt;system&gt;.\&lt;name&gt;</strong></li>
+<li><strong>nix search</strong>: Paket aramak için kullanılır.</li>
+<li><strong>nix copy</strong>: Store içindeki dosya ve klasörleri kopyalamak için kullanılır.</li>
+<li><strong>nix edit</strong>: Nix paketini düzenlemek için kullanılır.</li>
+<li><strong>nix store add</strong>: Bir dizini Nix Store'a ekler.</li>
+<li><strong>store add --mode flat</strong>: Bir dosyayı store'a ekler.</li>
+<li><strong>nix store cat</strong>: Nix deposundaki bir dosyanın içeriğini stdout'a yazdırır. Linux^daki cat komutu gibi.</li>
+<li><strong>nix store delete</strong>: Nix Store'dan bir dizin veya klasörü siler.</li>
+<li><strong>nix store diff-closures</strong>: iki Nix kapanışı (closure) arasındaki farkları gösterir. Nix closure, bir paketin bağımlılıklarıyla birlikte birleştirilmiş bir dizin yapısıdır. Bu, bir paketin tamamını ve ona bağlı tüm bağımlılıkları içerir.Komutun temel amacı, iki closure arasındaki paket ve sürüm farklarını belirlemektir. Yani, bir paketin bir versiyonundan diğerine veya bir kapanıştan diğerine hangi paketlerin eklenip kaldırıldığını gösterir. Bu bilgi, paketlerin ve bağımlılıklarının güncellenmesi veya değiştirilmesi durumlarında faydalı olabilir.</li>
+<li><strong>nix store dump-path</strong>: Bir store yolunu NAR formatında stdout'a serileştirir.</li>
+<li><strong>nix store gc</strong>: Nix Store'daki gereksiz dosyaları temizler.</li>
+<li><strong>nix store info</strong>: Store hakkında bilgi verir</li>
+<li><strong>nix store ls</strong> - Nix store'daki bir yol hakkında bilgi göster. Linux'deki ls komutu gibi.</li>
+<li><strong>nix store ping</strong>: Bir store'a erişilebilir mi diye test eder. Buna uzak store'larda dahil. örneğin <code>nix store ping --store https://cache.nixos.org</code></li>
+<li><strong>nix store prefetch-file</strong>: Bir dosyayı Nix Store'a indirir.</li>
+<li><strong>nix registry add</strong>: - add/replace flake in user flake registry</li>
+<li><strong>nix registry list</strong>: - list available Nix flakes</li>
+<li><strong>nix registry pin</strong>: - pin a flake to its current version or to the current version of a flake URL</li>
+<li><strong>nix registry remove</strong>: - remove flake from user flake registry</li>
+<li><strong>nix upgrade-nix</strong>: nix paket yöneticisini stabil en son sürüme upgrade etmek için kullanılır. Bunu ayrıca sadece tek bir profile için yapmak da mümkün. örneğin <code>nix upgrade-nix --profile ~alice/.local/state/nix/profiles/profile</code>.</li>
+<li><strong>nix why-depends</strong>: Bir paketin diğer bir pakete neden bağlı olduğu araştırmak için kullanılır</li>
+</ul>
+<p>örneğin altta thunderbird ile glib arasındaki bağımlılık araştırılmıştı.</p>
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>why-depends<span class="w"> </span>--all<span class="w"> </span>nixpkgs#thunderbird<span class="w"> </span>nixpkgs#glib
+
+<span class="c1"># Sonuç</span>
+/nix/store/97i88qcprk3ylam7b2ppkr94yj5hxm0r-thunderbird-115.6.0
+└───/nix/store/pag0sz7012misn9pckd6my9gvayl5q9h-xdg-utils-unstable-2022-11-06
+<span class="w">    </span>└───/nix/store/7m55djnyz4x0lcffn6c38j57bzpj1a6g-glib-2.78.1-bin
+</code></pre></div>
+<p>Bu makalemiz de bu kadar. Bir sonraki makalemizde Nix Flake kavramını detaylı olarak inceleyeceğiz. Devam edebilmemiz için artık Flake'i anlamamız gerekiyor.</p>
+<h2 id="referanslar">Referanslar</h2>
+<ul>
+<li><a href="https://nix.dev/concepts/flakes">https://nix.dev/concepts/flakes</a></li>
+<li><a href="https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake">https://nix.dev/manual/nix/2.18/command-ref/new-cli/nix3-flake</a></li>
+<li><a href="https://www.zknotes.com/page/flake.nix%20instead%20of%20nix%20channels">https://www.zknotes.com/page/flake.nix%20instead%20of%20nix%20channels</a></li>
+<li><a href="https://ryantm.github.io/nixpkgs/using/configuration/">https://ryantm.github.io/nixpkgs/using/configuration/</a></li>
+<li><a href="https://zero-to-nix.com/start/nix-search">https://zero-to-nix.com/start/nix-search</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.prune", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
