@@ -1,4 +1,4 @@
-site_name: NixOS Öğreniyoruz
+site_name: NixOS Öğreniyoruz - Murat Çabuk
 site_url: https://nixogreniyoruz.kavakci.dev
 docs_dir: src
 repo_url: https://github.com/LinuxTurkey/nix-ogreniyoruz
@@ -36,15 +36,15 @@ theme:
   palette: 
     - media: "(prefers-color-scheme: light)"
       scheme: slate
-      primary: "#7DB7E0"
-      accent: "#7DB7E0"
+      primary: "#7EBAE4"
+      accent: "#7EBAE4"
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
     - media: "(prefers-color-scheme: dark)"
       scheme: default
-      primary: "#7DB7E0"
-      accent: "#7DB7E0"
+      primary: "#7EBAE4"
+      accent: "#7EBAE4"
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -55,7 +55,14 @@ nav:
     - Nix Dili ile İlgili Alıştırmalar: nix_lang/02_nix_dili_alistirmalari.md
     - Nix Dilinde Gömülü Fonksiyonlar: nix_lang/03_nix_dili_gomulu.md
   - Nix Paket Yöneticisi:
-    - Nix Paket Yöneticisi: nix_package/04_nix_paket_yoneticisi.md
-    - Nix Shell ve Profile: nix_package/05_nix_package_manager_shell_profile.md
-    - Nix Flake Nedir?: nix_package/06_nix-package-flake-customderivation.md
-    - Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak: nix_package/07_nix-package-flake-customderivation-multiple.md
+    - Nix Paket Yöneticisi: nix_package/nix_paket_yoneticisi.md
+    - Nix Shell ve Profile: nix_package/nix_shell_ve_profile.md
+    - Nix Flake Nedir?: nix_package/nix_flake_nedir.md
+    - Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak: nix_package/birden_cok_paketi_ayni_repo_uzerinden_yayinlamak.md
+    - Override ve Overlay: nix_package/override_ve_overlay.md
+    - Developer ve Profile Ortamları Oluşturmak: nix_package/developer_ve_profile_ortamlari_olusturmak.md
+  - Sonrası:
+    - Nix ile NixOS Konfigürasyonu: nix_ile_nix_konfigurasyonu.md
+    - Module ve Option Kullanımı: module_ve_option_kullanimi.md
+    - NixOS Kurulumu ve Konfigürasyonu: nixos_kurulumu_ve_konfigurasyonu.md
+    - NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek: nixos_cloud_ve_uzak_ortam.md

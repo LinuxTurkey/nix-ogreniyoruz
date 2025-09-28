@@ -397,7 +397,7 @@ Lokal makinemde nixpkgs `/nix/store/jqypdy1dcvlz7i9qlgd7g5wvmjknzs6f-source` diz
 
 ![nixpkgs.png](../assets/files/nixpkgs.png)
 
-Yani aslında nixpkgs de bizim yazdığımız flake'ler gibi bir flake. Tek farkı bütün paketleri içinde barındırıyor olması. Dolayısıyla neredeyse her gün commit alıyor. Mesele NixOs kullanıyor olsaydık onunla ilgili repoları'da yine buradan kullanacaktık.
+Yani aslında nixpkgs de bizim yazdığımız flake'ler gibi bir flake. Tek farkı bütün paketleri içinde barındırıyor olması. Dolayısıyla neredeyse her gün commit alıyor. Mesele NixOS kullanıyor olsaydık onunla ilgili repoları'da yine buradan kullanacaktık.
 
 ![nixos-pkgs.png](./assets/files/nixos-pkgs.png)
 
@@ -693,7 +693,7 @@ nix run github:muratcabuk/nix-examples/message-third --no-write-lock-file
 
 Komutu çalıştırdığınızda flake.nix dosyası altında `selectedVersion = {version = "v1.0";};` hangi versiyon yazılıysa onun build alınıp çalıştırıldığını görebiliriz.
 
-Buraya kadar halen NixOs kullanmadık. Hala aslında Nix dilinin kıyılarında dolaşmaya devam ediyoruz. Biraz Biraz paket yönetimine girdik ama halen biraz daha yolumuz var. `nix shell` komutunu gördük ancak orada da aslında imperative bir kullanım yaptık. Yani herhangi bir proje klasörüne girdiğimizde her defasında onlarca bağımlılığı elimizle manuel kurmamız tabii ki anlamsız olacaktır. Yada kendimize bir profile kurmak istediğimizde tek tek uygulamaları kurmak da mantıksız olacaktır. Zaten bunu bütün paket yöneticileri bu şekilde yapıyor. Nix felsefesine de zaten bu kullanım aykırı bir durum. İşte bu nedenle flake'leri ve Nix'in modüler yapısını anlamak çok önemli.Bu sayede manuel yaptığımız her şeyi bir nix dosyasına declarative bir şekilde yazabileceğiz. Ayrıca NixOs'un modüler yapısını da anlamış olacağız.
+Buraya kadar halen NixOS kullanmadık. Hala aslında Nix dilinin kıyılarında dolaşmaya devam ediyoruz. Biraz Biraz paket yönetimine girdik ama halen biraz daha yolumuz var. `nix shell` komutunu gördük ancak orada da aslında imperative bir kullanım yaptık. Yani herhangi bir proje klasörüne girdiğimizde her defasında onlarca bağımlılığı elimizle manuel kurmamız tabii ki anlamsız olacaktır. Yada kendimize bir profile kurmak istediğimizde tek tek uygulamaları kurmak da mantıksız olacaktır. Zaten bunu bütün paket yöneticileri bu şekilde yapıyor. Nix felsefesine de zaten bu kullanım aykırı bir durum. İşte bu nedenle flake'leri ve Nix'in modüler yapısını anlamak çok önemli.Bu sayede manuel yaptığımız her şeyi bir nix dosyasına declarative bir şekilde yazabileceğiz. Ayrıca NixOS'un modüler yapısını da anlamış olacağız.
 
 Bir flake'in ne tür çıktılar üretebildiğini tekrar hatırlayalım.
 
@@ -702,9 +702,9 @@ Bir flake'in ne tür çıktılar üretebildiğini tekrar hatırlayalım.
 - NixOS configurations
 - Nix templates
 
-Dolayısıyla bir profile oluştururken veya NixOs için bir konfigürasyon ve paket yönetimi oluşturmak istediğimizde karmaşayı yönetmek için modüler bir yapıya ihtiyacımız olacak. Dolayısıyla sadece bir paketi bir GitHub reposunda yayınlamaktan daha fazlasını yapabiliyor olamamız gerekiyor.
+Dolayısıyla bir profile oluştururken veya NixOS için bir konfigürasyon ve paket yönetimi oluşturmak istediğimizde karmaşayı yönetmek için modüler bir yapıya ihtiyacımız olacak. Dolayısıyla sadece bir paketi bir GitHub reposunda yayınlamaktan daha fazlasını yapabiliyor olamamız gerekiyor.
 
-Kendimize bi NixOs ortamı veya bir profile oluşturmak istediğimizde aslında bir çok paketin bir arada çalıştığını göreceğiz. Bu paketlerin birbirleriyle uyumlu çalışması için bir çok parametreyi bir arada yönetmemiz gerekecek. Bu nedenle bir çok paketi bir arada yönetebileceğimiz bir yapıya ihtiyacımız olacak. Şimdi elimizdeki repoyu yazı devam ederken devamlı geliştirip değiştireceğiz.
+Kendimize bi NixOS ortamı veya bir profile oluşturmak istediğimizde aslında bir çok paketin bir arada çalıştığını göreceğiz. Bu paketlerin birbirleriyle uyumlu çalışması için bir çok parametreyi bir arada yönetmemiz gerekecek. Bu nedenle bir çok paketi bir arada yönetebileceğimiz bir yapıya ihtiyacımız olacak. Şimdi elimizdeki repoyu yazı devam ederken devamlı geliştirip değiştireceğiz.
 
 Elimizdeki message uygulaması için repomuzda bir message-app adında bir klasör oluşturup flake.nix ve derivation.nix dosyalarını içine taşıyoruz. Kod ileride değişeceği için message-app adında bir branch oluşturacağım. İleri de kodu incelemek istediğinizde bu branch'den bakabilirsiniz.
 

@@ -4,7 +4,7 @@ Distrowatch sitesine bakacak olursak yüzlerce Linux dağıtımı olduğunu gör
 
 ![distros.png](./assets/files/distros.png)
 
-Nixos işletim sistemi eğer Nix dilini ve Nix Paket Yöneticisini anlayabilirsek mevzunun belki de en basit kısmı. Şimdi biraz ekosistemi anlamaya çalışalım.
+NixOS işletim sistemi eğer Nix dilini ve Nix Paket Yöneticisini anlayabilirsek mevzunun belki de en basit kısmı. Şimdi biraz ekosistemi anlamaya çalışalım.
 
 Nix, Eelco Dolstra tarafından akademik bir proje olarak başladı.[^1] Dolstra'nın amacı, geleneksel paket yönetimi sistemlerinin karşılaştığı sorunları çözmek ve daha tutarlı bir sistem yönetimi sağlamaktı. Bu hedef doğrultusunda, fonksiyonel programlama prensiplerine dayanan bir dil olan Nix Expression Language (Nix) tasarlandı.
 
@@ -23,7 +23,7 @@ Başta sadece bir deployment dili olarak ortaya çıkmışken şimdi cloud ortam
 
 Nix, temel olarak dört ana bileşenden oluşur: Nix Dili, Nix Paket Yöneticisi, NixOS ve NixOps.
 
-![Nixos-stack2.webp](./assets/files/Nixos-stack2.webp)[^2]
+![NixOS-stack2.webp](./assets/files/Nixos-stack2.webp)[^2]
 
 [^2]: [NixOS Stack](https://nixos.wiki/wiki/Nix_Ecosystem)
 
@@ -120,7 +120,7 @@ Yani özet olarak normal bir Linux distrosunda örneğin Ubuntu'da bir uygulamay
 
 ## Infrastructure as Code (IaC) Sistemlerinden ve HashiCorp Packer'dan Farkı Nedir?
 
-Şimdi aklımıza şu gelebilir, zaten bir çok araç var neden Nix'i öğrenelim? IoC araçlarının temel amacı aslında doğrudan tek bir makine değil belki binlerce sunucuyu yönetmek. Hatta belki şu bile denilebilir gerekli plugin'lerle birlikte ekosistemi (farklı işletim sistemleri, network cihazları vb) yönetmek. Nix'in temel amacı deklaratif olarak bir makinenin bir doküman üzerinden her zaman aynı sonucu vermesini sağlamak. Bu bağlamda aslında Infrustracture as Code sistemleri NixOS'un üzerinde bir yapıdır. Örneğin Chef veya Puppet ile bi NixOS'u yönetebilirsiniz. Binlerce NixOS sunucunu ayağa kaldırıp yönetebilirsiniz. Bunu yaparken de Nixos konfigürasyon dosyasını kullanabilirsiniz. Ayrıca tabii ki bu araçların bir paket yöneticisi yok. Dolayısıyla işletim sistemei seviyesindeki bir işi daha üst seviyede iş yapan bir araca yaptırmış oluyoruz.
+Şimdi aklımıza şu gelebilir, zaten bir çok araç var neden Nix'i öğrenelim? IoC araçlarının temel amacı aslında doğrudan tek bir makine değil belki binlerce sunucuyu yönetmek. Hatta belki şu bile denilebilir gerekli plugin'lerle birlikte ekosistemi (farklı işletim sistemleri, network cihazları vb) yönetmek. Nix'in temel amacı deklaratif olarak bir makinenin bir doküman üzerinden her zaman aynı sonucu vermesini sağlamak. Bu bağlamda aslında Infrustracture as Code sistemleri NixOS'un üzerinde bir yapıdır. Örneğin Chef veya Puppet ile bi NixOS'u yönetebilirsiniz. Binlerce NixOS sunucunu ayağa kaldırıp yönetebilirsiniz. Bunu yaparken de NixOS konfigürasyon dosyasını kullanabilirsiniz. Ayrıca tabii ki bu araçların bir paket yöneticisi yok. Dolayısıyla işletim sistemei seviyesindeki bir işi daha üst seviyede iş yapan bir araca yaptırmış oluyoruz.
 
 HashiCorp Packer'ın temel amacı farklı ortamlar için isşetim sistemi image'ları oluşturmak. Bunu yaparken deklaratif bir yol izlemiyoruz daha çok prosedürel olarak bir birini takip eden adımlarla bir image oluşturuyoruz. Nix en temelinde bir cross-platform bir paket yöneticisi olmaya çalışıyor. Aslında NixOS, NixOps ve nix-generetor gibi araçlar paket yönetcisive Nix dilinini yetenekleri üzere sonradan geliştirilmiş araçlar. Bu araçlardan örneğin nix-generator ve NixOps kullanarak Packer'ın yaptığını yapabilir hale geliyoruz. Ancak bunu sadece NixOS işletim sistemi için yapabiliyoruz. Amaç Packer'ın yerini almak değil zaten. Hatta packer NixOS'u da kullanabilir. Ayrıca Packer'ın bir paket yönetici olmadığını tekrar hatırlatıyorum
 
@@ -128,7 +128,7 @@ Packer, önceden yapılandırılmış bir yapıyı alır ve bu yapı üzerinde b
 
 ## Neden NixOS Kullanmamalıyız?
 
-Sadece paket yöneticisindeki paketleri kurar çalıştırırım geriyle ilgilenmiyorum diyen bir son kullanıcıysanız bir satır komutla tüm sisteminizi kurabilirsiniz. Büyük ihtimal bir uygulama Nixos paket yöneticisinde yoksa başka bir yerde yoktur.
+Sadece paket yöneticisindeki paketleri kurar çalıştırırım geriyle ilgilenmiyorum diyen bir son kullanıcıysanız bir satır komutla tüm sisteminizi kurabilirsiniz. Büyük ihtimal bir uygulama NixOS paket yöneticisinde yoksa başka bir yerde yoktur.
 
 Linux dağıtımlarının istatistiklerinin yayınlandığı [Repology](https://repology.org/repositories/statistics/total) sayfasındaki rakamlara göre Nix paket reposunda en yakın Arch Linux'un AUR paket yöneticisinden farklı 17 bin adet daha fazla paket var. Buna tabi Nix'in resmi paket yöneticisinde olmayan Github, Gitlab, hatta bir FTP adresi veya bir URL üzerinden de yükleyebileceğiniz Nix paketleri hariç. Nix paket yöneticisi ile yazılmış bir paketi doğrudan herhangi bir adresten yükeyebilirsiniz. Paket yönetcisi bunu cache sunucularında bulamazsa local sistemde build alabilir.
 
@@ -137,7 +137,7 @@ Linux dağıtımlarının istatistiklerinin yayınlandığı [Repology](https://
 
 Ayrıca sisteme bir şey kurdum patladı gibi bir durumda rollback yapmak mümkün. Dolayısıyla bu tarz bir son kullanıcıysanız sadece bir uygulamanın adını yazmanız yeterli kurulum için. Hatta onlarca yeni uygulamanın adını listeye ekleyip, bazıların listeden silip veya bazıları üzerinde değişiklik yapıp tek seferde bütün değişikliği sisteminize uygulayabilirsiniz.
 
-Yani kişisel hayatınızda uzman olsanız da olmasanız da zevkle kullanabileceğiniz bir işletim sistemi. Eğer iş bilgisayarınızda kullanacaksanız ufak tefek problem çözebilecek kadar Nixos'a hakim olmanız gerekebilir.
+Yani kişisel hayatınızda uzman olsanız da olmasanız da zevkle kullanabileceğiniz bir işletim sistemi. Eğer iş bilgisayarınızda kullanacaksanız ufak tefek problem çözebilecek kadar NixOS'a hakim olmanız gerekebilir.
 
 Ancak eğer amacınız hakikaten sistemin uzmanı olmak ve profesyonel olarak iş hayatınızda da kullanmaksa altta sıralayacağım maddeleri dikkate almanızda fayda var.
 
@@ -145,8 +145,8 @@ Ancak eğer amacınız hakikaten sistemin uzmanı olmak ve profesyonel olarak i�
 - Öğrenme süresince yüzlerce kez deneme yanılma yapmak zorunda kalacaksınız. Bakış açımızı değiştirmemiz gerekiyor ancak dokümanlar yetersiz ayrıca topluluk da herkese yetişemiyor. Topluluğun verdiği örnekler ya çok basit veya tarihi geçmiş çok karmaşık örnekler.
 - Birçok durumu ilk kez yaşıyor olacaksınız ve bunlar Google için de yeni olacak.
 - Declarative, immutable gibi kavramlar sizin için hiç bir şey ifade etmiyorsa büyük yanlış bir yolda olabilirsiniz.
-- Kişisel olarak kullanmayacaksanız, tamamen iş ortamınızda Nixos'un avantajlarından faydalanmak için öğrenecekseniz ve ortamınızda 3-5 makine varsa attığınız taş ürküttüğünüz kurbağaya değmeyebilir.
-- Nix paket yöneticisini ve Nixos'u incelediğinizde ihtiyacınız olup olmadığını kendiniz anlayamıyorsanız veya karar vremiyorsanız Nixos'a bulaşmanıza gerek olmayabilir.
+- Kişisel olarak kullanmayacaksanız, tamamen iş ortamınızda NixOS'un avantajlarından faydalanmak için öğrenecekseniz ve ortamınızda 3-5 makine varsa attığınız taş ürküttüğünüz kurbağaya değmeyebilir.
+- Nix paket yöneticisini ve NixOS'u incelediğinizde ihtiyacınız olup olmadığını kendiniz anlayamıyorsanız veya karar vremiyorsanız NixOS'a bulaşmanıza gerek olmayabilir.
 
 Ancak hiç kullanmayacaksanız bile kendi kullandığınız dağıtıma Nix paket yöneticisini kurmanızı kesinlikle tavsiye ederim. Özellikle geliştirici olarak çalışıyorsanız internette Nix paket yöneticisi üzerine kurulu bir çok araç var. Hatta illa geliştirici olmanıza gerek yok aynı anda bir uygulamanın birden faza versiyonunu kullanıyorsanız da tercih edebilirsiniz. İlerleyen yazılarda bu konuya değiniyoruz ama yine de altta en çok kullanılanları ekledim.
 

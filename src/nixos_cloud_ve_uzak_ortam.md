@@ -1,21 +1,6 @@
-## NixOs'u Cloud ve Uzak Ortamlara Deploy Etmek (Nix Öğreniyoruz 13)
+# NixOS'u Cloud ve Uzak Ortamlara Deploy Etmek
 
-İlk yazımızda bahsettiğim Nix_gernerator aracından tekrar bahsederek konuya girmek istiyorum.
-
-1. [NixOS: İşletim Sistemlerine Fonksiyonel Yaklaşım](0.NixOs.md)
-2. [Nix Dili ve Özellikleri](1.NixLanguage.md)
-3. [Nix Dili ile ilgili Alıştırmalar](2.NixLanguage-Exercises.md)
-4. [Nix Dilinde Builtins Fonksiyonlar](3.NixLanguage-Builtins.md)
-5. [Nix Paket Yöneticisi](4.Nix-Package-Manager.md)
-6. [Nix Paket Yöneticisi Shell, Profile Kavram ve Komutları](5.Nix-Package-Manager-Shell-Profile.md)
-7. [Nix Flake Nedir?](6.Nix-Package-Flake-CustomDerivation.md)
-8. [Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak](7.Nix-Package-Flake-CustomDerivation-Multiple.md)
-9. [Override ve Overlay Kavramları](8.Nix-Package-Overlay-Overrride.md)
-10. [Nix Paket Yöneticisi ile Developer ve Profile Ortamları Oluşturmak](9.Nix-Package-Manager-Developer-Shell-Profile.md)
-11. [Nix ile NixOs Konfigürasyonu](10.Nix-With-NixOS.md)
-12. [NixOs Module ve Option Kullanımı](11.Nix-Nixos-Modules-Options.md)
-13. [NixOs Kurulumu ve Konfigürasyonu](12.Nix-NixOs-Configuration.md)
-14. [NixOs'u Cloud ve Uzak Ortamlara Deploy Etmek](13.Nix-With-NixOS-Iso-Docker-Cloud.md)
+İlk yazımızda bahsettiğim `nix-gernerator` aracından tekrar bahsederek konuya girmek istiyorum.
 
 Tek bir konfigürasyonu kullanarak [nix-generator](https://github.com/nix-community/nixos-generators) aracı ile alttaki bütün ortamlara çıktı üretebilirsiniz.
 
@@ -52,9 +37,11 @@ Tek bir konfigürasyonu kullanarak [nix-generator](https://github.com/nix-commun
 | vm-nogui             | same as vm, but without a GUI                                                                                                           |
 | vmware               | VMWare image (VMDK)                                                                                                                     |
 
-[Tablo Kaynak](https://github.com/nix-community/nixos-generators)
+[^1]
 
-Sayfasında detaylarına bakabilirsiniz. Uygulama olarak Nix paket yöneticisi ile kurulum yapıp kullanılabiliyor veya flake dosyasına konfigürasyon olarak da girilebiliyor. Yani illa Nixos sahibi olmak zorunda değiliz. Yani örneğin bir Ubuntu üzerinde Nix paket yöneticisini kurup bu aracı kullanabiliriz.
+[^1]: [Tablo Kaynağı](https://github.com/nix-community/nixos-generators)
+
+Sayfasında detaylarına bakabilirsiniz. Uygulama olarak Nix paket yöneticisi ile kurulum yapıp kullanılabiliyor veya flake dosyasına konfigürasyon olarak da girilebiliyor. Yani illa NixOS sahibi olmak zorunda değiliz. Yani örneğin bir Ubuntu üzerinde Nix paket yöneticisini kurup bu aracı kullanabiliriz.
 
 Elimizdeki Konfigürasyon üzerinden bu aracı kullanarak ISO, Docker Image ve VM oluşturmak çok vakit alcaktır. Bu nedenle Github sayfamda önceki yazılarımızda kullandığımız repo'da ilk oluşturduğumuz base konfigürasyonu kullanarak uygulamaları yapacağız.
 
@@ -64,7 +51,7 @@ Bunun için alttaki komutla base brach'i klonlayalım.
 git clone -b base https://github.com/muratcabuk/nixos-sample-dotfiles.git
 ```
 
-## Nixos-Generator ile ISO, Docker Image ve VM oluşturma
+## NixOS-Generator ile ISO, Docker Image ve VM oluşturma
 
 **ISO Oluşturmak**
 
@@ -119,21 +106,21 @@ Daha sonra `nixos-generate -f virtualbox -c configuration.nix` komutunu kullanar
 
 İşlem bittiğinde `/nix/store/7qy9wvm93p4ycwq2rxf6184xj8bna32c-nixos-ova-23.11pre536306.12bdeb01ff9e-x86_64-linux/nixos-23.11pre536306.12bdeb01ff9e-x86_64-linux.ova` şeklinde bir dizinde VirtualBox image'ımızın oluştuğunu görebiliriz.
 
-## Nixos'u Uzak Sistemlere ve Cloud'a Kurmak
+## NixOS'u Uzak Sistemlere ve Cloud'a Kurmak
 
 Burada karşımıza alttaki araçlar çıkıyor. Bir iki araç daha var ama ya geliştirmeleri durmuş ya da çok popüler değil o yüzden listeye eklemedim.
 
-- [Nixos Everywhere](https://github.com/nix-community/nixos-anywhere): Yıldız Sayısı 950. Temel amacı SSH ile bağlanılabilen bir sisteme elinizdeki Flake ile kurulum yapmak. Nix Everywhere'de cloud kısmı yok ancak [Disco](https://github.com/nix-community/disko) eklentisi sayesinde disk formatlama ve biçimlendirme işlerini de yapabiliyor.
+- [NixOS Everywhere](https://github.com/nix-community/nixos-anywhere): Yıldız Sayısı 950. Temel amacı SSH ile bağlanılabilen bir sisteme elinizdeki Flake ile kurulum yapmak. Nix Everywhere'de cloud kısmı yok ancak [Disco](https://github.com/nix-community/disko) eklentisi sayesinde disk formatlama ve biçimlendirme işlerini de yapabiliyor.
   - Detaylar için [resmi dokümanına](https://github.com/nix-community/nixos-anywhere/blob/main/docs/howtos/INDEX.md) bakabilirsiniz.
   - **Yetenekleri**
     - Disk formatlama ve bölümlendirme
-    - Nixos'un kurulumu ve konfigürasyonu
+    - NixOS'un kurulumu ve konfigürasyonu
     - Uygulama kurabilir
     - Ayrıca ekstra dosya konulacaksa onları ekleyebilir
   - **Nasıl Çalışır?**
     - SSH ile bağlanılabiliyor olması lazım.
     - SSh ile ayarları sayfasında bulabilirsiniz.
-    - Karşı makinede Nixos kurulu olmalı yada installer çalışıyor olmalı. Eğer o yoksa kexec ile makine boot edilmiş olmalı.
+    - Karşı makinede NixOS kurulu olmalı yada installer çalışıyor olmalı. Eğer o yoksa kexec ile makine boot edilmiş olmalı.
     - şu komutla sisteme kurulum yapılır `nix run github:nix-community/nixos-anywhere -- --flake '.#myconfig' nixos@remote-host-ip-address`
 - [deploy-rs](https://github.com/serokell/deploy-rs/): Yıldız Sayısı (1100)
   - **Yetenekleri**
@@ -154,15 +141,15 @@ Burada karşımıza alttaki araçlar çıkıyor. Bir iki araç daha var ama ya g
       - Cloud deployment yeteneği yok. Sadece local ve uzak makinelere kurulum yapabiliyor.
       - **Kullanımı** Nixops'a çok benziyor. YAni bir flake deployment'ı yok daha çok sunucu kurulumlar için uygun görünüyor.
 - [Morph](https://github.com/DBCDK/morph): Yıldız Sayısı 700
-  - Temel amacı birden fazla host üzerinde Nixos'u yönetmek. Kurulum yapıp health check yapabiliyor.
-  - Daha önce Ansible, Chef veya Puppet gibi araçlar kullandıysanız tam olarak onların yaptığı için Nixos ve Nix paket yöneticisini kullanarak yapıyor.
+  - Temel amacı birden fazla host üzerinde NixOS'u yönetmek. Kurulum yapıp health check yapabiliyor.
+  - Daha önce Ansible, Chef veya Puppet gibi araçlar kullandıysanız tam olarak onların yaptığı için NixOS ve Nix paket yöneticisini kullanarak yapıyor.
   - Çok basit bir kullanımı var. Bir nix dosyasına makinelerin bilgilerini yazdıktan morph komutu ile elinizdeki konfigürasyonu toplu halde makinelerinize uygulayabiliyorsunuz.
 - [Nixops](https://github.com/NixOS/nixops): Yıldız Sayısı 1700. Araçlardan en dikkat çekeni Nixops. Temelde Nixops bir flake'i alıp onu belirtilen makineye kurmaya odaklanmıyor. Bunu Nix Everywhere veya Deploy-rs ile yapabiliriz. Nixops amacı çok farklı ortamlardaki makinelere bağlanmak ve onlara Nixops konfigürasyonunda belirttiğimiz paketleri ve uygulamaları kurmaktır. Toplu halde paket kurmak, toplu halde sistemleri destroy etmek gibi işlemleri yapabilir. Yani daha çok sunucu işlemleri ve konfigürasyonu için kullanılır.
 
 - Nixops'un yeni versiyonu Nixops 2.0'da bazı değişikliliklere gidilmiş. Yeni versiyonla ilgili olarak da elimizdeki tek kaynak da [resmi dokümanlar](https://nixops.readthedocs.io/en/latest/introduction.html). Ancak bu versiyondaki bazı yapısal problemlerden dolayı da Rust diliyle yeniden yazmaya karar verilmiş. Bu yeni versiyonu da tamamen yeni bir Github hesabından devam ettiriyorlar. [Şu linkten](https://github.com/nixops4/nixops4) takip edebilirsiniz. Mevzu halen [şu issue'da](https://github.com/NixOS/nixops/issues/1574) tartışılıyor.
   - Elimizdeki çalışan en temiz versiyon olarak 1.7'nin [resmi dokümanlarına da şu linkten](https://releases.nixos.org/nixops/nixops-1.7/manual/manual.html) erişebilirsiniz.
 
-  - Konu ile ilgili Türkçe olarak bulabileceğiniz belki tek içerik [şu Youtube videosu](https://www.youtube.com/watch?v=VIBPfXmkvr8&t=4309s) olacaktır. Bunu da izlemenizi tavsiye ederim. Çünkü videonun yarısında Nix paket yöneticisi ve Nixos hakkında çok güzel bilgiler veriliyor.
+  - Konu ile ilgili Türkçe olarak bulabileceğiniz belki tek içerik [şu Youtube videosu](https://www.youtube.com/watch?v=VIBPfXmkvr8&t=4309s) olacaktır. Bunu da izlemenizi tavsiye ederim. Çünkü videonun yarısında Nix paket yöneticisi ve NixOS hakkında çok güzel bilgiler veriliyor.
 
   - Baştan sona tüm detaylarıyla Nixops'un anlatıldığı [bir makale](https://www.thedroneely.com/posts/nixops-towards-the-final-frontier/).
 
@@ -170,11 +157,11 @@ Burada karşımıza alttaki araçlar çıkıyor. Bir iki araç daha var ama ya g
     - Local veya uzak makinelere kurulum yapabilirsiniz.
     - Hetzner fiziksel makinelere kurulum yapabilirsiniz.
     - Libvirt (Qemu) üzerinde VM oluşturabilirsiniz.
-    - VirtualBox üzerinde çalışan bir Nixos üzerinde kurulum ve değişiklik yapabilirsiniz. Ancak buraya dikkat çekmek istiyorum Nixops Virtualbox üzerinden makine oluşturmaz sadece vorolan makşneye bağlanablir.
+    - VirtualBox üzerinde çalışan bir NixOS üzerinde kurulum ve değişiklik yapabilirsiniz. Ancak buraya dikkat çekmek istiyorum Nixops Virtualbox üzerinden makine oluşturmaz sadece vorolan makşneye bağlanablir.
     - AWS (Amazon Web Services), GCE (Google Compute Engine), Azure (Microsoft Azure), Digital Ocean gibi cloud ortamlarına kurulum yapabilir hatta network, storage, IP, firewall gibi
     - [Şu kaynakta da](https://nixops.readthedocs.io/en/latest/manual/migrating.html) Versiyon 1'den 2'ye geçişle alakalı konulara değinilmiş.
 
-  Son tahlilde eğer 1.7 kullanmak istiyorsak özellikle ilgili Nixos versiyonunu bulup onun üzerinden nixops'u yüklememiz gerekiyor. Nixops 1.7 versiyonunun bulunduğu Nixpks'nin en son versiyonu [Nixos 23.05'de](https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/tools/package-management/nixops/default.nix) bulabiliyoruz. O zaman registry (channel) olarak 23.05 versiyonunu registry'lere ekleyip bu versiyon üzeridnen Nixops'u kurabiliriz.
+  Son tahlilde eğer 1.7 kullanmak istiyorsak özellikle ilgili NixOS versiyonunu bulup onun üzerinden nixops'u yüklememiz gerekiyor. Nixops 1.7 versiyonunun bulunduğu Nixpks'nin en son versiyonu [NixOS 23.05'de](https://github.com/NixOS/nixpkgs/blob/nixos-23.05/pkgs/tools/package-management/nixops/default.nix) bulabiliyoruz. O zaman registry (channel) olarak 23.05 versiyonunu registry'lere ekleyip bu versiyon üzeridnen Nixops'u kurabiliriz.
 
   ```bash
        nix registry add nixpkgs2305 github:NixOS/nixpkgs/nixos-23.05
@@ -186,7 +173,7 @@ Burada karşımıza alttaki araçlar çıkıyor. Bir iki araç daha var ama ya g
        nixops --version
   ```
 
-  Nixops'u kullanırken flake içine veya flake'den bağımsız olarak bir dosya içine konfigürasyonu yazabiliriz. Bu dosya içinde birden fazla makine tanımlayabiliriz. Bu makinelere bağlanarak Nixos konfigürasyonunu uygulayabiliriz.
+  Nixops'u kullanırken flake içine veya flake'den bağımsız olarak bir dosya içine konfigürasyonu yazabiliriz. Bu dosya içinde birden fazla makine tanımlayabiliriz. Bu makinelere bağlanarak NixOS konfigürasyonunu uygulayabiliriz.
 
   Flake içinde tanımlama yaparken alttaki gibi bir template kullanmalısınız. `nixopsConfigurations` bloğuna bakacak olursanız `network`, `defaults` ve `machine` bloklarını görebilirsiniz. `network` bloğunda genel network ayarları yapılırken `machine` bloğunda ise tekbir makinenin tanımını gösteriyor. Defaults bloğu ise tüm makinelere uygulanacak genel ayarları gösteriyor. Konfigürasyondaki databasefile kısmı ise eskiye uyumluluk için gerekiyor. Bu dosya içinde deployment'lar ve makine bilgileri tutuluyor.
 
@@ -195,7 +182,7 @@ Burada karşımıza alttaki araçlar çıkıyor. Bir iki araç daha var ama ya g
   ```nix
   # flake.nix
   {
-  description = "Murat Cabuk NixOs Configuration";
+  description = "Murat Cabuk NixOS Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -254,4 +241,4 @@ Nixops ile Kubernetes kurulumu için fikir olması adına altta 2 Github projesi
 - Sadene Kubernetes değil ELK, Kafka, Mesos ve Postgres cluster'larının da Nixops ile nasıl oluşturabilceğinize örnek olarak [şu linkten](https://github.com/thpham/magics/tree/master/k8s-cluster) inmceleyebilirsiniz.
 - [Bu örnek](https://gist.github.com/offlinehacker/5f77f4ae9accc1859a4381429bd6fdbb) de sade bir şekilde 6 sunuculu bir Kubernetes cluster'ının nasıl yapılabileceğini gösteriyor.
 
-Evet bu yazmızda bu kadar. Fırsat buldukça Nixos hakkındaki deneyimlerimi paylaşmaya devam edeceğim. Umarım faydalı olmuştur diğer yazılarımda görüşmek ümidiyle.
+Evet bu yazmızda bu kadar. Fırsat buldukça NixOS hakkındaki deneyimlerimi paylaşmaya devam edeceğim. Umarım faydalı olmuştur diğer yazılarımda görüşmek ümidiyle.
