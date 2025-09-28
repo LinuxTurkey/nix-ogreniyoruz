@@ -49,7 +49,7 @@ theme:
         icon: material/weather-night
         name: Switch to dark mode
 nav:
-  - NixOS: README.md
+  - NixOS: index.md
   - Nix Dili:
     - Nix Dili ve Özellikleri: nix_lang/01_nix_dili_ve_ozellikleri.md
     - Nix Dili ile İlgili Alıştırmalar: nix_lang/02_nix_dili_alistirmalari.md
