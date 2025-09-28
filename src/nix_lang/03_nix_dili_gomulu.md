@@ -523,7 +523,7 @@ result = builtins.isList "merhaba"
 - **builtins.fetchTarball**: Tarball dosyalarını indirmek için kullanılır.
 - **builtins.fetchurl**: URL'den dosya indirmek için kullanılır.
 
-Diğer fetcher'lar için [şu linke](https://ryantm.github.io/nixpkgs/builders/fetchers/) ve [resmi NixOs sayfasına](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers) göz atabilirsiniz. NixOs sayfasındakiler sadece builtins fonksiyonlarını içermiyor.
+Diğer fetcher'lar için [şu linke](https://ryantm.github.io/nixpkgs/builders/fetchers/) ve [resmi NixOS sayfasına](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers) göz atabilirsiniz. NixOS sayfasındakiler sadece builtins fonksiyonlarını içermiyor.
 
 Biz aslında nixpkgs reposunu kullandığımızda repo bir tar dosaysı oalrak sistemimize indirilir. Extract edildikten sonra lokal dosyalarla işlem yapılır.
 

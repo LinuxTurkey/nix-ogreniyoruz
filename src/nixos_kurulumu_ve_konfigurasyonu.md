@@ -1,77 +1,57 @@
-## NixOs Kurulumu ve Konfigürasyonu (Nix Öğreniyoruz 12)
+# NixOS Kurulumu ve Konfigürasyonu
 
-Bu yazımızda daha önce kurmuş olduğumuz NixOs konfigürasyonunu yapmaya devam edeceğiz. 
+Bu yazımızda daha önce kurmuş olduğumuz NixOS konfigürasyonunu yapmaya devam edeceğiz.
 
 Yazının en sonunda örnek olarak incelenebilecek bir çok repo'nun da linklerini verdim. Onlarda da faydalanarak örneğimizi yavaş yavaş geliştireceğiz.
-
-1. [NixOS: İşletim Sistemlerine Fonksiyonel Yaklaşım](0.NixOs.md)
-2. [Nix Dili ve Özellikleri](1.NixLanguage.md)
-3. [Nix Dili ile ilgili Alıştırmalar](2.NixLanguage-Exercises.md)
-4. [Nix Dilinde Builtins Fonksiyonlar](3.NixLanguage-Builtins.md) 
-5. [Nix Paket Yöneticisi](4.Nix-Package-Manager.md)
-6. [Nix Paket Yöneticisi Shell, Profile Kavram ve Komutları](5.Nix-Package-Manager-Shell-Profile.md)
-7. [Nix Flake Nedir?](6.Nix-Package-Flake-CustomDerivation.md)
-8. [Birden Çok Paketi Aynı Repo Üzeriden Yayınlamak](7.Nix-Package-Flake-CustomDerivation-Multiple.md) 
-9. [Override ve Overlay Kavramları](8.Nix-Package-Overlay-Overrride.md)
-10. [Nix Paket Yöneticisi ile Developer ve Profile Ortamları Oluşturmak](9.Nix-Package-Manager-Developer-Shell-Profile.md) 
-11. [Nix ile NixOs Konfigürasyonu](10.Nix-With-NixOS.md) 
-12. [NixOs Module ve Option Kullanımı](11.Nix-Nixos-Modules-Options.md)
-13. [NixOs Kurulumu ve Konfigürasyonu](12.Nix-NixOs-Configuration.md)
-14. [NixOs'u Cloud ve Uzak Ortamlara Deploy Etmek](13.Nix-With-NixOS-Iso-Docker-Cloud.md)
 
 Alttaki çalışmanın son halini de [Github'daki repo](https://github.com/muratcabuk/nixos-sample-dotfiles) üzerinden inceleyebilirsiniz. Adım adım her değişimi ayrı bir branch olarak ekleyeceğim. Kod değişeceği için geri dönük takip edebilirsiniz kodu.
 
 ## Klasörlerin Kullanım Amaçları
+
 Bir bilgisayarda ne tür ayarlar yaparız bi listeleyelim.
 
-
-- **Makinemizin kullanıcıdan bağımsız donanımsal ayarları**: Disk yapısı, driver'lar, bluetooth, sensör, dış cihazlar (yazıcı, monitor, kamera vb) ayarlar. Tabi eğer birden fazla makine yönetiliyorsa o zaman makine sayısı kadar ayar gerekiyor. 
+- **Makinemizin kullanıcıdan bağımsız donanımsal ayarları**: Disk yapısı, driver'lar, bluetooth, sensör, dış cihazlar (yazıcı, monitor, kamera vb) ayarlar. Tabi eğer birden fazla makine yönetiliyorsa o zaman makine sayısı kadar ayar gerekiyor.
 - **İşletim sisteminin kullanıcıdan bağımsız ayarları**: Hangi modüller kullanılacak, hangi servisler çalışıyor olacak, sistem üzerinde tüm kullanıcılar için ortak olacak diğer ayarlar.
-- **Sistem üzerinden kullanıcıdan bağımsız kurulması gereken uygulamalar**: Hangi kullanıcı sistemi kullanırsa kullansın olması gereken uygulamalar. Mesela bir servis, office uygulaması veya basit bir çizim programı gibi. Tabi bunların kullanılabilmesi içinde bir masaüstü ortamı (kde, gnome) gerekiyor. 
+- **Sistem üzerinden kullanıcıdan bağımsız kurulması gereken uygulamalar**: Hangi kullanıcı sistemi kullanırsa kullansın olması gereken uygulamalar. Mesela bir servis, office uygulaması veya basit bir çizim programı gibi. Tabi bunların kullanılabilmesi içinde bir masaüstü ortamı (kde, gnome) gerekiyor.
 - **Kullanıcının kişisel ayarları**: Kişinin kullanacağı uygulamalar me masaüstü ortamı ayarları
-- **Kullanıcının kişisel uygulamaları**: Kişinin sadece kendisinin kullandığı, diğer kullanıcılara paylaştırılmayacak uygulamalar.  Tabi her kullanıcı kendisi isterse kurabilir aynı uygulamayı.
-
+- **Kullanıcının kişisel uygulamaları**: Kişinin sadece kendisinin kullandığı, diğer kullanıcılara paylaştırılmayacak uygulamalar. Tabi her kullanıcı kendisi isterse kurabilir aynı uygulamayı.
 
 Bütün bu sistemi kurmak için herkesin farklı bir dosya yönetme stratejisi var. Alttaki örnek linklerden farklı kullanıcıların repo'larını inceleyebilirsiniz. Bazı klasör adlarını hemen hemen hepsinde görebilirsiniz.
-
 
 - **Hosts/machines** : Kullanılacak Bilgisayarın ayaları için kullanılır. BAzıları donanımsal işleri machines klasörüne, diğer ayarları da hosts klasörüne koyabiliyor.
 - **Home/Users** : Kullanıcıya özel ayarlar ve uygulamalar için kullanılır.
 - **Pkgs/Packages**: Bizzat ilgili konfigürasyon içinde build alınıp derivation/package oluşturulacak paket bilgileri bulunur.
-- **Overlays**: Nixpkgs üzerindeki değişiklikler, pkgs/packages klasöründeki paketlerin yüklenmesi ve diğer paket repo'larından yüklenen paketlerin override işlemleri  gibi işler için kullanılır.
-- **Modules** : Nixos konfigürasyonu için kullanılır. Burada önemli olan konu her kim olursa olsun yani kişiye bağlı olmadan yapılan konfigürasyonlar burada olmalı.
+- **Overlays**: Nixpkgs üzerindeki değişiklikler, pkgs/packages klasöründeki paketlerin yüklenmesi ve diğer paket repo'larından yüklenen paketlerin override işlemleri gibi işler için kullanılır.
+- **Modules** : NixOS konfigürasyonu için kullanılır. Burada önemli olan konu her kim olursa olsun yani kişiye bağlı olmadan yapılan konfigürasyonlar burada olmalı.
 - **Lib** : Custom yazılan fonksiyonlar konulur.
-- **Scripts/Config/Bin** : Bazen Nixos module ve option'ları yetersiz gelebilir. Bu gibi durumlarda script yazmak gerekebilir. Hem bu script'leri hem de kullanılan konfigürasyon dosyalarını burada tutulur.
+- **Scripts/Config/Bin** : Bazen NixOS module ve option'ları yetersiz gelebilir. Bu gibi durumlarda script yazmak gerekebilir. Hem bu script'leri hem de kullanılan konfigürasyon dosyalarını burada tutulur.
 
+NixOS klasör yapısı için bize bir best practice sunmuyor. Yani tamamen nasıl bir şey yapacağımız tamamen bize kalmış
 
-NixOs klasör yapısı için bize bir best practice sunmuyor. Yani tamamen nasıl bir şey yapacağımız tamamen bize kalmış
-
-Bu yazıda elimden geldiğince sade kalmaya çalışacağım. Hem yazıyı bitiremeyiz hem de amacımız zaten mükemmel bir sistem kurmak değil daha çok mantığını anlamak. Devamını getirmek artık sizin elinizde. Bu arada ben de kendi sistemlerimde mümkün olduğunca sade tutmaya çalışıyorum. Gereksiz yere kullanmayacağımız  konfigürasyonları yönetmeye gerek yok.
+Bu yazıda elimden geldiğince sade kalmaya çalışacağım. Hem yazıyı bitiremeyiz hem de amacımız zaten mükemmel bir sistem kurmak değil daha çok mantığını anlamak. Devamını getirmek artık sizin elinizde. Bu arada ben de kendi sistemlerimde mümkün olduğunca sade tutmaya çalışıyorum. Gereksiz yere kullanmayacağımız konfigürasyonları yönetmeye gerek yok.
 
 Tek bir makine ve tek bir kullanıcı için system konfigürasyonu yapacağız. Dosya yapımız alttaki gibi olacak
 
-![schema.png](files/schema.png)
+![schema.png](./assets/files\schema.png)
 
 - **Host**: Makine hardware ayarlarımızın olduğu klasör
-- **Modules**: NixOs konfigürasyonunun ve kullanıcı home dizini ve diğer kişisel ayarlarının olduğu klasör
+- **Modules**: NixOS konfigürasyonunun ve kullanıcı home dizini ve diğer kişisel ayarlarının olduğu klasör
 - **Overlays**: Custom geliştirilen uygulamaların ve diğer paket yöneticilerinden yüklenen uygulamaların yüklenme öncesinde yapılacak değişikliklerinin yönetildiği overlay dosyalarının konulduğu klasör
 - **Pkgs**: Custom geliştirilen uygulamaların bulunduğu klasör
 
 Bu arada bütün klasörlerde README dosyası mevcut, bu dosyalardan bulunduğu klasör ve uygulama hakkında bilgi alabilirsiniz.
 
-
 ## Dosya ve Klasör Yapısının Oluşturulması
 
 Adım adım sistemimizi kurmaya başlayalım.
 
-1. Öncelikle hosts klasörünüze makinemizin adını/modelini içeren bir klasör oluşturalım ve root dizinde olan `hardware-configuration.nix` dosyasını bu klasöre kopyalayalım. 
+1. Öncelikle hosts klasörünüze makinemizin adını/modelini içeren bir klasör oluşturalım ve root dizinde olan `hardware-configuration.nix` dosyasını bu klasöre kopyalayalım.
 
-![schema2.png](files/schema2.png)
+![schema2.png](./assets/files\schema2.png)
 
 İlerde belki farklı sistemler de eklemek sitesebiz yapınız hazır olmuş olur.
 
-
-2. Root dizindeki `nixos-configuration.nix` dosyasını da modules klasörüne taşıyalım ve bu dosyada en üstte yer `hardware-configuration.nix` dosyasının adresini değiştirelim. Ayrıca ` networking.hostName = "muratpc";` satırında önceden hostname Nixos olarak yazıyordu onu da sistem adıyla aynı yaptım yani muratpc. Siz de istediğiniz gibi değiştirebilirsiniz. İlla sistem adıyla hostname aynı olmak zorunda değil farklı isimler de verilebilir.
+2. Root dizindeki `nixos-configuration.nix` dosyasını da modules klasörüne taşıyalım ve bu dosyada en üstte yer `hardware-configuration.nix` dosyasının adresini değiştirelim. Ayrıca ` networking.hostName = "muratpc";` satırında önceden hostname NixOS olarak yazıyordu onu da sistem adıyla aynı yaptım yani muratpc. Siz de istediğiniz gibi değiştirebilirsiniz. İlla sistem adıyla hostname aynı olmak zorunda değil farklı isimler de verilebilir.
 
 ```nix
 { config, pkgs, ... }:
@@ -85,13 +65,14 @@ Adım adım sistemimizi kurmaya başlayalım.
 # KISALTILDI
 
 ```
+
 3. modules klasörünüze `home-manager.nix` dosyanızı ekleyin. Ben prefix olarak kendi adımı kullandım .Hangi user için olduğu belli olsun. İlerde belki farklı kulalnıcılar da ekleyebilirsiniz. İçini boş bırakın şimdilik ilerde dolduracağız.
-4. Pkgs klasörünü oluşturalım. Bu klasörde kendi yazdığımız paketler olarak. Eğer yazı dizisini baştan beri okuduysanız zaten içinde daha önceki yazılarda oluşturduğum örnek paketleri koydum. Bu paketleri sizde Github sayfamdaki repo'dan alabilirsiniz. Uygulamalar farklı şekillerde nasıl kendi paketlerinize yazabilirsiniz bunlar için de örnek olmuş oluyor. Zaten her bir uygulama klasöründe README dosyası var onlardan da bilgi alabilirsiniz. 
+4. Pkgs klasörünü oluşturalım. Bu klasörde kendi yazdığımız paketler olarak. Eğer yazı dizisini baştan beri okuduysanız zaten içinde daha önceki yazılarda oluşturduğum örnek paketleri koydum. Bu paketleri sizde Github sayfamdaki repo'dan alabilirsiniz. Uygulamalar farklı şekillerde nasıl kendi paketlerinize yazabilirsiniz bunlar için de örnek olmuş oluyor. Zaten her bir uygulama klasöründe README dosyası var onlardan da bilgi alabilirsiniz.
 5. Overlays klasörünü oluşturalım. Bu klasörde de hem kendi yazdığımız paketlerde hem de diğer paket repo'larından yüklediğimiz paketlerde yüklenme öncesi değişiklikleri yönetiyoruz. Hatırlarsanız önceki yazılarımızda paket yüklemenin bile bir nixpkgs üzerinde bir değişiklik yapmak anlamına geldiğinden bahsetmiştik. Bu nedenle kendi yazdığımız paketlerin sisteme yüklenmesini ve yüklenme öncesi yapılacak değişiklikleri de buradan yönetiyoruz.
 
-Burada da şimdilik 2 dosya `custom.nix` ve `hello.nix` buluyor.  
+Burada da şimdilik 2 dosya `custom.nix` ve `hello.nix` buluyor.
 
-![schema3.png](files/schema3.png)
+![schema3.png](./assets/files\schema3.png)
 
 `custom.nix` dosyasında kendi yazdığımız paketlere ait overlay işlemleri varken `hello.nix` içinde NisOs repo'sudan yer alan hello uygulamasına yönelik overlay ayarları bulunuyor.
 
@@ -145,16 +126,15 @@ final: prev: {
 
 6. `Flake.nix` dosyasını alttaki gibi değiştiriyoruz. Değişiklikler açıklama satırı olarak eklendi.
 
-
 ```nix
 {
-  description = "Murat Cabuk NixOs Configuration";
+  description = "Murat Cabuk NixOS Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: 
+  outputs = { self, nixpkgs, ... }@inputs:
   let
 
     # üzerinde çalıştığımız sistemin Nix'deki kod addı.
@@ -162,7 +142,7 @@ final: prev: {
 
     # 2 adet overlay var
     overlays = [
-                (import ./overlays/custom.nix) 
+                (import ./overlays/custom.nix)
                 (import ./overlays/hello.nix)
                ] ;
     # ne tür bir sistemde çalışıyorsak onun için nixpkgs koleksiyonu ve kütüphanesi oluşturuluyor.
@@ -173,11 +153,11 @@ final: prev: {
 
     # build alınan veya override edilen paketler bu flake ile yayınlanıyor.
     packages = {
-        x86_64-linux.default = pkgs.defaultapp; 
-        x86_64-linux.defaultfile = pkgs.defaultfile; 
-        x86_64-linux.defaultalt = pkgs.defaultalt; 
+        x86_64-linux.default = pkgs.defaultapp;
+        x86_64-linux.defaultfile = pkgs.defaultfile;
+        x86_64-linux.defaultalt = pkgs.defaultalt;
         x86_64-linux.nixapp = pkgs.nixapp;
-        x86_64-linux.message = pkgs.message; 
+        x86_64-linux.message = pkgs.message;
         x86_64-linux.testapp = pkgs.testapp;
         x86_64-linux.hello = pkgs.hello;
         x86_64-linux.hello-custom = pkgs.hello-custom;
@@ -187,7 +167,7 @@ final: prev: {
 
     # bu sistemin adı muratpc olarak değiştirildi
     nixosConfigurations.muratpc = nixpkgs.lib.nixosSystem {
-      
+
       # systm bilgisi yukarıda tanımlana system değişkeniniden alındı
       system = system;
 
@@ -196,17 +176,18 @@ final: prev: {
         ./modules/nixos-configuration.nix
       ];
     };
-   
+
     packages = packages;
   };
 }
 ```
+
 Şimdi `flake.nix` dosyamız neler sunuyor ona bir bakalım.
 
 ```bash
 nix flake show . --impure --all-systems
 warning: Git tree '/home/.../nixos-sample-dotfiles' is dirty
-warning: creating lock file '/home/muratcabuk/projects/GitHub/nixos-sample-dotfiles/flake.lock'
+warning: creating lock file '/home/muratcabuk/projects/GitHub/nixos-sample-dot./assets/files\flake.lock'
 warning: Git tree '/home/.../nixos-sample-dotfiles' is dirty
 git+file:///home/.../nixos-sample-dotfiles
 ├───nixosConfigurations
@@ -223,9 +204,9 @@ git+file:///home/.../nixos-sample-dotfiles
         └───testapp: package 'testapp'
 ```
 
-Ever görüleceği üzere flake dosyamız bir NixOs sistem birde 8 adet paket sunuyor.
+Ever görüleceği üzere flake dosyamız bir NixOS sistem birde 8 adet paket sunuyor.
 
-Şimdide yaptığımız değişiklikleri sisteme uygulayalım. Bunun için alttaki komutu çalıştırıyoruz. Eğer siz de `flake.nix`  dosyasında system adını nixos dışında başka bir isme çevirdiyseniz altta muratpc yerine o ismi yazmalısınız. Eğer değiştirmediyseniz de nixos yazmalı.
+Şimdide yaptığımız değişiklikleri sisteme uygulayalım. Bunun için alttaki komutu çalıştırıyoruz. Eğer siz de `flake.nix` dosyasında system adını nixos dışında başka bir isme çevirdiyseniz altta muratpc yerine o ismi yazmalısınız. Eğer değiştirmediyseniz de nixos yazmalı.
 
 ```bash
 sudo nixos-rebuild switch --flake .#muratpc
@@ -247,19 +228,15 @@ nix run .#hello --impure
 
 ```
 
-Ancak mesela hello uygulamasına terminalden erişmeyi denediğimizde sonuç alamayacağız. 
+Ancak mesela hello uygulamasına terminalden erişmeyi denediğimizde sonuç alamayacağız.
 
-Bu kısmı bu şekilde hızlı geçiyorum daha fazla detaya girmeden çünkü çok büyük ihtimal bu yazıyı okuyanların büyük bir kısmı bu tarz bir işlem yapamayacaktır yani kendi kod yazıp yada internetten bir projeyi, bulup build alama yoluna gitmeyecektir. Zaten bunu düşünenleriniz varsa geriye dönük bütün yazılar bu konuyu anlatıyor. Yani NixOs'u ayarlamak ona paket yazmaktan daha kolay. 
+Bu kısmı bu şekilde hızlı geçiyorum daha fazla detaya girmeden çünkü çok büyük ihtimal bu yazıyı okuyanların büyük bir kısmı bu tarz bir işlem yapamayacaktır yani kendi kod yazıp yada internetten bir projeyi, bulup build alama yoluna gitmeyecektir. Zaten bunu düşünenleriniz varsa geriye dönük bütün yazılar bu konuyu anlatıyor. Yani NixOS'u ayarlamak ona paket yazmaktan daha kolay.
 
-
-Github sayfamda geldiğimiz noktaya kadar olan kodları [file-structure](https://github.com/muratcabuk/nixos-sample-dotfiles/tree/file-structure) adlı branch'de bulabilirsiniz.
-
-
+Github sayfamda geldiğimiz noktaya kadar olan kodları [file-structure](https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/file-structure) adlı branch'de bulabilirsiniz.
 
 ## Nix-Configuration Dosyasının İncelenmesi
 
 Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için açıklamalar ekledim. Bundan dolayı sizinkinden biraz farklı görünüyor olabilir.
-
 
 ```nix
 { config, pkgs, ... }:
@@ -270,8 +247,8 @@ Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için 
       ../hosts/lenovo-l15/hardware-configuration.nix
     ];
 
- # Nix flake halen geliştiriliyor tam release olmadı. 
- # Buna rağmen çok stable ve neredeyse NixOs ile ilgili herkes flake'i artık aktif olarak kullanıyor 
+ # Nix flake halen geliştiriliyor tam release olmadı.
+ # Buna rağmen çok stable ve neredeyse NixOS ile ilgili herkes flake'i artık aktif olarak kullanıyor
  # Ancak halen release olmadığı için deneyimsel bir özellik olarak kabul ediliyor.
  # bundan dolayı bunu kullanmak için enable etmemiz gerekiyor
  nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -282,7 +259,7 @@ Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için 
   boot.loader.grub.useOSProber = true;
 
   # hem bilgisayar adımız hem de bir network'de bilgisayara erişmek için kullanılan isim
-  networking.hostName = "muratpc"; 
+  networking.hostName = "muratpc";
 
   # Network ayarlarının yapılabilmesi için gerekli.
   # Sadece Network MAnager yok aslında Linux dünyası için ancak ben de en iyilerinden biri
@@ -291,7 +268,7 @@ Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için 
   # TimeZoe ayarı
   time.timeZone = "Europe/Istanbul";
 
-  # Windows'daki bölgesel ayarlarla aynı işi yapıyor. 
+  # Windows'daki bölgesel ayarlarla aynı işi yapıyor.
   # Yani  mesela para birimi, ölçüm ayalarları, Klavye karakterleri vb Türkiye'ye özel ayarların baz alınacağını söylüyor. .
   i18n.defaultLocale = "tr_TR.UTF-8";
   i18n.extraLocaleSettings = {
@@ -329,17 +306,17 @@ Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için 
   # free paketlerin kullanılmasına izin verdik
   nixpkgs.config.allowUnfree = true;
 
-  # ileride buna değişenceğiz. 
-  #Bİr masaüstü ortamı kurduğumuzda SSh yerine VirtualBox üzeriden GUI kullanmak ve 
+  # ileride buna değişenceğiz.
+  #Bİr masaüstü ortamı kurduğumuzda SSh yerine VirtualBox üzeriden GUI kullanmak ve
   # Host ile dosya alışverişi sağlam için kullanıan ayalarlar.
   virtualisation.virtualbox.guest.enable = true;
   virtualisation.virtualbox.guest.x11 = true;
 
 
   # Sistemde kullanıcıdan bağımsız kullanılacak paketler
-  # ilerde buraları da değiştireceğiz. 
+  # ilerde buraları da değiştireceğiz.
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
     curl
     git
@@ -359,28 +336,24 @@ Dosyayı açıklama satırlarını silerek sadeleştirdim ve her bir ayar için 
 
 Tabi bir çok ayar yapacağımız için gerçek bir konfigürasyonda bu aynı hardware configuration modülünde olduğu gibi konfigürasyonları farklı modüllere bölmek gerekebilir.
 
-
 Diğer önemli konu da dosyada en attaki stateVersion numarası ne işe yarar? Bunu da alttaki başlıkta inceleyelim.
 
-## NixOs Nasıl Upgrade Edilir?
+## NixOS Nasıl Upgrade Edilir?
 
-Bu versiyon numarasını tabiri caizse dokümanımızın versiyon numarası olarak düşünebiliriz. 
-
+Bu versiyon numarasını tabiri caizse dokümanımızın versiyon numarası olarak düşünebiliriz.
 
 - Öncelikle kesinlikle stateVersion numarasını bir sonraki sürün notunu okumadan asla değiştirmiyoruz. Bu sistemin bozulmasına neden olabilir. Daha da kötüsü rollback de çalışmayabilir.
 - Sistem bulunduğumuz stateVersion üzerinden paket güncellemelerini otomatik olarak yapar.
 - Bu değerin mevcut NixOS sürümünden daha düşük olması, sisteminizin modası geçmiş, destek dışı veya savunmasız olduğu anlamına gelmez.
-- Bundan dolayı bu değeri, yapılandırmamıza yapacağı tüm değişiklikleri manuel olarak incelemediğimiz ve verilerinizi buna göre taşımadığımız sürece değiştirmemeliyiz. Bunun için bir nedenden ötürü örneğin stateVersion numarasını release 23.11'e geçirmek istiyorsak öncelikle [release notlarını](https://nixos.org/manual/nixos/unstable/release-notes#sec-release-23.11) okumalıyız. Bu notlar bize eğr bu değiştirmeyi yaparsak hangi verilerimizde problem olacağını ve bunları nasıl çözebileceğimizi anlatır.  
+- Bundan dolayı bu değeri, yapılandırmamıza yapacağı tüm değişiklikleri manuel olarak incelemediğimiz ve verilerinizi buna göre taşımadığımız sürece değiştirmemeliyiz. Bunun için bir nedenden ötürü örneğin stateVersion numarasını release 23.11'e geçirmek istiyorsak öncelikle [release notlarını](https://nixos.org/manual/nixos/unstable/release-notes#sec-release-23.11) okumalıyız. Bu notlar bize eğr bu değiştirmeyi yaparsak hangi verilerimizde problem olacağını ve bunları nasıl çözebileceğimizi anlatır.
 
 Bu seçenek, bu belirli makineye ilk yüklediğiniz NixOS sürümünü tanımlar ve eski NixOS sürümlerinde oluşturulan uygulama verileriyle (örneğin veritabanları) uyumluluğu korumak için kullanılır.
 
 Örneğin, NixOS XX.YY sürümü varsayılan olarak AwesomeDB N sürümüyle birlikte gelirse ve daha sonra XX.YY+1 sürümüne yükseltilirse, AwesomeDB N+1 sürümüyle birlikte gelen bu sürüm, mevcut veritabanlarıyla artık uyumlu olmayabilir. Bu, uygulamaların çalışmasına engel olabilir veya hatta veri kaybına yol açabilir. stateVersion mekanizması, varsayılan paket sürümlerini, her zaman en son sürümü kullanmak yerine, yüklediğiniz ilk NixOS sürümüne (stateVersion ile kodlanmış) bağlı hale getirerek bu durumdan kaçınır.
 
-
-
 Bu, genellikle verilerini otomatik olarak yükseltemeyen uygulamaları etkiler. Otomatik geçişleri destekleyen uygulamalar ve hizmetler, siz yükseltme yaptığınızda en son sürümlerde kalacaktır.
 
-Otomatik yükseltmelerde  da zaten problem olabilecekler kontrol edilir. Örneğin [Postgresql paketinin yükseltilmesi](https://github.com/NixOS/nixpkgs/blob/2c7f3c0fb7c08a0814627611d9d7d45ab6d75335/nixos/modules/services/databases/postgresql.nix#L486-L498) her setateVersion'a özel yapılır.  
+Otomatik yükseltmelerde da zaten problem olabilecekler kontrol edilir. Örneğin [Postgresql paketinin yükseltilmesi](https://github.com/NixOS/nixpkgs/blob/2c7f3c0fb7c08a0814627611d9d7d45ab6d75335/nixos/modules/services/databases/postgresql.nix#L486-L498) her setateVersion'a özel yapılır.
 
 ```nix
     services.postgresql.package = let
@@ -411,11 +384,10 @@ Zaten bunu şu şekilde de test edebilirsiniz. Alttaki komutla sisteminizin vers
 ll /run/current-system/
 ```
 
-
 - Peki diyelim ki bu değer düşük olmasına rağmen bir paketin üst versiyonunu kullanmak istersek veya tam tersi versiyon yukarıda olsa bile bir paketin alt versiyon kullanmak istersek ne yapacağız?
 
-  Öncelikle şunu bilmek gerekiyor ki sistemi her zaman en son sürümde tutmamız lazım. Zaten sistemimiz de her zaman otomatik upgrade ile bunu sağlıyor. 
-  
+  Öncelikle şunu bilmek gerekiyor ki sistemi her zaman en son sürümde tutmamız lazım. Zaten sistemimiz de her zaman otomatik upgrade ile bunu sağlıyor.
+
   Eğer bir paketin/uygulamanın farklı bir versiyonu test edeceksek bunun için `nix shell` komutunu kullanmak en doğrusu. Mesela sisteminiz 23.11 ve siz 22.05 deki bir paketi test etmek istiyorsunuz. Testiniz bittikten sonra da sistemden otomatik kaldırılsın istiyorsunuz. Bu durumda alttaki komutu kullanabilirsiniz.
 
   ```bash
@@ -423,7 +395,7 @@ ll /run/current-system/
     # çalıştırmak içinde hello komutunu çalıştırabilirsiniz
   ```
 
-  Bu arada önceki yazılarımızda `nix shell`, `nix profile` ve `nix develop` komutlarını detaylı olarak inceledik. O yazıları okumanızı da tavsiye ederim. 
+  Bu arada önceki yazılarımızda `nix shell`, `nix profile` ve `nix develop` komutlarını detaylı olarak inceledik. O yazıları okumanızı da tavsiye ederim.
 
   Eğer kalıcı olarak kurmak istiyorsanız `nix profile` komutunu kullanabilirsiniz.
 
@@ -431,10 +403,9 @@ ll /run/current-system/
     nix profile install nixpkgs/nixos-22.05#hello
   ```
 
-  Tabi bu tekniklerin hiç birisi declarative değil ve bu nedenle değişikliklerinizi kaydetmek istiyorsanız bunu `flake.nix` dosyanıza eklemeniz gerekiyor. Ayrıca servis kuracaksanız veya kuracağınız uygulamada bazı değişikliler yapmanız gerekiyorsa bu durumda da zaten declarative yolu tercih etmeniz gerekiyor. 
+  Tabi bu tekniklerin hiç birisi declarative değil ve bu nedenle değişikliklerinizi kaydetmek istiyorsanız bunu `flake.nix` dosyanıza eklemeniz gerekiyor. Ayrıca servis kuracaksanız veya kuracağınız uygulamada bazı değişikliler yapmanız gerekiyorsa bu durumda da zaten declarative yolu tercih etmeniz gerekiyor.
 
-  Flake Dosyanızda iki farklı registry tanımlamanız gerekiyor. Mesela alttaki örnekte sistemde aktif olarak 23.11 versiyonu kullanılmasına rağmen unstable versiyonundan paket yükleyebilmek için unstable registry configuration dosyasında kullanılabilir hale getiriliyor.. 
-
+  Flake Dosyanızda iki farklı registry tanımlamanız gerekiyor. Mesela alttaki örnekte sistemde aktif olarak 23.11 versiyonu kullanılmasına rağmen unstable versiyonundan paket yükleyebilmek için unstable registry configuration dosyasında kullanılabilir hale getiriliyor..
 
   ```nix
   # flake.nix
@@ -465,7 +436,7 @@ ll /run/current-system/
   }
   ```
 
-Mesela Firefox 23.11'den yüklenirken Chromium unstable'den yükleniyor. 
+Mesela Firefox 23.11'den yüklenirken Chromium unstable'den yükleniyor.
 
 ```nix
 # configuration.nix
@@ -475,16 +446,16 @@ Mesela Firefox 23.11'den yüklenirken Chromium unstable'den yükleniyor.
   # ...
 }
 ```
+
 Tabi burada eğer yüklediğimiz şey bir paket bir servise option ayarlarının yapılması gerekebilir. İlgili versiyonun bütün bağımlılıklarını Nix paket yöneticisi hallediyor.
 
-Şimdi home-manager'ı da sisteme dahil edelim ve  kullanıcı ile sistemi birbirinden ayırdıktan sonra iki taraf için adım adım ayarlarımızı eklemeye devam edelim.
+Şimdi home-manager'ı da sisteme dahil edelim ve kullanıcı ile sistemi birbirinden ayırdıktan sonra iki taraf için adım adım ayarlarımızı eklemeye devam edelim.
 
 ## Home-Manager Modülünün Eklenmesi
 
 Home-manager tamamen bir community projesidir.
 
-
-Home-manager ile yönetilecek kullanıcı NixOs'e user olarak eklenmiş olmalı. Mesel bendeki `configuration.nix` dosyasında alttaki gibi ekli.
+Home-manager ile yönetilecek kullanıcı NixOS'e user olarak eklenmiş olmalı. Mesel bendeki `configuration.nix` dosyasında alttaki gibi ekli.
 
 ```nix
   users.users.muratcabuk = {
@@ -495,21 +466,21 @@ Home-manager ile yönetilecek kullanıcı NixOs'e user olarak eklenmiş olmalı.
   };
 ```
 
-Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ekliyoruz. `flake.nix` dosyasında da öncelikle inputs'lara ve alttaki gib modules dizisine ekleyelim. Home manager'ın NixOs ile aynı version olmasına dikket edin. Versiyon bilgileri için  [şu sayfayı](https://github.com/nix-community/home-manager/blob/master/modules/misc/version.nix) takip edebilrisiniz.
+Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ekliyoruz. `flake.nix` dosyasında da öncelikle inputs'lara ve alttaki gib modules dizisine ekleyelim. Home manager'ın NixOS ile aynı version olmasına dikket edin. Versiyon bilgileri için [şu sayfayı](https://github.com/nix-community/home-manager/blob/master/modules/misc/version.nix) takip edebilrisiniz.
 
 ```nix
 {
-  description = "Murat Cabuk NixOs Configuration";
+  description = "Murat Cabuk NixOS Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  
+
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
 
     # üzerinde çalıştığımız sistemin Nix'deki kod addı.
@@ -517,7 +488,7 @@ Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ek
 
     # 2 adet overlay var
     overlays = [
-                (import ./overlays/custom.nix) 
+                (import ./overlays/custom.nix)
                 (import ./overlays/hello.nix)
                ] ;
     # ne tür bir sistemde çalışıyorsak onun için nixpkgs koleksiyonu ve kütüphanesi oluşturuluyor.
@@ -528,11 +499,11 @@ Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ek
 
     # build alınan veya override edilen paketler bu flake ile yayınlanıyor.
     packages = {
-        x86_64-linux.default = pkgs.defaultapp; 
-        x86_64-linux.defaultfile = pkgs.defaultfile; 
-        x86_64-linux.defaultalt = pkgs.defaultalt; 
+        x86_64-linux.default = pkgs.defaultapp;
+        x86_64-linux.defaultfile = pkgs.defaultfile;
+        x86_64-linux.defaultalt = pkgs.defaultalt;
         x86_64-linux.nixapp = pkgs.nixapp;
-        x86_64-linux.message = pkgs.message; 
+        x86_64-linux.message = pkgs.message;
         x86_64-linux.testapp = pkgs.testapp;
         x86_64-linux.hello = pkgs.hello;
         x86_64-linux.hello-custom = pkgs.hello-custom;
@@ -542,7 +513,7 @@ Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ek
 
     # bu sistemin adı muratpc olarak değiştirildi
     nixosConfigurations.muratpc = nixpkgs.lib.nixosSystem {
-      
+
       # systm bilgisi yukarıda tanımlana system değişkeniniden alındı
       system = system;
 
@@ -558,14 +529,13 @@ Aynı kullanıcı için modules dizisine `murat-home-manager.nix` dosyasını ek
           }
       ];
     };
-   
+
     packages = packages;
   };
 }
 ```
 
-
-Konfigürasyondaki `home-manager.inputs.nixpkgs.follows = "nixpkgs";` satırında geçen follows keyword'ü ile Nix paket yöneticisine eğer nixpkgs update edilirse home-manager  pakaetinin de update edilmesi gerektiğini söylemiş oluyoruz.
+Konfigürasyondaki `home-manager.inputs.nixpkgs.follows = "nixpkgs";` satırında geçen follows keyword'ü ile Nix paket yöneticisine eğer nixpkgs update edilirse home-manager pakaetinin de update edilmesi gerektiğini söylemiş oluyoruz.
 
 Şimdi home-manager dosyamızı düzenlemeye başlayalım.
 
@@ -580,7 +550,7 @@ Konfigürasyondaki `home-manager.inputs.nixpkgs.follows = "nixpkgs";` satırınd
 
 
 
-  # bu değeri de ilk kuruulumdaki gibi bırakıyoruz. 
+  # bu değeri de ilk kuruulumdaki gibi bırakıyoruz.
   # daha önce flake.nix dosyası için söylediklerimiz burası için de geçerli
   home.stateVersion = "23.11";
 
@@ -590,32 +560,32 @@ Konfigürasyondaki `home-manager.inputs.nixpkgs.follows = "nixpkgs";` satırınd
 
 ```
 
-Şimdi buraya kadar yaptıklarımızı NixOs'a uygulayalım. Ancak yaptığımız 2 değişikliği hatırlatmak istiyorum
+Şimdi buraya kadar yaptıklarımızı NixOS'a uygulayalım. Ancak yaptığımız 2 değişikliği hatırlatmak istiyorum
 
-1. `nixos-configuration.nix` dosyasında  Hostame'i değiştirmiştik: Mesela benimkinde `networking.hostName = "muratpc";` olarka ayarlı.
-2. `flake.nix` dosyasında `nixosConfigurations.muratpc = nixpkgs.lib.nixosSystem` satırında sistem çıktımızın  adını değiştirmiştik. Mesela benimkinde hostnem adıyla aynı yani mcabuk.
+1. `nixos-configuration.nix` dosyasında Hostame'i değiştirmiştik: Mesela benimkinde `networking.hostName = "muratpc";` olarka ayarlı.
+2. `flake.nix` dosyasında `nixosConfigurations.muratpc = nixpkgs.lib.nixosSystem` satırında sistem çıktımızın adını değiştirmiştik. Mesela benimkinde hostnem adıyla aynı yani mcabuk.
 
 Flake dosyasındaki değişiklişkten solayı artık build alırken nixos değil mcabukpc olarak build alıyorum.
 
 ```bash
 sudo nixos-rebuild switch --flake .#muratpc --impure
 ```
-Build işlemi bittiğinde artık home-manager yüklenmiş olacak. 
 
+Build işlemi bittiğinde artık home-manager yüklenmiş olacak.
 
-
-## NixOs Kanfigürasyonu
+## NixOS Konfigürasyonu
 
 Bu noktadan sonra bir strateji belirlememiz gerekiyor. Kendimede yakın bulduğum için :) bir yazılımcının iş bilgisayarını konfigüre edelim diyorum.
 
 **Home Manager Konfigürasyonu**
+
 - Varsayılan metin editörümüzü Vim olarak ayarlayalım
 - IDE olarak Visual Studio Code kuralım
 - Shell olarak Zsh'ı ayarlayalım
 - Varsayılan Browser olarak Google Chrome kuralım
 
-
 **System Konfigürasyonu**
+
 - Sistem dilini ingilizce olarak ayarlayalım
 - Masaüstü Ortamı Olarak KDE'i kuralım
 - Sistemin varsayılan metin editörü olarak Nano'yu ayaralayalım
@@ -623,27 +593,21 @@ Bu noktadan sonra bir strateji belirlememiz gerekiyor. Kendimede yakın bulduğu
 - Docker kuralım ve ayaralarını yapalım
 - Sistem için Firefox'ı varsayılan Browser olarak kuralım
 
+Tabi daha bir çok şey yapılabilir ancak bunu yazarak bitiremeyiz. En temekl haliyke böyle bir sistem kuramak baya bi işimizi görecektir. Zatwn incelemeniz ve örnek almnız için bir çokGithub reposunun adresini altta vereceğim.
 
-Tabi daha bir çok  şey yapılabilir ancak bunu yazarak bitiremeyiz. En temekl haliyke böyle bir sistem kuramak baya bi işimizi görecektir. Zatwn incelemeniz ve örnek almnız için bir çokGithub reposunun adresini altta vereceğim.
+**Home Manager Konfigürasyonu** yaparken bir çok option'ı ayarlamamız ve gereken yerlerde olmayan option'ları da yazmamız gerekecek. Home manager'ın normal NixOS modülleriden en önemli farı da zaten özellikle home dizininne ve kullanıcı özelleştirmelerine yönelik option'lar sunuyor olması. [Şu sayfadan](https://nix-community.github.io/home-manager/index.xhtml#sec-usage-configuration) home manager'ın sunmuş olduğu opiton'ları inceleyebilirsiniz ki zaten konfigürasyon yapmaya başladığınızda bu sayfayı bir çok kez ziyaret etmeniz gerekecek.
 
+Home manager ile kendi paketlerimizi yükleyebiliriz, sistemde zaten kurulu olan paketleri ayarlayabiliriz. Masaüstü ortamımızı ayarayabiliriz. Kendi dotfile'larımızı veya diğer configürasyon dosyalaımız yönetebiliriz. YAni temel de amaç kişisel tercihlerimizi declarative olarak yönetebilmemmizi sağlar.
 
-**Home Manager Konfigürasyonu** yaparken bir çok option'ı ayarlamamız ve gereken yerlerde olmayan option'ları da yazmamız gerekecek. Home manager'ın normal NixOs modülleriden en önemli farı da zaten özellikle home dizininne ve kullanıcı özelleştirmelerine yönelik option'lar sunuyor olması. [Şu sayfadan](https://nix-community.github.io/home-manager/index.xhtml#sec-usage-configuration) home manager'ın sunmuş olduğu opiton'ları inceleyebilirsiniz ki zaten konfigürasyon yapmaya başladığınızda bu sayfayı bir çok kez ziyaret etmeniz gerekecek.
-
-Home manager ile kendi paketlerimizi yükleyebiliriz, sistemde zaten kurulu olan paketleri ayarlayabiliriz. Masaüstü ortamımızı ayarayabiliriz. Kendi dotfile'larımızı veya diğer configürasyon dosyalaımız yönetebiliriz. YAni temel de amaç  kişisel tercihlerimizi declarative olarak yönetebilmemmizi sağlar.
-
-
-- **KDE Masaüstü Ortamı Kurulumu, Dil ayarları, Zsh'ın ayarlanması, Browser ayarları**
+### KDE Masaüstü Ortamı Kurulumu, Dil ayarları, Zsh'ın ayarlanması, Browser ayarları
 
 Tabii ki biz burada çok derin konfigürasyona yönetimi yapmayacağız. Amacımız sadece aktive etmek ve ufak tefek dokunuşlar yaparak mantığını anlamak. Yoksa KDE'de kullandığımız kısa yolları, temeları, Kwin scriptleri,...vb bütün ayarlarınızı declarative olarak yazmak mümkün.
 
 Biz kullanmayacağız ancak linkini vermek istedim. KDE Plasma'yı daha detaylı ama daha kolay bir yolla ayalarmyabilmemiz için community bir modul geliştirmiş [şu linkten](https://github.com/pjones/plasma-manager) görebilirsiniz. GitHub'da görebilceğiniz bir çok örnekte de kullanılıyor.
 
-
-Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.com/muratcabuk/nixos-sample-dotfiles/tree/kde-zsh) branch'inde  bulabilirsiniz. 
-
+Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/kde-zsh) branch'inde bulabilirsiniz.
 
 `nixos-configuration.nix` dosyamıza bir göz atalım. Yeni eklene nveya değiştirilen her yerde açıklama ekledim.
-
 
 ```nix
 # nixos-configuration.nix
@@ -662,7 +626,7 @@ Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.c
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "muratpc"; 
+  networking.hostName = "muratpc";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -697,8 +661,8 @@ Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.c
                               enable = true;
                               autoNumlock = true;
     };
-    
-    # kde plasma 5 aktif ediliyor                          };       
+
+    # kde plasma 5 aktif ediliyor                          };
     desktopManager.plasma5.enable = true;
 
     layout = "tr";
@@ -739,7 +703,7 @@ Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.c
     curl
     git
     home-manager
-    
+
     # kde plasma 5 paketleri
     kate
     kwin
@@ -784,13 +748,10 @@ Bu bölümde yaptıklarımızı da GitHub respsundaki [kde-zsh](https://github.c
 
 ```
 
-
-NisOs konfigürasyonu yaparken bol miktarda yukarıdaki gibi option ayarlamak gerekiyor. Bunun için [NixOs Arama sayfasında](https://search.nixos.org/options) hem opiton hem de paket arayabilirniz.
-![nixos.png](files/nixos.png)
-
+NisOs konfigürasyonu yaparken bol miktarda yukarıdaki gibi option ayarlamak gerekiyor. Bunun için [NixOS Arama sayfasında](https://search.nixos.org/options) hem opiton hem de paket arayabilirniz.
+![nixos.png](./assets/files\nixos.png)
 
 Bir de Homa_manager dosyamıza bakalım.
-
 
 ```nix
 # murat-home-manager.nix
@@ -811,7 +772,7 @@ Bir de Homa_manager dosyamıza bakalım.
   # Kurulması gereken pakatler
   home.packages = with pkgs; [
     vim
-    
+
     # zsh
     zsh
     oh-my-zsh
@@ -825,7 +786,7 @@ Bir de Homa_manager dosyamıza bakalım.
 
   # Uygulamaların Konfigürasyonu
     programs.home-manager.enable = true;
-    programs.chromium = { 
+    programs.chromium = {
                           enable = true;
                           extensions = ["aapbdbdomjkkjkaonfhkkikfgjllcleb"];
                         };
@@ -847,7 +808,7 @@ Bir de Homa_manager dosyamıza bakalım.
                                     src = pkgs.zsh-powerlevel10k;
                                     file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
                                   }
-                                  
+
                                   # Elimizdeki konfigurasyon dosyasını sisteme kopyalıyoruz.
                                   # üst dinizdek config klasöründeki .pk10k.zsh dosyasını kopyalıyoruz
                                   {
@@ -855,7 +816,7 @@ Bir de Homa_manager dosyamıza bakalım.
                                     src = ../config;
                                     file = ".p10k.zsh";
                                   }
-                                  
+
                                   # manual olarka paket kuruyoruz
                                   {
                                     name = "zsh-syntax-highlighting";
@@ -872,15 +833,15 @@ Bir de Homa_manager dosyamıza bakalım.
                                     enable = true;
                                     package = pkgs.oh-my-zsh;
                                     plugins = [ "git" "sudo"];
-                                    
-                                
+
+
                                   };
                       # zsh içine alias tanımlıyoruz
                       shellAliases = {
                                         ll = "ls -l";
                                         nixupdate = "sudo nixos-rebuild switch --flake .#muratpc --impure";
                                       };
-                      
+
                     };
 
   # Servislerin Konfigürasyonu
@@ -890,23 +851,22 @@ Bir de Homa_manager dosyamıza bakalım.
     };
 
 
-  # bu değeri de ilk kuruulumdaki gibi bırakıyoruz. 
+  # bu değeri de ilk kuruulumdaki gibi bırakıyoruz.
   # daha önce flake.nix dosyası için söylediklerimiz burası için de geçerli
   home.stateVersion = "23.11";
 
 }
 ```
 
-NixOs için home manager gerekli değil. Hatta home manager için NixOs'da gerekli değil. Yani homa manger'ı Nix paket yönetcisini kurduğunuz diğer Linux dağıtımlarında da kullanabilirsiniz. Yeterince uzamnlaştığınıda kendiniz de modüllerinizi yazabilirsiniz. Ancak yine de home manager bu home dizini için bize sunduğu stadart kabül görmüş ve bir çok kolaylığı da sunuyor. Yani illa birşeyler yapmak isterseniz home manager'a detek olabilirsiniz.
+NixOS için home manager gerekli değil. Hatta home manager için NixOS'da gerekli değil. Yani homa manger'ı Nix paket yönetcisini kurduğunuz diğer Linux dağıtımlarında da kullanabilirsiniz. Yeterince uzamnlaştığınıda kendiniz de modüllerinizi yazabilirsiniz. Ancak yine de home manager bu home dizini için bize sunduğu stadart kabül görmüş ve bir çok kolaylığı da sunuyor. Yani illa birşeyler yapmak isterseniz home manager'a detek olabilirsiniz.
 
 Flake.nix dosyasında bir değişiklik yapmamıştık.
 
-
-- **VS Code, Qemu-KVM ve Docker kurulumu ve Ayarlarının yapılması**
+### VS Code, Qemu-KVM ve Docker kurulumu ve Ayarlarının yapılması
 
 Öncelikle VS Code kurulumunu yapalım. Kurgumuz şu şekilde olacak. Visual Studio'yu kuracağız, basit kişisel ayarlar yapacağız, bir iki extension kuracağız. Ancak kuracağımız extension'lardan birini nixpks'nin unstable veryionundan kuracağız. Ancak home manager'da sadece 23.11 paket kolksiyonunu parametre olarak geçirmiştik. Ektra parametre geçirmek için flake üzerinden extraSpecialArgs parametresini geçirmemiz gerekiyor.
 
-Öncelikle flake içinde inputs'a yeni bir paket koleksiyonu `nixpkgs-unstable` tanımlıyoruz.  
+Öncelikle flake içinde inputs'a yeni bir paket koleksiyonu `nixpkgs-unstable` tanımlıyoruz.
 
 ```nix
 # kısaltıldı
@@ -920,17 +880,18 @@ Flake.nix dosyasında bir değişiklik yapmamıştık.
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  
+
   };
 
-  outputs = { self, nixpkgs,home-manager,nixpkgs-unstable, ... }@inputs: 
+  outputs = { self, nixpkgs,home-manager,nixpkgs-unstable, ... }@inputs:
   let
 
 
 # kısaltıldı
 
 ```
-Daha sonra bunu flake üzerinde home manager'a parametre olarak geçirmemiz gerekiyor. 
+
+Daha sonra bunu flake üzerinde home manager'a parametre olarak geçirmemiz gerekiyor.
 
 ```nix
 # kısaltıldı
@@ -955,7 +916,6 @@ Daha sonra bunu flake üzerinde home manager'a parametre olarak geçirmemiz gere
 
 Şimdi bir de home manager'a VS Code ayarlarımızı ekleyelim.
 
-
 ```nix
 # home-manager.nix
 
@@ -967,7 +927,7 @@ programs.vscode = {
                     enable = true;
 
                     # bu ayar sayesinde VS Code'u manulal olarak da yöntecileceğiz.
-                    # ÖZellikle NixOs a alışma şamasında faydalı olacaktır.
+                    # ÖZellikle NixOS a alışma şamasında faydalı olacaktır.
                     mutableExtensionsDir = true;
 
                     # Kişisel ayarlarmızı json format da girebiliriz.
@@ -980,12 +940,12 @@ programs.vscode = {
                     # extensiton ların update'leri kontrol edilsin mi?
                     enableExtensionUpdateCheck = true;
 
-                    # community open source edition olan  pkgs.vscodium  paketi de kullanılabilir 
+                    # community open source edition olan  pkgs.vscodium  paketi de kullanılabilir
                     package = pkgs.vscode;
 
                     # extension listesi yazılabilir
                     # ancak tabi extension ları burradan yüklemek istersek bu paketlerin yazılmış olması lazım.
-                    # şuan Nixos paket yöneticisinde 290 paketin yazılı olduğu görünüyor.
+                    # şuan NixOS paket yöneticisinde 290 paketin yazılı olduğu görünüyor.
                     # ayrıca istenirse farklı version lardan da kurulum yapılabilir.
                     # Altta ili liste ++ opratörü ile topşanıyor.
                     extensions = (with pkgs.vscode-extensions;[
@@ -997,7 +957,7 @@ programs.vscode = {
                                                 ]);
                     # kısayol tanımları yapılabilir
                     keybindings = [
-                                    { 
+                                    {
                                       key = "ctrl+y";
                                       command = "editor.action.commentLine";
                                       when = "editorTextFocus && !editorReadonly";
@@ -1014,31 +974,25 @@ Build alıp çalıştıdığımızda VS Code'un kurulduğunu ve extension'ların
 sudo nixos-rebuild switch --flake .#muratpc --impure --show-trace --upgrade
 ```
 
-
-
 Paket yöneticisiniden [Visual Studio Extension](https://search.nixos.org/packages?channel=23.11&from=0&size=50&sort=relevance&type=packages&query=vscode-extensions)'ların dan arama yapabilirsiniz. Şuan 290 adet paket bulunuyor.
 
-![vscode.png](files/vscode.png)
+![vscode.png](./assets/files\vscode.png)
 
-Ancak bildiğiniz üzere eğer VS Code'a GitHub hesabınızı bağlanrsanız zaten bütün aylarınız ve extension'larınız senkronize oluyor. Ben bunu tercih ediyorum açıkçası. 
+Ancak bildiğiniz üzere eğer VS Code'a GitHub hesabınızı bağlanrsanız zaten bütün aylarınız ve extension'larınız senkronize oluyor. Ben bunu tercih ediyorum açıkçası.
 
-Diğer VS Code option'ları için[ home manager option](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.enable)'larında arama yapabilirsiniz. 
-
+Diğer VS Code option'ları için[ home manager option](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.vscode.enable)'larında arama yapabilirsiniz.
 
 Visual Studio Code'u çalıştırdığımızda extension'ların kurulduğunu görebiliyoruz.
 
-![vscode2.png](files/vscode2.png)
-
+![vscode2.png](./assets/files\vscode2.png)
 
 Bir de yaptığımız font ayarına bakalım. Fontu 16 olarak ayarlamıştık. Onu da görebiliyoruz.
 
-![vscode3.png](files/vscode3.png)
+![vscode3.png](./assets/files\vscode3.png)
 
+Bu arada bu bölümün kodlarını da kendi Github hesabımdaki [nixos-sample-dotfiles](https://github.com/muratcabuk/nixos-sample-dotfiles) reposunda [vscode-qemu-docker](https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/vscode-qemu-docker) branch'inde bulabilirsiniz.
 
-Bu arada bu bölümün kodlarını da kendi Github hesabımdaki [nixos-sample-dotfiles](https://github.com/muratcabuk/nixos-sample-dotfiles) reposunda [vscode-qemu-docker](https://github.com/muratcabuk/nixos-sample-dotfiles/tree/vscode-qemu-docker) branch'inde bulabilirsiniz.
-
-
-Şimdi de Qemu-Kvm (libvirt) ve Docker kurulumlarını yapıp kodun son halini inceleyelim. Bu paketlerin kurulumunu `nixos-configuration.nix` dosyasında yapacaktık. 
+Şimdi de Qemu-Kvm (libvirt) ve Docker kurulumlarını yapıp kodun son halini inceleyelim. Bu paketlerin kurulumunu `nixos-configuration.nix` dosyasında yapacaktık.
 
 ```nix
 # nixos-configuration.nix
@@ -1064,8 +1018,7 @@ environment.systemPackages = with pkgs; [
 
 ```
 
-Kvm-Qemu (libvirt) ayarlarında hata alırsanız [şu linki](https://nixos.wiki/wiki/Virt-manager) ziyaret ediniz. 
-
+Kvm-Qemu (libvirt) ayarlarında hata alırsanız [şu linki](https://nixos.wiki/wiki/Virt-manager) ziyaret ediniz.
 
 Alttaki komutla sşstemimide kurumları yapabiliriz.
 
@@ -1073,13 +1026,11 @@ Alttaki komutla sşstemimide kurumları yapabiliriz.
 sudo nixos-rebuild switch --flake .#muratpc --impure --show-trace --upgrade
 ```
 
-Çalıştırdıktan sonra uygulamalardan virtual machine manager'ı açtığınızda `can't detect default hypervisor` hatası verece sistem. Bizde file menüsüne gidip yeni bir conneciton eklememizi istiyor. Aynen dediğini yapıyoruz, File>Add Connection dediğimizde  sadece KVM/QEMU'nun seçmemiz yeterli.
+Çalıştırdıktan sonra uygulamalardan virtual machine manager'ı açtığınızda `can't detect default hypervisor` hatası verece sistem. Bizde file menüsüne gidip yeni bir conneciton eklememizi istiyor. Aynen dediğini yapıyoruz, File>Add Connection dediğimizde sadece KVM/QEMU'nun seçmemiz yeterli.
 
-![qemu-kvm1.png](files/qemu-kvm1.png)
-
+![qemu-kvm1.png](./assets/files\qemu-kvm1.png)
 
 Son olarka bir de Docker'ı ekleyelim. [Şu linkten](https://nixos.wiki/wiki/Docker) de konuyu inceleyebilirsiniz.
-
 
 ```nix
 
@@ -1105,7 +1056,7 @@ Son olarka bir de Docker'ı ekleyelim. [Şu linkten](https://nixos.wiki/wiki/Doc
 # virtualisation / kvm-qemu
 virtualisation.libvirtd.enable = true;
 
-# virtualizatiob docker 
+# virtualizatiob docker
 virtualisation.docker = {
                         enable = true;
                         # eğer btrfs kullanacaksanız
@@ -1121,16 +1072,15 @@ virtualisation.docker = {
 
 Kurulumu yapıp test ediyoruz.
 
-![docker.png](files/docker.png)
-
+![docker.png](./assets/files\docker.png)
 
 Bu noktadan sonra biraz da ihtiyacımız olabilecek ince detaylarla uğraşalım.
 
-## Bir Servisi Kurmak ve Gerektiğinde Başlatıp Durdurmak 
+## Bir Servisi Kurmak ve Gerektiğinde Başlatıp Durdurmak
 
 Bildiğiniz üzere servislerl de aslında bir uygulama veya paket. Tek farkları işleri bitene kadar veya manual olarak durdurulana kadar yapması gereken işi yapmaya devam etmesi.
 
-Örneğin bir web servisi (Nginx, Apache, Dotnet Kestrel, NodeJs ExpressJs, Java Tomcat) veya bir veritabanı (Postgres, Mysql, MS Sql, Oracle) gibi devamlı çalışması gereken uygulamalara servis diyoruz. Sığ bi tanım  oldu ama burada yapmak istediğimiz şeyi tanımlamaya yetiyor.
+Örneğin bir web servisi (Nginx, Apache, Dotnet Kestrel, NodeJs ExpressJs, Java Tomcat) veya bir veritabanı (Postgres, Mysql, MS Sql, Oracle) gibi devamlı çalışması gereken uygulamalara servis diyoruz. Sığ bi tanım oldu ama burada yapmak istediğimiz şeyi tanımlamaya yetiyor.
 
 Örnek olarak Nginx ile bir siteyi yayına verelim ve gerektiğinde başlatıp durduralım. Klasik dağıtımlardan ne gibi farklılıklar var görelim.
 
@@ -1157,6 +1107,7 @@ Yazdığımız modülü `flake.nix` modülleri arasına ekliyoruz.
 # kısaltıldı
 
 ```
+
 Daha sonra modules klasörümüze `nginx.nix` adında bir dosya ekleyelim alttaki kodları kopyalayalım.
 
 ```nix
@@ -1165,7 +1116,7 @@ Daha sonra modules klasörümüze `nginx.nix` adında bir dosya ekleyelim alttak
 
 let
 
-  # writeTextDir fonksiyonu ile nix/store dizinine html/site1/index.html adında 
+  # writeTextDir fonksiyonu ile nix/store dizinine html/site1/index.html adında
   # bir klasör açıp içinde index.html adında bir doya oluşturuyoruz.
   # aynen yazdığım gibi yanlışlık yok. index.html adında  bir klasörün altına index.html adında doys olulşturuyor.
   site1Root = pkgs.writeTextDir "html/site1/index.html" ''
@@ -1182,7 +1133,7 @@ let
       </html>'';
 
 
-  # writeTextDir fonksiyonu ile nix/store dizinine html/site2/index.html adında 
+  # writeTextDir fonksiyonu ile nix/store dizinine html/site2/index.html adında
   # bir klasör açıp içinde index.html adında bir doya oluşturuyoruz.
   # aynen yazdığım gibi yanlışlık yok. index.html adında  bir klasörün altına index.html adında doys olulşturuyor.
   site2Root = pkgs.writeTextDir "html/site2/index.html" ''
@@ -1209,7 +1160,7 @@ in
     # nginx i enable ediyoruz ve statik sayfalarımızın dizinlerini gosteriyoruz.
     services.nginx = {
                     enable = true;
-                    
+
                     recommendedGzipSettings = true;
 
                     virtualHosts."site1" = {
@@ -1225,26 +1176,22 @@ in
 
 Tabiiki burada amacımız Nis Store'a nasıl dosya kaydedilir omu da görmek. Yoksa en doğrusu bu tarz bir iş için `/var/www` dizinini kullanmak daha doğru olacaktır.
 
-
 Build alıp tarayıcıdan test ettiğimizde alttaki gibi eklediğimiz `index.html` sayfasının içerğini görebiliriz.
 
-![hello_site1.png](files/hello_site1.png)
+![hello_site1.png](./assets/files\hello_site1.png)
 
+Şİmdi mevzuyu biraz daha karmaşıklaştıralım. Sisteme bir de vertabanı ekleyelim. Ancak bu veritabanı Nginx çalıştırıldığında çalışsın çalışmıyorsa hiç başlamasın. Ayrıca kullanıcı adı, şifre ve veritabanı adını option'lardan alsın.
 
-Şİmdi mevzuyu biraz daha karmaşıklaştıralım. Sisteme bir de vertabanı ekleyelim. Ancak bu veritabanı Nginx çalıştırıldığında çalışsın çalışmıyorsa hiç başlamasın. Ayrıca kullanıcı adı, şifre ve veritabanı adını option'lardan alsın. 
-
-Bunun için modules  klasörüne `postgres.nix` adında bir dosya oluşturalım ve alttaki kodları ekleyelim.
+Bunun için modules klasörüne `postgres.nix` adında bir dosya oluşturalım ve alttaki kodları ekleyelim.
 
 Şöyle bir soru aklımıza gelebilir. Neden burada option kullandık ki, zaten doğrudan postgres konfigürasyonuna kullanıcı adı ve şifreyi yazabilirdik. Bir özelliği option haline gatirdiğinizde başka modüllerde de bu ayarı değiştirme şansımız oluyor. Yazacağınız bir başka modülde de tanımladığımız kullanıcı adı ve şifre optionlarını kullnabiliriz. Bu sayede zaten Nginx'e ait bir özelliği Postgres modülü içinde kullanabiliyoruz. Kodda da göreceğiniz gibi Nginx'in enbale olup olmadığını kontrol edip ona gmre postgre'i kuruyoruz.
-
-
 
 ```nix
 # postgres.nix
 # https://nixos.wiki/wiki/PostgreSQL
 { lib, config, pkgs, ...}:
-{ 
-  
+{
+
   options = {
       postgres.database_name = lib.mkOption {
         type = lib.types.str;
@@ -1266,7 +1213,7 @@ Bunun için modules  klasörüne `postgres.nix` adında bir dosya oluşturalım 
       };
 
     };
-  
+
 config = lib.mkMerge [ {
                           postgres.username = "admin";
                           postgres.password = "Abc123";
@@ -1280,9 +1227,9 @@ config = lib.mkMerge [ {
                                     enable = true;
                                     ensureDatabases = [ config.postgres.database_name ];
                                     enableTCPIP = true;
-  
+
                                     port = 5432;
-  
+
                                       initialScript = pkgs.writeText "backend-initScript" ''
                                             CREATE ROLE ${config.postgres.username} WITH LOGIN PASSWORD '${config.postgres.password}' CREATEDB;
                                             CREATE DATABASE ${config.postgres.database_name};
@@ -1290,7 +1237,7 @@ config = lib.mkMerge [ {
                                             '';
                                       };}
                         )
-                        
+
                     ];
 
 }
@@ -1319,7 +1266,6 @@ config = lib.mkMerge [ {
 
 ```
 
-
 Kurulumu yapıp test edelim.
 
 ```bash
@@ -1333,24 +1279,23 @@ systemctl status postgresql
 
 Nginx'i enable özelliğini false yapıp sistememizi üstteki komutla tekrar güncelleyip postgres servisinin çalıp çalışmadığını kontrol ettiğimizde çalışmadığını da görebiliriz.
 
-
-Bu şekilde kurmuş olduğumuz bir servisi bildiğiniz systemctl komutları ile başlatıp durdurabiliriz.  Ancak servisi `systemctl disable postgresql` komutu ile disable etmeye çalıştığımızda `Read-only file system` hatası alırız. İşte tam burası Nixos için çok önemli. Nixos'un kullanığı bir sisteme yazme yapacağınız zaman bunu kesinlikle Nixos komutları ile yapmalısınız. Örneğin bir servisi disable ettiğimizde en basiyle `/etc/systemd/system/` dizininden sembolik link silinir ki bu da sisteme yazmak anlamına gelir. Bu durumda her defasında bir servisi disable/enable etmek için konfigürasyon dosyamızı değitirmemiz gerekecek şuana kadar öğrendiklerimize göre. 
+Bu şekilde kurmuş olduğumuz bir servisi bildiğiniz systemctl komutları ile başlatıp durdurabiliriz. Ancak servisi `systemctl disable postgresql` komutu ile disable etmeye çalıştığımızda `Read-only file system` hatası alırız. İşte tam burası NixOS için çok önemli. NixOS'un kullanığı bir sisteme yazme yapacağınız zaman bunu kesinlikle NixOS komutları ile yapmalısınız. Örneğin bir servisi disable ettiğimizde en basiyle `/etc/systemd/system/` dizininden sembolik link silinir ki bu da sisteme yazmak anlamına gelir. Bu durumda her defasında bir servisi disable/enable etmek için konfigürasyon dosyamızı değitirmemiz gerekecek şuana kadar öğrendiklerimize göre.
 
 Günlük kullanımda illaki bu tarz işlemlere ihtiyacımız olacak ancak bunun çözümü de konfigürasyon dosyalarını editlemek olmamalı. Çünkü bu dosyalar sistemin state'ini de tutuyor. Yani bir dahaki sefere bir sistemi ayağa kaldırak sitediğimizde zırt pırt değişen bir dosyanın üzerinden kurulum yapmak istemeyiz. Bu tarz durumlarda kullanmak için önceleri adı **nesting** olan ama sonraları adı **specialisation** olarak değiştirilen bir kullanım var. Amacımız konfigürasyon dosyalarındaki bütün ayları aynı tutup sdece değişen ayarları bir yerde toplamak. Bu sadece bu farklılıklar üzerinden sitemi update edebilceğiz. Tabi bunu aynı zamanda iki farlı kullanıcı için bir çok ayar tamemen aynıysa diğerinden farklı olan ayarları bir yerde toplamak için de kullanabiliriz. Nesne Yönetlimli Programlamadaki inheritance (miras almaya) benzetebiliriz.
 
-Biz de örneğimizde Nginx servisini istediğimiz zaman disable etmeyi deneyelim. Tabibiz bun yaptuğımızda konfigürasyomnumuzdan dolayı Postgres'in de disable olması gerekeiyor. Tabi normal dağıtımlardaki servisi disable etmek gibi değil. Nixos da bir uyugulamyı disable etmek demek tamamen sistemden kaldırmak anlamına geliyor.
+Biz de örneğimizde Nginx servisini istediğimiz zaman disable etmeyi deneyelim. Tabibiz bun yaptuğımızda konfigürasyomnumuzdan dolayı Postgres'in de disable olması gerekeiyor. Tabi normal dağıtımlardaki servisi disable etmek gibi değil. NixOS da bir uyugulamyı disable etmek demek tamamen sistemden kaldırmak anlamına geliyor.
 
 Modules klasörüne `nigix-disabled.nix` adından bir dosya oluşturalım ve içine alattaki kodları kopyalayalım. Alttaki kodda en önceli bölüm configuration bloğu. Sistemde tanımlı bütün ayları değiştrebiliriz veya yenileri ekelyebliriz.
 
 ```nix
 # nginx-disabled.nix
-{ config, pkgs,lib, ...}: 
+{ config, pkgs,lib, ...}:
  {
     specialisation = {
            nginx-disabled = {
-                inheritParentConfig = true; 
+                inheritParentConfig = true;
                 configuration = {
-                         
+
                          system.nixos.tags = [ "nginx-disabled" ];
                          services.nginx.enable = lib.mkForce false;
                                  };
@@ -1360,7 +1305,7 @@ Modules klasörüne `nigix-disabled.nix` adından bir dosya oluşturalım ve iç
                             };
 ```
 
-Sonuçta bu dosaya da bir modül. Bu modülü de `flake.nix` dosyamzdaki modüllerin arasına import ediyoruz.  Biz şu ana kadar bütün modülleri `flake.nix` dosyuasına ekledik. Aslında istesek `nixos-congfiguration.nix` dosyasındaki imports listesine veya tamamane başka bir module dosyası ekleyip ona import edip daha sonra onu `flake.nix` dosyasındaki modules listesine ekleyebilirdik. Bu tamamen bize kalmış bir durum. Ancak şuınu söyleyebilirim, eğer bir klasörde çok fazla dosya birikirse bunları `default.nix` dsoyasına import edip o dosyası flake'e eklemek genel bir kullanım haline gelmiş.
+Sonuçta bu dosaya da bir modül. Bu modülü de `flake.nix` dosyamzdaki modüllerin arasına import ediyoruz. Biz şu ana kadar bütün modülleri `flake.nix` dosyuasına ekledik. Aslında istesek `nixos-congfiguration.nix` dosyasındaki imports listesine veya tamamane başka bir module dosyası ekleyip ona import edip daha sonra onu `flake.nix` dosyasındaki modules listesine ekleyebilirdik. Bu tamamen bize kalmış bir durum. Ancak şuınu söyleyebilirim, eğer bir klasörde çok fazla dosya birikirse bunları `default.nix` dsoyasına import edip o dosyası flake'e eklemek genel bir kullanım haline gelmiş.
 
 ```nix
 # flake.nix
@@ -1387,13 +1332,13 @@ Sonuçta bu dosaya da bir modül. Bu modülü de `flake.nix` dosyamzdaki modüll
 
 ```
 
-Tabi burada ciddi bir değişiklik yapıyoruz. Çalışma anında postgres'i dsiable edip tekrar enable ediyoruz. Ancak çok daha basit işler için de  specialisation'ları kullanabiliriz. Oluştrduğumuz nginx-disabled adındaki specialisation'i çalıştımak için alttaki komutu çalıştırıyoruz. komutun sonuna ekledğimiz `--specialisation nginx-disabled` kısmına dikkate edin.
+Tabi burada ciddi bir değişiklik yapıyoruz. Çalışma anında postgres'i dsiable edip tekrar enable ediyoruz. Ancak çok daha basit işler için de specialisation'ları kullanabiliriz. Oluştrduğumuz nginx-disabled adındaki specialisation'i çalıştımak için alttaki komutu çalıştırıyoruz. komutun sonuna ekledğimiz `--specialisation nginx-disabled` kısmına dikkate edin.
 
 ```bash
 sudo nixos-rebuild switch --flake .#muratpc --impure --show-trace --upgrade --specialisation nginx-disabled
 ```
 
-Bunu çalıştırdığımızda Nginx servisi disable olacak, Postgres ise Nginx disaple olduğunu için disable olacak.  
+Bunu çalıştırdığımızda Nginx servisi disable olacak, Postgres ise Nginx disaple olduğunu için disable olacak.
 
 ```bash
 systemctl status nginx
@@ -1403,24 +1348,22 @@ systemctl status postgres
 # Unit postgres.service could not be found.
 ```
 
-
-Kodun bitmiş halini Github sayfamda [nixos-sample-dotfiles](https://github.com/muratcabuk/nixos-sample-dotfiles) reposundaki  [nginx-postgres](https://github.com/muratcabuk/nixos-sample-dotfiles/tree/nginx-postgres) branch'inde  bulabilirsiniz.
- 
-
+Kodun bitmiş halini Github sayfamda [nixos-sample-dotfiles](https://github.com/muratcabuk/nixos-sample-dotfiles) reposundaki [nginx-postgres](https://github.com/muratcabuk/nixos-sample-dot./assets/files\tree/nginx-postgres) branch'inde bulabilirsiniz.
 
 Şimdilik bu kadar. Bir sonraki yazımızda da elimizde ki configürasyon dosyası ile,
+
 - uzak bir makineye kurmayı,
 - Docker Container oluşturmayı,
 - ISO oluşturmayı
-göreceğiz.
+  göreceğiz.
 
-İlk yazımızda bahsettiğimiz gibi Nixos bunlardan ibaret değil. Ben ancak bu kadarına girebilceğim ama tüm kaynkları da yazıda vereceğim.
+İlk yazımızda bahsettiğimiz gibi NixOS bunlardan ibaret değil. Ben ancak bu kadarına girebilceğim ama tüm kaynkları da yazıda vereceğim.
 
-Bu yazıyı ilgilendiren diğer bir konu da hardware managment kısmı ancak ona da o kadar hakim değilim. Tamamen ihtiyacınıza göre adokümnlardan araştırma yapıp halletmemniz gerekiyor. İlk kurulumda sistem aslında bir çok şeyi hallediyor. Ancak hiç birmediğiniz bir makineye doğrudan konfigürasyon üerinden bütün donaım ayarları kurulu yapmaya çalışmak tabii ki biraz zorlayıcı bir süreç. Tabi öyle bir şeye ne kadar ihtiyacınız olur aınu bilemem ancak çok myoğun sistem mühendisliği  işi yapıyoranız belki ihyisaç duyabilrisiniz. Ben de ihtiyaç duymadığım için o kısımları sadece ihtiyaç duyfupumda bakacağım şekilde bıraktım. 
+Bu yazıyı ilgilendiren diğer bir konu da hardware managment kısmı ancak ona da o kadar hakim değilim. Tamamen ihtiyacınıza göre adokümnlardan araştırma yapıp halletmemniz gerekiyor. İlk kurulumda sistem aslında bir çok şeyi hallediyor. Ancak hiç birmediğiniz bir makineye doğrudan konfigürasyon üerinden bütün donaım ayarları kurulu yapmaya çalışmak tabii ki biraz zorlayıcı bir süreç. Tabi öyle bir şeye ne kadar ihtiyacınız olur aınu bilemem ancak çok myoğun sistem mühendisliği işi yapıyoranız belki ihyisaç duyabilrisiniz. Ben de ihtiyaç duymadığım için o kısımları sadece ihtiyaç duyfupumda bakacağım şekilde bıraktım.
 
-Bu yaznın konusu oldupu için sadece [Disco](https://github.com/nix-community/disko)  aracından çok kısa bahsetmek istiyorum. Bu araç ile durulu esnasında gerekli olan disk bölümlendirme ve yönetim işlemlerini de declarative olarak yönetbiliyorsunuz. Bu paketi de community geliştiriyor ve tamamen açık kaynak. Altta sadece firkir vermesi için [Nixos wiki](https://nixos.wiki/wiki/Disko) sayfasındaki örneği paylaşıyorum.
+Bu yaznın konusu oldupu için sadece [Disco](https://github.com/nix-community/disko) aracından çok kısa bahsetmek istiyorum. Bu araç ile durulu esnasında gerekli olan disk bölümlendirme ve yönetim işlemlerini de declarative olarak yönetbiliyorsunuz. Bu paketi de community geliştiriyor ve tamamen açık kaynak. Altta sadece firkir vermesi için [NixOS wiki](https://nixos.wiki/wiki/Disko) sayfasındaki örneği paylaşıyorum.
 
-```nix 
+```nix
 # disko-config.nix
 
 { disks ? [ "/dev/vda" ], ... }: {
@@ -1464,8 +1407,7 @@ Bu yaznın konusu oldupu için sadece [Disco](https://github.com/nix-community/d
 
 ```
 
-`Flake.nix` dosyamızı da alttaki gibi yazıyoruz. Görüldüğü üzere bu da bir module. Formatlancak disk ile ilgili bilgiyi parametre olarak modüle geçiyoruz. 
-
+`Flake.nix` dosyamızı da alttaki gibi yazıyoruz. Görüldüğü üzere bu da bir module. Formatlancak disk ile ilgili bilgiyi parametre olarak modüle geçiyoruz.
 
 ```nix
 # flake.nix
@@ -1496,52 +1438,50 @@ Bu yaznın konusu oldupu için sadece [Disco](https://github.com/nix-community/d
 
 Github sayfasında ihtiyacınız olacak hemen hemen bütün durumlar için örnekler mevcut. [Şu linkte](https://github.com/nix-community/disko/tree/master/example) örnekleri bulabilirsiniz.
 
-## NixOs İçin Diğer Paket Yöneticileri
+## NixOS İçin Diğer Paket Yöneticileri
 
-Nixos'da diğer cross platform paket yöneticilerini de kullnabilirsiniz. Alttaki kurumlarını da içeren linkleri paylaşıyorum.
+NixOS'da diğer cross platform paket yöneticilerini de kullnabilirsiniz. Alttaki kurumlarını da içeren linkleri paylaşıyorum.
 
-
-- [Flatpak Sayfası](https://www.flatpak.org/setup/NixOS), [Nixos Sayfası](https://nixos.org/manual/nixos/stable/#module-services-flatpak) 
+- [Flatpak Sayfası](https://www.flatpak.org/setup/NixOS), [NixOS Sayfası](https://nixos.org/manual/nixos/stable/#module-services-flatpak)
 - [AppImage](https://nixos.wiki/wiki/Appimage)
 - [Community](https://github.com/io12/nix-snapd), [Github Tartışma Sayfası](https://github.com/NixOS/nixpkgs/issues/30336), [Flake ile Snapd Kurmak](https://flakehub.com/flake/io12/nix-snapd)
 
-## Araçlar  ve Sayfalar
+## Araçlar ve Sayfalar
 
 İşinize yarayabilcek bazı linkler paylaşıyorum.
 
-- https://github.com/danth/stylix : Stylix is a NixOS module which applies the same colour scheme, font and wallpaper to a range of applications and desktop environments.
-- https://github.com/fufexan/nix-gaming : Gaming related stuff for Nix and NixOS.
-- https://github.com/nix-community/nixos-vscode-server : Visual Studio Code Server support in NixOS
-- https://github.com/nix-community/awesome-nix : A curated list of the best resources in the Nix community.
-- https://nixos.wiki/wiki/Comparison_of_NixOS_setups
-- https://nixos.wiki/wiki/Configuration_Collection
-- https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/
-- https://github.com/nmattia/niv : Painless dependencies for Nix projects. 
-- https://github.com/nix-community/disko : Declarative disk partitioning
-- https://www.tweag.io/blog/2022-08-18-nixos-specialisations/
-- https://nixos.wiki/wiki/Specialisation
+- [Stylix is a NixOS module which applies the same colour scheme, font and wallpaper to a range of applications and desktop environments.](https://github.com/danth/stylix)
+- [Gaming related stuff for Nix and NixOS.](https://github.com/fufexan/nix-gaming)
+- [Visual Studio Code Server support in NixOS](https://github.com/nix-community/nixos-vscode-server)
+- [A curated list of the best resources in the Nix community.](https://github.com/nix-community/awesome-nix)
+- [https://nixos.wiki/wiki/Comparison_of_NixOS_setups](https://nixos.wiki/wiki/Comparison_of_NixOS_setups)
+- [https://nixos.wiki/wiki/Configuration_Collection](https://nixos.wiki/wiki/Configuration_Collection)
+- [https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/](https://aldoborrero.com/posts/2023/01/15/setting-up-my-machines-nix-style/)
+- [Painless dependencies for Nix projects.](https://github.com/nmattia/niv)
+- [Declarative disk partitioning](https://github.com/nix-community/disko)
+- [https://www.tweag.io/blog/2022-08-18-nixos-specialisations/](https://www.tweag.io/blog/2022-08-18-nixos-specialisations/)
+- [https://nixos.wiki/wiki/Specialisation](https://nixos.wiki/wiki/Specialisation)
 
+## İncelemlemek ve Örnek Almak için NixOS Dotfiles GitHub Repo'ları
 
-## İncelemlemek ve Örnek Almak için NixOs Dotfiles GitHub Repo'ları 
-- https://github.com/mitchellh/nixos-config (yıldız sayısı: 1700)
-- https://github.com/hlissner/dotfiles/tree/master (yıldız sayısı: 1400)
-- https://github.com/dustinlyons/nixos-config (yıldız sayısı: 800)
-- https://github.com/gvolpe/nix-config (yıldız sayısı: 700)
-- https://github.com/Misterio77/nix-config/tree/main (yıldız sayısı: 550)
-- https://github.com/fufexan/dotfiles (yıldız sayısı: 500)
-- https://github.com/Mic92/dotfiles (yıldız sayısı: 420)
-- https://github.com/fufexan/nix-gaming (yıldız sayısı: 370)
-- https://github.com/sioodmy/dotfiles (yıldız sayısı: 390)
-- https://github.com/notusknot/dotfiles-nix (yıldız sayısı: 340)
-- https://github.com/srid/nixos-config (yıldız sayısı: 320)
-- https://github.com/NobbZ/nixos-config (yıldız sayısı: 190)
-- https://github.com/gytis-ivaskevicius/nixfiles/tree/master (yıldız sayısı: 120)
-- https://github.com/bobbbay/dotfiles/tree/master (yıldız sayısı: 37)
-- https://github.com/chvp/nixos-config/tree/main (yıldız sayısı: 70)
-- https://github.com/shiryel/fennecOS
-- https://github.com/phenax/nixos-dotfiles
-- https://github.com/tolgaerok/nixos-kde
-- https://github.com/mcdonc/.nixconfig
-- https://github.com/hervyqa/dotfire
-- https://codeberg.org/merulox/dotfiles/src/branch/master/nixos/configuration.nix
-
+- [https://github.com/mitchellh/nixos-config](https://github.com/mitchellh/nixos-config)
+- [https://github.com/hlissner/dot./assets/files\tree/master](https://github.com/hlissner/dot./assets/files\tree/master)
+- [https://github.com/dustinlyons/nixos-config](https://github.com/dustinlyons/nixos-config)
+- [https://github.com/gvolpe/nix-config](https://github.com/gvolpe/nix-config)
+- [https://github.com/Misterio77/nix-config/tree/main](https://github.com/Misterio77/nix-config/tree/main)
+- [https://github.com/fufexan/dotfiles](https://github.com/fufexan/dotfiles)
+- [https://github.com/Mic92/dotfiles](https://github.com/Mic92/dotfiles)
+- [https://github.com/fufexan/nix-gaming](https://github.com/fufexan/nix-gaming)
+- [https://github.com/sioodmy/dotfiles](https://github.com/sioodmy/dotfiles)
+- [https://github.com/notusknot/dotfiles-nix](https://github.com/notusknot/dotfiles-nix)
+- [https://github.com/srid/nixos-config](https://github.com/srid/nixos-config)
+- [https://github.com/NobbZ/nixos-config](https://github.com/NobbZ/nixos-config)
+- [https://github.com/gytis-ivaskevicius/nix./assets/files\tree/master](https://github.com/gytis-ivaskevicius/nix./assets/files\tree/master)
+- [https://github.com/bobbbay/dot./assets/files\tree/master](https://github.com/bobbbay/dot./assets/files\tree/master)
+- [https://github.com/chvp/nixos-config/tree/main](https://github.com/chvp/nixos-config/tree/main)
+- [https://github.com/shiryel/fennecOS](https://github.com/shiryel/fennecOS)
+- [https://github.com/phenax/nixos-dotfiles](https://github.com/phenax/nixos-dotfiles)
+- [https://github.com/tolgaerok/nixos-kde](https://github.com/tolgaerok/nixos-kde)
+- [https://github.com/mcdonc/.nixconfig](https://github.com/mcdonc/.nixconfig)
+- [https://github.com/hervyqa/dotfire](https://github.com/hervyqa/dotfire)
+- [https://codeberg.org/merulox/dot./assets/files\src/branch/master/nixos/configuration.nix](https://codeberg.org/merulox/dot./assets/files\src/branch/master/nixos/configuration.nix)

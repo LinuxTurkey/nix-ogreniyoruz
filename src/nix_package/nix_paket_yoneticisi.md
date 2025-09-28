@@ -84,7 +84,7 @@ Sonuç olarak Nix için paket demek aslında bir programın kurulabilmesi için 
 
 ## Nixpkgs tam olarak nedir?
 
-Öncelikle NixOs'u incelerken dokümanlarda sıklıkla karşılaşacağınız **Channel** kavramından bahsedelim. Farklı repo kaynaklarına channel diyoruz. Diğer Linux distro'larındaki repo kavramına benzer bir yapısı var diyebiliriz. Channel'ları yönetmek için **nix-channel** komutu kullanılır. Channel'ın diğer Linux dağıtımlarındaki repo kavramından farkı channel'ın aslında aynı repo olsa dahi farklı versiyon veya branch'i işaret ediyor olmasıdır. Ancak mantık olarak yine de aynıdır diyebiliriz. Channel web sayfasına https://channels.nixos.org/ adresinden ulaşabilirsiniz. Ayrıca channel'ların durumunu görmek için de şu linki kullnabilirsiniz: https://status.nixos.org/
+Öncelikle NixOS'u incelerken dokümanlarda sıklıkla karşılaşacağınız **Channel** kavramından bahsedelim. Farklı repo kaynaklarına channel diyoruz. Diğer Linux distro'larındaki repo kavramına benzer bir yapısı var diyebiliriz. Channel'ları yönetmek için **nix-channel** komutu kullanılır. Channel'ın diğer Linux dağıtımlarındaki repo kavramından farkı channel'ın aslında aynı repo olsa dahi farklı versiyon veya branch'i işaret ediyor olmasıdır. Ancak mantık olarak yine de aynıdır diyebiliriz. Channel web sayfasına https://channels.nixos.org/ adresinden ulaşabilirsiniz. Ayrıca channel'ların durumunu görmek için de şu linki kullnabilirsiniz: https://status.nixos.org/
 
 Ancak channel sistemindeki [problemler](https://zero-to-nix.com/concepts/channels#the-problem-with-nix-channel) nedeniyle artık **nix registry** kullanılıyor. Bunun temelini de flake yapısı oluşturuyor. Flake'ler lock dosyası kullanarak bağımlılıkları ve versiyonları daha iyi yönetiyor. Örnek nix dosyalarında nixpkgs adıyla import ettiğimiz modul aslında bir flake'dir. Flake web sayfası ise bildiğimiz bir GitHub reposudur. Sayfaya https://github.com/NixOS/nixpkgs adresinden ulaşabilirsiniz. Bu yapıda aynı reponun klonlarına veya farklı branch'lerine erişmemiz artık mümkün. Ne kadar esnek bir yapı sunduğunu anlayabiliyoruz.
 
@@ -110,7 +110,7 @@ Bu arada **/nix/var/nix/profiles/per-user/root/channels/nixpkgs** dizini bile as
   } ]
 ```
 
-Sonuç olarak biz `import <nixpkgs> {};` satırını yazdığımızda sistem bahsettiğimiz dizinlerde arama yaparak bütün modülleri yükler. Moduller ile paket bilgilerini alırız, derivation'lar ile ile paketleri türetiriz ve bu paketleri de nix yardımıyla kurarız. Her modül de bir çalıştırabilir bir uygulama olmak durumunda değildir. nixpkgs içinde örneğin bir çok kullanışlı fonksiyon bulunur. Bizzat bu fonksiyonlar kullanılarak paketler oluşturulur. Hatta ileride göreceğimiz NixOs bile bu modüller sayesinde ayarlanır.
+Sonuç olarak biz `import <nixpkgs> {};` satırını yazdığımızda sistem bahsettiğimiz dizinlerde arama yaparak bütün modülleri yükler. Moduller ile paket bilgilerini alırız, derivation'lar ile ile paketleri türetiriz ve bu paketleri de nix yardımıyla kurarız. Her modül de bir çalıştırabilir bir uygulama olmak durumunda değildir. nixpkgs içinde örneğin bir çok kullanışlı fonksiyon bulunur. Bizzat bu fonksiyonlar kullanılarak paketler oluşturulur. Hatta ileride göreceğimiz NixOS bile bu modüller sayesinde ayarlanır.
 
 Bazı önemli dizinlere ve dosyalara bir göz atalım.
 
@@ -194,7 +194,7 @@ Nix, paket yönetimi ve paket türetilmesi için kullanılan bir sistemdir ve bu
 
 4. **Hızlı Sorgular ve İndeksleme:** SQLite, sorgular ve indeksleme konusunda iyi bir performans sergiler. Bu, Nix'in paket bilgilerini hızlı bir şekilde sorgulamasına ve türetilmiş ürünlerle ilgili bilgileri etkili bir şekilde yönetmesine olanak tanır.
 
-Dİkkat ederseniz halen NixOs işlemi sistemine halen hiç değinmedik. Anlayebileceğiniz üzere Nix paket yöneticisinin temel derdi hakikaten paket yönetimi mevzusunu çözebilmek. Bütün Linux distro'larında kullanılabilecek, farklı ortamların izole bir iekilde oluturulabildiği ve deklaratif olarak tekrar tekrar kurulum yapabilen bir paket yöneticisi zannediyorum hepimizn hayalidir.
+Dİkkat ederseniz halen NixOS işlemi sistemine halen hiç değinmedik. Anlayebileceğiniz üzere Nix paket yöneticisinin temel derdi hakikaten paket yönetimi mevzusunu çözebilmek. Bütün Linux distro'larında kullanılabilecek, farklı ortamların izole bir iekilde oluturulabildiği ve deklaratif olarak tekrar tekrar kurulum yapabilen bir paket yöneticisi zannediyorum hepimizn hayalidir.
 
 Evet bu yazımıda bu kadar. Nix paket yönetcisini teori ve consept olarak incelemiş olduk. Bir sonraki yazımızda shelli pofile ve develop gibi kavramları ve komutlarını göreceğiz. Artık Nix paket yöneticisinin bize sunduğu kolaylıkları deneyimleyebileceğiz.
 

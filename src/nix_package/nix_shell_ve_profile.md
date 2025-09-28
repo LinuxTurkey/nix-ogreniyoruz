@@ -30,7 +30,7 @@ Ancak biz komut satırını kullanarak çalışacağız. Aramada öncelikle nere
 
 Arama sonucunda legacyPackages yazdığına bakmayın yani burada sanki eski bir repo üzerinde arama yapıyormuşuz gibi görünüyor ama öyle değil aslında sadece kötü bir isimlendirme diyebiliriz.
 
-Bu arada biz arama yaparken hangi repo'da arma yaptığımız belirtmeliyiz. Bunun için arama yapacağımız repo adını nixpkgs olarak yazdık ancak unutmayalım bu sadece GitHub'daki bir adres. Aslında Github'da NixOs kullanıcısının nixpkgs adlı reposunda arama yapıyoruz. komutun uzun halide aşağıda yazıyor.
+Bu arada biz arama yaparken hangi repo'da arma yaptığımız belirtmeliyiz. Bunun için arama yapacağımız repo adını nixpkgs olarak yazdık ancak unutmayalım bu sadece GitHub'daki bir adres. Aslında Github'da NixOS kullanıcısının nixpkgs adlı reposunda arama yapıyoruz. komutun uzun halide aşağıda yazıyor.
 
 ```bash
 nix search nixpkgs python   # veya nix search github:NixOS/nixpkgs#python
@@ -274,7 +274,7 @@ ll ~/.nix-profile/bin
 # lrwxrwxrwx 1 root root 73 Oca  1  1970 smtpd.pyo -> /nix/store/a55nhyb3n13bdx1swv5dz3zm3lhikmfd-python-2.7.18.7/bin/smtpd.pyo
 ```
 
-Peki bu binary'leri nasıl kullanacağız. Yani sonuçta şuan NixOs kullanmıyorsak ve kullandığımız Linux dağıtımında da NodeJs'in farklı bir versiyonu kuruluysa sistem onu çalıştıracaktır. Bunun içinde `nix shell` komutunu kullanabilir. Zaten kendi makinenizde bir Node sürümü kurulu ise terminalde `nix shell nixpkgs#nodejs-slim_18` komutu ile NodeJs 18'i active edebilirsiniz. Bu durumda tekrar kurulum yapılmayacağını sadece PAth tanımlaması yapılacağını hatırlayalım.
+Peki bu binary'leri nasıl kullanacağız. Yani sonuçta şuan NixOS kullanmıyorsak ve kullandığımız Linux dağıtımında da NodeJs'in farklı bir versiyonu kuruluysa sistem onu çalıştıracaktır. Bunun içinde `nix shell` komutunu kullanabilir. Zaten kendi makinenizde bir Node sürümü kurulu ise terminalde `nix shell nixpkgs#nodejs-slim_18` komutu ile NodeJs 18'i active edebilirsiniz. Bu durumda tekrar kurulum yapılmayacağını sadece PAth tanımlaması yapılacağını hatırlayalım.
 
 Şimdi de Git'i kurabiliriz.
 
